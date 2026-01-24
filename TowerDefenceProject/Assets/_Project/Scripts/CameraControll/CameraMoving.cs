@@ -4,6 +4,7 @@ using UnityEngine.InputSystem.Controls;
 
 namespace _Project.Scripts.CameraControll
 {
+    [RequireComponent(typeof(Camera))]
     public class CameraMoving : MonoBehaviour
     {
         [Header("References")]
@@ -35,7 +36,10 @@ namespace _Project.Scripts.CameraControll
         private InputAction _touch0PositionAction;
         private InputAction _touch1PositionAction;
 
+        private Camera _camera;
         private Transform _cameraTransform;
+
+        private bool _movingIsLocked = false;
 
         private float _yawVelocity;
         private float _targetCameraDistance;
@@ -45,8 +49,12 @@ namespace _Project.Scripts.CameraControll
         private float _yawStopElapsed;
         private float _yawStopVelocity;
 
+        public Camera Camera => _camera;
+
         private void Awake()
         {
+            _camera = GetComponent<Camera>();
+
             CacheCameraTransform();
 
             if (_cameraTransform != null && _cameraPivot != null)
@@ -127,19 +135,28 @@ namespace _Project.Scripts.CameraControll
         private void Update()
         {
             if (_cameraPivot == null)
-            {
                 return;
-            }
 
             CacheCameraTransform();
 
             if (_cameraTransform == null)
-            {
                 return;
-            }
+
+            if (_movingIsLocked)
+                return;
 
             UpdateRotation(Time.deltaTime);
             UpdateZoom(Time.deltaTime);
+        }
+
+        public void LockMoving()
+        {
+            _movingIsLocked = true;
+        }
+
+        public void UnlockMoving()
+        {
+            _movingIsLocked = false;
         }
 
         private void UpdateRotation(float dt)
@@ -153,10 +170,7 @@ namespace _Project.Scripts.CameraControll
 
                 float sign = _invertX ? -1f : 1f;
                 inputYawVelocity = delta.x * sign * _yawSpeed;
-            }
 
-            if (rotatePressed)
-            {
                 // Разгон к скорости от ввода
                 _yawVelocity = Mathf.Lerp(_yawVelocity, inputYawVelocity, 1f - Mathf.Exp(-_rotationAcceleration * dt));
                 _yawVelocity = Mathf.Clamp(_yawVelocity, -_maxYawVelocity, _maxYawVelocity);

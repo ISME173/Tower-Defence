@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace _Project.Scripts.Building
+namespace _Project.Scripts.Construction
 {
     public abstract class Tower : MonoBehaviour
     {

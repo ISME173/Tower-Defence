@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-namespace _Project.Scripts.Building
+namespace _Project.Scripts.Construction
 {
     [RequireComponent(typeof(Collider))]
     public class BuildingSite : MonoBehaviour
     {
-        [SerializeField] private GameObject _view;
+        [SerializeField] private GameObject _selectView;
+        [SerializeField] private GameObject _mainView;
 
         private Collider _collider;
         private Tower _currentTower;
@@ -18,12 +19,22 @@ namespace _Project.Scripts.Building
             _collider.isTrigger = false;
         }
 
+        public void ShowSelectView()
+        {
+            _selectView.SetActive(true);
+        }
+
+        public void HideSelectView()
+        {
+            _selectView.SetActive(false);
+        }
+
         public bool TryBuildTower(Tower towerPrefab)
         {
             if (CurrentTower != null)
                 return false;
 
-            _view.SetActive(false);
+            _mainView.SetActive(false);
 
             Tower newTower = Instantiate(towerPrefab);
             newTower.Initialize();
@@ -42,7 +53,7 @@ namespace _Project.Scripts.Building
             _currentTower.Deinitialize();
             GameObject.Destroy(_currentTower.gameObject);
 
-            _view.SetActive(true);
+            _mainView.SetActive(true);
 
             return true;
         }
