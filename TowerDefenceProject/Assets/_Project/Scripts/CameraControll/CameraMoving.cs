@@ -12,11 +12,19 @@ namespace _Project.Scripts.CameraControll
         [Header("Rotation")]
         [SerializeField] private float _yawSpeed = 180f;
         [SerializeField] private bool _invertX;
+        [SerializeField] private float _rotationAcceleration = 18f;
+
+        [Tooltip("Время (в секундах), за которое скорость вращения затухает почти до 0 после отпускания ввода.")]
+        [Min(0.01f)]
+        [SerializeField] private float _rotationStopTime = 0.35f;
+
+        [SerializeField] private float _maxYawVelocity = 720f;
 
         [Header("Zoom")]
         [SerializeField] private float _zoomSpeed = 8f;
         [SerializeField] private float _minCameraDistance = 3f;
         [SerializeField] private float _maxCameraDistance = 20f;
+        [SerializeField] private float _zoomSmoothTime = 0.12f;
 
         private InputAction _pointerDeltaAction;
 
@@ -29,38 +37,46 @@ namespace _Project.Scripts.CameraControll
 
         private Transform _cameraTransform;
 
+        private float _yawVelocity;
+        private float _targetCameraDistance;
+        private float _zoomVelocity;
+
+        private bool _wasRotatePressed;
+        private float _yawStopElapsed;
+        private float _yawStopVelocity;
+
         private void Awake()
         {
             CacheCameraTransform();
+
+            if (_cameraTransform != null && _cameraPivot != null)
+            {
+                _targetCameraDistance = GetCameraDistance();
+            }
         }
 
         private void OnEnable()
         {
-            // Общие
             _pointerDeltaAction = new InputAction(
                 name: "PointerDelta",
                 type: InputActionType.PassThrough,
                 binding: "<Pointer>/delta");
 
-            // ПК: вращение по ПКМ
             _mouseRightButtonAction = new InputAction(
                 name: "MouseRightButton",
                 type: InputActionType.Button,
                 binding: "<Mouse>/rightButton");
 
-            // Мобилка: вращение/жесты по удержанию пальца
             _touchPressAction = new InputAction(
                 name: "TouchPress",
                 type: InputActionType.Button,
                 binding: "<Touchscreen>/primaryTouch/press");
 
-            // ПК: зум колесом
             _mouseScrollAction = new InputAction(
                 name: "MouseScroll",
                 type: InputActionType.PassThrough,
                 binding: "<Mouse>/scroll");
 
-            // Мобилка: pinch по позициям двух касаний
             _touch0PositionAction = new InputAction(
                 name: "Touch0Position",
                 type: InputActionType.PassThrough,
@@ -79,6 +95,16 @@ namespace _Project.Scripts.CameraControll
             _touch1PositionAction.Enable();
 
             CacheCameraTransform();
+
+            if (_cameraTransform != null && _cameraPivot != null)
+            {
+                _targetCameraDistance = GetCameraDistance();
+                _zoomVelocity = 0f;
+            }
+
+            _wasRotatePressed = false;
+            _yawStopElapsed = 0f;
+            _yawStopVelocity = 0f;
         }
 
         private void OnDisable()
@@ -112,50 +138,95 @@ namespace _Project.Scripts.CameraControll
                 return;
             }
 
-            UpdateRotation();
-            UpdateZoom();
+            UpdateRotation(Time.deltaTime);
+            UpdateZoom(Time.deltaTime);
         }
 
-        private void UpdateRotation()
+        private void UpdateRotation(float dt)
         {
-            // ПК: только при зажатой ПКМ
-            // Мобильное: только при удержании пальца
             bool rotatePressed = _mouseRightButtonAction.IsPressed() || _touchPressAction.IsPressed();
-            if (!rotatePressed)
+
+            float inputYawVelocity = 0f;
+            if (rotatePressed)
             {
+                Vector2 delta = _pointerDeltaAction.ReadValue<Vector2>();
+
+                float sign = _invertX ? -1f : 1f;
+                inputYawVelocity = delta.x * sign * _yawSpeed;
+            }
+
+            if (rotatePressed)
+            {
+                // Разгон к скорости от ввода
+                _yawVelocity = Mathf.Lerp(_yawVelocity, inputYawVelocity, 1f - Mathf.Exp(-_rotationAcceleration * dt));
+                _yawVelocity = Mathf.Clamp(_yawVelocity, -_maxYawVelocity, _maxYawVelocity);
+
+                _yawStopElapsed = 0f;
+                _yawStopVelocity = 0f;
+            }
+            else
+            {
+                // Старт "остановки" ровно в момент отпускания
+                if (_wasRotatePressed)
+                {
+                    _yawStopElapsed = 0f;
+                    _yawStopVelocity = _yawVelocity;
+                }
+
+                float stopT = Mathf.Max(0.01f, _rotationStopTime);
+                _yawStopElapsed += dt;
+
+                float t = Mathf.Clamp01(_yawStopElapsed / stopT);
+                _yawVelocity = Mathf.Lerp(_yawStopVelocity, 0f, t);
+            }
+
+            _wasRotatePressed = rotatePressed;
+
+            if (Mathf.Abs(_yawVelocity) < 0.001f)
+            {
+                _yawVelocity = 0f;
                 return;
             }
 
-            Vector2 delta = _pointerDeltaAction.ReadValue<Vector2>();
-
-            float sign = _invertX ? -1f : 1f;
-            float yawDelta = delta.x * sign * _yawSpeed * Time.deltaTime;
-
             Vector3 euler = _cameraPivot.eulerAngles;
-            euler.y += yawDelta;
+            euler.y += _yawVelocity * dt;
             _cameraPivot.eulerAngles = euler;
         }
 
-        private void UpdateZoom()
+        private void UpdateZoom(float dt)
         {
-            // ПК: колесо мыши (Y) -> приближение/отдаление
-            Vector2 scroll = _mouseScrollAction.ReadValue<Vector2>();
-
-            float currentDistance = 0;
-            float nextDistance = 0;
-
-            if (Mathf.Abs(scroll.y) > 0.01f)
+            float zoomDelta = GetZoomDelta(dt);
+            if (Mathf.Abs(zoomDelta) > 0.0001f)
             {
-                currentDistance = GetCameraDistance();
-                nextDistance = currentDistance - (scroll.y * _zoomSpeed * Time.deltaTime);
-                SetCameraDistance(nextDistance);
-                return;
+                _targetCameraDistance = Mathf.Clamp(
+                    _targetCameraDistance + zoomDelta,
+                    _minCameraDistance,
+                    _maxCameraDistance);
             }
 
-            // Мобилка: pinch (2 пальца)
+            float currentDistance = GetCameraDistance();
+            float smoothedDistance = Mathf.SmoothDamp(
+                currentDistance,
+                _targetCameraDistance,
+                ref _zoomVelocity,
+                _zoomSmoothTime,
+                Mathf.Infinity,
+                dt);
+
+            SetCameraDistance(smoothedDistance);
+        }
+
+        private float GetZoomDelta(float dt)
+        {
+            Vector2 scroll = _mouseScrollAction.ReadValue<Vector2>();
+            if (Mathf.Abs(scroll.y) > 0.01f)
+            {
+                return -(scroll.y * _zoomSpeed * dt);
+            }
+
             if (Touchscreen.current == null)
             {
-                return;
+                return 0f;
             }
 
             TouchControl t0 = Touchscreen.current.touches.Count > 0 ? Touchscreen.current.touches[0] : null;
@@ -163,12 +234,12 @@ namespace _Project.Scripts.CameraControll
 
             if (t0 == null || t1 == null)
             {
-                return;
+                return 0f;
             }
 
             if (!t0.press.isPressed || !t1.press.isPressed)
             {
-                return;
+                return 0f;
             }
 
             Vector2 p0 = _touch0PositionAction.ReadValue<Vector2>();
@@ -181,11 +252,7 @@ namespace _Project.Scripts.CameraControll
             float currDist = Vector2.Distance(p0, p1);
 
             float pinchDelta = currDist - prevDist;
-
-            // Пальцы расходятся -> pinchDelta > 0 -> приближаем (уменьшаем дистанцию)
-            currentDistance = GetCameraDistance();
-            nextDistance = currentDistance - (pinchDelta * _zoomSpeed * Time.deltaTime);
-            SetCameraDistance(nextDistance);
+            return -(pinchDelta * _zoomSpeed * dt);
         }
 
         private void CacheCameraTransform()
@@ -211,7 +278,6 @@ namespace _Project.Scripts.CameraControll
         {
             float clamped = Mathf.Clamp(distance, _minCameraDistance, _maxCameraDistance);
 
-            // Двигаем камеру вдоль её forward к pivot (по линии камера <-> pivot)
             Vector3 dirFromPivotToCamera = (_cameraTransform.position - _cameraPivot.position).normalized;
             _cameraTransform.position = _cameraPivot.position + dirFromPivotToCamera * clamped;
         }

@@ -19,9 +19,13 @@ namespace _Project.Scripts.Enemy
         [Header("Base enemy animation states")]
         [SerializeField] private string _isWalkingStateName;
 
+        [Header("Rotation settings")]
+        [SerializeField, Min(0)] private float _rotationTime = 0.1f;
+
         private int _currentPointIndex;
         private int _currentHealth;
         private MotionHandle _movingHandle;
+        private MotionHandle _rotationHandle;
         private Transform _transform;
         private Collider _collider;
 
@@ -50,6 +54,7 @@ namespace _Project.Scripts.Enemy
         public virtual void Deinitialize()
         {
             _movingHandle.TryCancel();
+            _rotationHandle.TryCancel();
 
             OnMovedEvent -= OnMoved;
         }
@@ -70,7 +75,14 @@ namespace _Project.Scripts.Enemy
             direction.y = 0;
 
             if (direction.sqrMagnitude > 0.0001f)
-                Transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+
+                _rotationHandle.TryCancel();
+                _rotationHandle = LMotion.Create(Transform.rotation, targetRotation, _rotationTime)
+                    .WithCancelOnError()
+                    .BindToRotation(Transform);
+            }
 
             float movingTime = Math.Max(Vector3.Distance(movePosition, Transform.position) / _movingSpeed, 0);
             _movingHandle = LMotion.Create(Transform.position, movePosition, movingTime)
@@ -82,6 +94,8 @@ namespace _Project.Scripts.Enemy
         protected virtual void Died()
         {
             _movingHandle.TryCancel();
+            _rotationHandle.TryCancel();
+
             OnDied?.Invoke(this);
         }
 
