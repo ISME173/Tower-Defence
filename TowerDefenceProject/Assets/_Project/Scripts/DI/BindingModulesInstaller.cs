@@ -1,4 +1,4 @@
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using Reflex.Core;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace _Project.Scripts.DI
         {
             if (_searchBindingModulesInOnValidate)
             {
-                _bindingModules = FindObjectsOfType<BindingModule>().ToList();
+                _bindingModules = FindObjectsByType<BindingModule>(FindObjectsInactive.Exclude, FindObjectsSortMode.None).ToList();
 
                 _readOnlyBindingModules.Clear();
                 _readOnlyBindingModules.AddRange(_bindingModules);

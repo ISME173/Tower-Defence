@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.CameraControll;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Construction
@@ -15,6 +16,8 @@ namespace _Project.Scripts.Construction
 
         private InputAction _pointerPositionAction;
         private InputAction _pointerPressAction;
+
+        private readonly DeferredClickProcessor _deferredClickProcessor;
 
         public ConstructionController(ConstructionView constructionView, CameraMoving cameraMoving, ConstructionControllerParameters constructionControllerParameters)
         {
@@ -35,16 +38,21 @@ namespace _Project.Scripts.Construction
                 type: InputActionType.Button,
                 binding: "<Pointer>/press");
 
-            _pointerPressAction.performed += TrySearchBuildingSite;
+            _pointerPressAction.performed += OnPointerPressPerformed;
 
             _pointerPositionAction.Enable();
             _pointerPressAction.Enable();
+
+            _deferredClickProcessor = CreateDeferredClickProcessor();
         }
 
         public void Dispose()
         {
+            if (_deferredClickProcessor != null)
+                UnityEngine.Object.Destroy(_deferredClickProcessor.gameObject);
+
             ConstructionView.OnBuildTowerButtonClickedEvent -= OnBuildTowerButtonClicked;
-            _pointerPressAction.performed -= TrySearchBuildingSite;
+            _pointerPressAction.performed -= OnPointerPressPerformed;
 
             _pointerPositionAction.Disable();
             _pointerPressAction.Disable();
@@ -53,9 +61,17 @@ namespace _Project.Scripts.Construction
             _pointerPressAction.Dispose();
         }
 
-        public void TrySearchBuildingSite(InputAction.CallbackContext callbackContext)
+        private void OnPointerPressPerformed(InputAction.CallbackContext callbackContext)
         {
-            if (ConstructionView.IsShowedSelectView)
+            if (callbackContext.performed == false)
+                return;
+
+            _deferredClickProcessor.RequestClick();
+        }
+
+        private void ProcessPointerPress()
+        {
+            if (IsPointerOverUI())
                 return;
 
             Camera cam = CameraMoving.Camera;
@@ -81,6 +97,20 @@ namespace _Project.Scripts.Construction
             ConstructionView.HideSelectView();
         }
 
+        private bool IsPointerOverUI()
+        {
+            if (EventSystem.current == null)
+                return false;
+
+            if (Mouse.current != null)
+                return EventSystem.current.IsPointerOverGameObject();
+
+            if (Touchscreen.current != null && Touchscreen.current.primaryTouch != null)
+                return EventSystem.current.IsPointerOverGameObject(Touchscreen.current.primaryTouch.touchId.ReadValue());
+
+            return false;
+        }
+
         private void OnBuildTowerButtonClicked(Tower towerPrefab)
         {
             if (_selectedBuildingSite == null)
@@ -90,6 +120,42 @@ namespace _Project.Scripts.Construction
             {
                 ConstructionView.HideSelectView();
                 CameraMoving.UnlockMoving();
+            }
+        }
+
+        private DeferredClickProcessor CreateDeferredClickProcessor()
+        {
+            var go = new GameObject(nameof(ConstructionController) + "_" + nameof(DeferredClickProcessor));
+            UnityEngine.Object.DontDestroyOnLoad(go);
+
+            var processor = go.AddComponent<DeferredClickProcessor>();
+            processor.Initialize(ProcessPointerPress);
+
+            return processor;
+        }
+
+        private sealed class DeferredClickProcessor : MonoBehaviour
+        {
+            private Action _onClickRequested;
+            private bool _isClickRequested;
+
+            public void Initialize(Action onClickRequested)
+            {
+                _onClickRequested = onClickRequested;
+            }
+
+            public void RequestClick()
+            {
+                _isClickRequested = true;
+            }
+
+            private void Update()
+            {
+                if (_isClickRequested == false)
+                    return;
+
+                _isClickRequested = false;
+                _onClickRequested?.Invoke();
             }
         }
 

@@ -13,6 +13,12 @@ namespace _Project.Scripts.Construction
 
         private ConstructionController _constructionController;
 
+        private void OnDestroy()
+        {
+            _constructionController?.Dispose();
+            _constructionView?.Dispose();
+        }
+
         public override void Bind(ContainerBuilder containerBuilder)
         {
             _constructionView.Initialize();

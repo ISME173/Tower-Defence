@@ -15,13 +15,41 @@ PluginImporter:
   platformData:
     Any:
       enabled: 1
-      settings: {}
-    Editor:
-      enabled: 0
       settings:
+        Exclude Editor: 0
+        Exclude Linux64: 0
+        Exclude OSXUniversal: 0
+        Exclude WebGL: 0
+        Exclude Win: 0
+        Exclude Win64: 0
+        Exclude WindowsStoreApps: 0
+    Editor:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
         DefaultValueInitialized: true
+        OS: AnyOS
+    Linux64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    OSXUniversal:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    WebGL:
+      enabled: 1
+      settings: {}
+    Win:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    Win64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
     WindowsStoreApps:
-      enabled: 0
+      enabled: 1
       settings:
         CPU: AnyCPU
   userData: 

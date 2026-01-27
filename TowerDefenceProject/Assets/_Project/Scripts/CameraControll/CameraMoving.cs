@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.LevelsManagement;
+using R3;
+using Reflex.Attributes;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -7,6 +10,8 @@ namespace _Project.Scripts.CameraControll
     [RequireComponent(typeof(Camera))]
     public class CameraMoving : MonoBehaviour
     {
+        [Inject] private readonly LevelsCreator LevelsCreator;
+
         [Header("References")]
         [SerializeField] private Transform _cameraPivot;
 
@@ -48,6 +53,8 @@ namespace _Project.Scripts.CameraControll
         private bool _wasRotatePressed;
         private float _yawStopElapsed;
         private float _yawStopVelocity;
+
+        private CompositeDisposable _compositeDisposables = new CompositeDisposable();
 
         public Camera Camera => _camera;
 
@@ -113,6 +120,10 @@ namespace _Project.Scripts.CameraControll
             _wasRotatePressed = false;
             _yawStopElapsed = 0f;
             _yawStopVelocity = 0f;
+
+            LevelsCreator.LevelCreated
+                .Subscribe(levelObject => OnLevelCreated(levelObject))
+                .AddTo(_compositeDisposables);
         }
 
         private void OnDisable()
@@ -130,6 +141,8 @@ namespace _Project.Scripts.CameraControll
             _mouseScrollAction.Dispose();
             _touch0PositionAction.Dispose();
             _touch1PositionAction.Dispose();
+
+            _compositeDisposables.Dispose();
         }
 
         private void Update()
@@ -157,6 +170,12 @@ namespace _Project.Scripts.CameraControll
         public void UnlockMoving()
         {
             _movingIsLocked = false;
+        }
+
+        private void OnLevelCreated(LevelObject levelObject)
+        {
+            _cameraPivot = levelObject.CameraPivot;
+            transform.SetParent(_cameraPivot);
         }
 
         private void UpdateRotation(float dt)

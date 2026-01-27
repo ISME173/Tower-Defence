@@ -35,6 +35,7 @@ namespace _Project.Scripts.Enemy
 
         public Transform Transform => _transform ?? transform;
         public int AttackDamage => _attackDamage;
+        public bool Alive => _currentHealth > 0;
 
         public virtual void Initialize(Vector3[] movingPoints)
         {

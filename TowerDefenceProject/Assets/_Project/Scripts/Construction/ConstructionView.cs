@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace _Project.Scripts.Construction
 {
-    public class ConstructionView : MonoBehaviour
+    public class ConstructionView : MonoBehaviour, IDisposable
     {
         [Header("References")]
         [SerializeField] private GameObject _selectTowerView;
@@ -16,7 +16,7 @@ namespace _Project.Scripts.Construction
 
         public bool IsShowedSelectView { get; private set; } = false;
 
-        private void OnDestroy()
+        public void Dispose()
         {
             for (int i = 0; i < _towerSlotUIs.Count; i++)
                 _towerSlotUIs[i].OnBuildTowerButtonClick -= OnBuildTowerButtonClicked;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1835646862386143226}
   - component: {fileID: 1977521719226927763}
   - component: {fileID: 8011934008601780315}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 8190244135494370165}
   - component: {fileID: 1798834299724553342}
   - component: {fileID: 7635692637973864031}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: tower-round-build-a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 717139908048406886}
   - component: {fileID: 284485839086550462}
   - component: {fileID: 1284093081449744639}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,13 +213,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058106032518392276}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.014427939, z: -0, w: 0.99989593}
+  m_LocalPosition: {x: -0.000045262255, y: -0.26799995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 52208275876360792}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 5900298020811517591}
+  m_LocalEulerAnglesHint: {x: 0, y: -1.653, z: 0}
 --- !u!33 &284485839086550462
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 3812288534708572394}
   - component: {fileID: 1390687825116551680}
   - component: {fileID: 8837542655897719686}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: weapon-turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,8 +304,8 @@ Transform:
   m_GameObject: {fileID: 4336798987725762949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0, y: -0.0501, z: 0}
+  m_LocalScale: {x: 1, y: 1.2178, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 52208275876360792}
@@ -376,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 52208275876360792}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: weapon-turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,11 +392,11 @@ Transform:
   m_GameObject: {fileID: 4869729953256980450}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.888, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 717139908048406886}
+  - {fileID: 5900298020811517591}
   - {fileID: 3812288534708572394}
   m_Father: {fileID: 4083341351728114450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -409,7 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4083341351728114450}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,6 +433,38 @@ Transform:
   - {fileID: 8190244135494370165}
   m_Father: {fileID: 7668534028899574052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5725008400404170780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5900298020811517591}
+  m_Layer: 7
+  m_Name: RotateTurretTranform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5900298020811517591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725008400404170780}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.39261588, z: -0, w: 0.91970253}
+  m_LocalPosition: {x: 0, y: 0.268, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 717139908048406886}
+  m_Father: {fileID: 52208275876360792}
+  m_LocalEulerAnglesHint: {x: 0, y: -46.235, z: 0}
 --- !u!1 &9129420760022535187
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7668534028899574052}
   - component: {fileID: 4282562834644743071}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TurretTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,3 +514,5 @@ MonoBehaviour:
   _attackZone: {fileID: 8011934008601780315}
   _attackDamage: 5
   _delayBetweenAttacks: 1
+  _rotateWeaponToEnemySpeed: 1
+  _turretRotateTransform: {fileID: 5900298020811517591}

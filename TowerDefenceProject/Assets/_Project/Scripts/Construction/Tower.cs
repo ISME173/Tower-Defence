@@ -15,12 +15,14 @@ namespace _Project.Scripts.Construction
         [Header("Settings")]
         [SerializeField, Min(0)] private int _attackDamage;
         [SerializeField, Min(0)] private float _delayBetweenAttacks;
+        [SerializeField, Min(0)] private float _rotateWeaponToEnemySpeed;
 
         private Enemy.Enemy _targetEnemy;
         private float _attackDelayTimer;
 
         protected Enemy.Enemy TargetEnemy => _targetEnemy;
         protected int AttackDamage => _attackDamage;
+        protected float RotateWeaponToEnemySpeed => _rotateWeaponToEnemySpeed;
 
         protected virtual void Update()
         {
@@ -54,7 +56,7 @@ namespace _Project.Scripts.Construction
         {
             if (collider.TryGetComponent(out Enemy.Enemy enemy))
             {
-                if (EnemiesInAttackZone.Contains(enemy) == false)
+                if (EnemiesInAttackZone.Contains(enemy) == false && enemy.Alive)
                 {
                     EnemiesInAttackZone.Add(enemy);
 
