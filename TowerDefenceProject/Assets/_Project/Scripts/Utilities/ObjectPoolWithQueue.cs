@@ -23,6 +23,11 @@ namespace _Project.Scripts.Utilities
             Queue.Enqueue(obj);
         }
 
+        public bool ContainsObject(T obj)
+        {
+            return Queue.Contains(obj);
+        }
+
         public T GetObject()
         {
             T returnObject = null;

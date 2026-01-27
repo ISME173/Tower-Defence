@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.LevelsManagement;
+using _Project.Scripts.Utilities;
 using Cysharp.Threading.Tasks;
 using R3;
 using Reflex.Attributes;
@@ -13,7 +14,9 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
     public class EnemysSpawner : MonoBehaviour
     {
         private readonly List<Enemy> EnemiesInLevel = new();
+        private readonly Dictionary<string, ObjectPoolWithQueue<Enemy>> ObjectPoolsByEnemy = new();
 
+        private Transform _currentSpawnEnemiesPoint;
         private LevelsCreator _levelsCreator;
         private CompositeDisposable _compositeDisposable = new();
         private List<Transform> _currentMovingPoints;
@@ -36,9 +39,28 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
         private void OnLevelCreated(LevelObject levelObject)
         {
             CancelSpawn();
+            UpdatePoolsByLevel(levelObject);
 
             _currentMovingPoints = levelObject.MovingPoints.ToList();
             _currentEnemiesInLevelSpawnSequence = levelObject.EnemysInLevelSpawnSeqence;
+            _currentSpawnEnemiesPoint = levelObject.NpcSpawnPoint;
+        }
+
+        private void UpdatePoolsByLevel(LevelObject levelObject)
+        {
+            foreach (var enemyGroupSettings in levelObject.EnemysInLevelSpawnSeqence.EnemyGroupsSpawnSettings)
+            {
+                foreach (var enemySpawnSettings in enemyGroupSettings.EnemySpawnSettings)
+                {
+                    Enemy enemyPrefab = enemySpawnSettings.EnemyPrefab;
+
+                    if (ObjectPoolsByEnemy.ContainsKey(enemyPrefab.EnemyName) == false)
+                        ObjectPoolsByEnemy.Add(enemyPrefab.EnemyName, new ObjectPoolWithQueue<Enemy>(enemyPrefab, transform));
+
+                    //for (int i = 0; i < enemySpawnSettings.SpawnCount; i++)
+                    //    ObjectPoolsByEnemy[enemyPrefab.EnemyName].AddObject(Instantiate(enemyPrefab));
+                }
+            }
         }
 
         [ContextMenu("StartSpawnProcess")]
@@ -49,7 +71,7 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             CancellationToken cancellationToken = _spawnCancellationTokenSource.Token;
 
             List<Enemy> createdEnemys = new();
-            Vector3[] movingPositions = new Vector3[_currentMovingPoints.Count - 1];
+            Vector3[] movingPositions = new Vector3[_currentMovingPoints.Count];
 
             for (int i = 0; i < movingPositions.Length; i++)
                 movingPositions[i] = _currentMovingPoints[i].position;
@@ -68,8 +90,11 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
                         {
                             cancellationToken.ThrowIfCancellationRequested();
 
-                            Enemy spawnedEnemy = Instantiate(enemySpawnSettings.EnemyPrefab);
+                            Enemy spawnedEnemy = ObjectPoolsByEnemy[enemySpawnSettings.EnemyPrefab.EnemyName].GetObject();
+                            spawnedEnemy.transform.position = _currentSpawnEnemiesPoint.position;
                             spawnedEnemy.Initialize(movingPositions);
+
+                            spawnedEnemy.OnDied += OnEnemyDied;
 
                             await UniTask.Delay(
                                 Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
@@ -84,6 +109,17 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             }
         }
 
+        private void OnEnemyDied(Enemy enemy)
+        {
+            enemy.OnDied -= OnEnemyDied;
+            enemy.Dispose();
+
+            EnemiesInLevel.Remove(enemy);
+
+            if (ObjectPoolsByEnemy[enemy.EnemyName].ContainsObject(enemy) == false)
+                ObjectPoolsByEnemy[enemy.EnemyName].AddObject(enemy);
+        }
+
         private void CancelSpawn()
         {
             if (_spawnCancellationTokenSource == null)
@@ -96,7 +132,11 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             for (int i = 0; i < EnemiesInLevel.Count; i++)
             {
                 if (EnemiesInLevel[i] != null)
+                {
+                    OnEnemyDied(EnemiesInLevel[i]);
                     Destroy(EnemiesInLevel[i].gameObject);
+                    i--;
+                }
             }
 
             EnemiesInLevel.Clear();

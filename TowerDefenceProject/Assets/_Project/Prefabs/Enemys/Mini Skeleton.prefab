@@ -1471,7 +1471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37aa91b4ecd85eb47b95535fb1b7c414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.Enemy
-  _maxHealth: 100
+  _enemyName: Skeleton
+  _maxHealth: 50
   _movingSpeed: 1
   _attackDamage: 5
   _isWalkingStateName: IsWalk

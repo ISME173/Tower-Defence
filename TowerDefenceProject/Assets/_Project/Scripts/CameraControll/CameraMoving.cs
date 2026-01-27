@@ -176,6 +176,9 @@ namespace _Project.Scripts.CameraControll
         {
             _cameraPivot = levelObject.CameraPivot;
             transform.SetParent(_cameraPivot);
+
+            _targetCameraDistance = GetCameraDistance();
+            _zoomVelocity = 0f;
         }
 
         private void UpdateRotation(float dt)

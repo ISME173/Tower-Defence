@@ -7,11 +7,12 @@ using UnityEngine;
 namespace _Project.Scripts.Enemy
 {
     [RequireComponent(typeof(Collider), typeof(Animator))]
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDisposable
     {
         private readonly List<Vector3> MovingPoints = new();
 
         [Header("Base enemy settings")]
+        [SerializeField] private string _enemyName;
         [SerializeField, Min(0)] private int _maxHealth;
         [SerializeField, Min(0)] private float _movingSpeed;
         [SerializeField, Min(0)] private int _attackDamage;
@@ -33,6 +34,7 @@ namespace _Project.Scripts.Enemy
 
         protected event Action OnMovedEvent;
 
+        public string EnemyName => _enemyName;
         public Transform Transform => _transform ?? transform;
         public int AttackDamage => _attackDamage;
         public bool Alive => _currentHealth > 0;
@@ -52,7 +54,7 @@ namespace _Project.Scripts.Enemy
             MoveToPoint(MovingPoints[_currentPointIndex]);
         }
 
-        public virtual void Deinitialize()
+        public virtual void Dispose()
         {
             _movingHandle.TryCancel();
             _rotationHandle.TryCancel();
