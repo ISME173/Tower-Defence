@@ -8,13 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace _Project.Scripts.Enemy.EnemySpawnManagement
 {
     public class EnemysSpawner : MonoBehaviour
     {
-        private readonly Dictionary<Enemy, IDisposable> EnemiesInLevel = new();
+        private readonly Dictionary<Enemy, CompositeDisposable> EnemiesInLevel = new();
         private readonly Dictionary<string, ObjectPoolWithQueue<Enemy>> ObjectPoolsByEnemy = new();
 
         private Transform _currentSpawnEnemiesPoint;
@@ -23,6 +22,8 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
         private List<Transform> _currentMovingPoints;
         private EnemysInLevelSpawnSeqence _currentEnemiesInLevelSpawnSequence;
         private CancellationTokenSource _spawnCancellationTokenSource;
+
+        public readonly Subject<Enemy> EnemyMovedToLastPoint = new();
 
         private void OnEnable()
         {
@@ -95,7 +96,10 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
                             spawnedEnemy.transform.position = _currentSpawnEnemiesPoint.position;
                             spawnedEnemy.Initialize(movingPositions);
 
-                            EnemiesInLevel.Add(spawnedEnemy, spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
+                            EnemiesInLevel.Add(spawnedEnemy, new CompositeDisposable());
+
+                            EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
+                            EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnMovedToLastPoint.Subscribe(enemy => EnemyMovedToLastPoint?.OnNext(enemy)));
 
                             await UniTask.Delay(
                                 Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),

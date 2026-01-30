@@ -6,13 +6,17 @@ namespace _Project.Scripts.LevelsManagement
 {
     public class LevelObject : MonoBehaviour
     {
-        [SerializeField, Min(1)] private int _levelNumber;
-        [Space]
+        [Header("References")]
         [SerializeField] private List<Transform> _movingPoints;
         [SerializeField] private EnemysInLevelSpawnSeqence _enemySpawnSequence;
         [SerializeField] private Transform _cameraPivot;
         [SerializeField] private Transform _npcSpawnPoint;
 
+        [Header("Settings")]
+        [SerializeField, Min(1)] private int _levelNumber;
+        [SerializeField, Min(0)] private int _maxLevelHealth;
+
+        public int MaxLevelHealth => _maxLevelHealth;
         public int LevelNumber => _levelNumber;
         public IReadOnlyList<Transform> MovingPoints => _movingPoints;
         public EnemysInLevelSpawnSeqence EnemysInLevelSpawnSeqence => _enemySpawnSequence;
