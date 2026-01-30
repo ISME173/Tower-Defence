@@ -1352,14 +1352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07573953c99abcf4bbae1d6cfecfb08e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.EnemysMover
-  _spawnPoint: {fileID: 0}
-  _movingPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _enemysInLevelSpawnSeqence: {fileID: 11400000, guid: 83282773d1626274189bcae362d424ed, type: 2}
 --- !u!1 &1772137880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,7 +1534,7 @@ MonoBehaviour:
   _constructionView: {fileID: 1450020238}
   _cameraMoving: {fileID: 330585548}
   _constructionControllerParameters:
-    _raycastMaxDistance: 1000
+    _raycastMaxDistance: 10000
     _targetLayerMask:
       serializedVersion: 2
       m_Bits: 128
