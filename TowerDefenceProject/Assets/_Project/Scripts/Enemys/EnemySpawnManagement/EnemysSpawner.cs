@@ -8,12 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace _Project.Scripts.Enemy.EnemySpawnManagement
 {
     public class EnemysSpawner : MonoBehaviour
     {
-        private readonly List<Enemy> EnemiesInLevel = new();
+        private readonly Dictionary<Enemy, IDisposable> EnemiesInLevel = new();
         private readonly Dictionary<string, ObjectPoolWithQueue<Enemy>> ObjectPoolsByEnemy = new();
 
         private Transform _currentSpawnEnemiesPoint;
@@ -94,7 +95,7 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
                             spawnedEnemy.transform.position = _currentSpawnEnemiesPoint.position;
                             spawnedEnemy.Initialize(movingPositions);
 
-                            spawnedEnemy.OnDied += OnEnemyDied;
+                            EnemiesInLevel.Add(spawnedEnemy, spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
 
                             await UniTask.Delay(
                                 Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
@@ -111,9 +112,9 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
 
         private void OnEnemyDied(Enemy enemy)
         {
-            enemy.OnDied -= OnEnemyDied;
             enemy.Dispose();
 
+            EnemiesInLevel[enemy].Dispose();
             EnemiesInLevel.Remove(enemy);
 
             if (ObjectPoolsByEnemy[enemy.EnemyName].ContainsObject(enemy) == false)
@@ -129,13 +130,28 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             _spawnCancellationTokenSource.Dispose();
             _spawnCancellationTokenSource = null;
 
-            for (int i = 0; i < EnemiesInLevel.Count; i++)
+            //for (int i = 0; i < EnemiesInLevel.Count; i++)
+            //{
+            //    if (EnemiesInLevel[i] != null)
+            //    {
+            //        OnEnemyDied(EnemiesInLevel[i]);
+            //        Destroy(EnemiesInLevel[i].gameObject);
+            //        i--;
+            //    }
+            //}
+
+            List<Enemy> enemiesInLevel = new();
+
+            foreach (var keyValuePair in EnemiesInLevel)
+                enemiesInLevel.Add(keyValuePair.Key);
+
+            for (int i = 0; i < enemiesInLevel.Count; i++)
             {
-                if (EnemiesInLevel[i] != null)
+                Enemy enemy = enemiesInLevel[i];
+
+                if (enemy != null)
                 {
-                    OnEnemyDied(EnemiesInLevel[i]);
-                    Destroy(EnemiesInLevel[i].gameObject);
-                    i--;
+                    OnEnemyDied(enemiesInLevel[i]);
                 }
             }
 

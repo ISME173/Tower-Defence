@@ -1,4 +1,6 @@
 ﻿using _Project.Scripts.Utilities;
+using R3;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +9,7 @@ namespace _Project.Scripts.Construction
 {
     public abstract class Tower : MonoBehaviour
     {
-        private readonly List<Enemy.Enemy> EnemiesInAttackZone = new();
+        private readonly Dictionary<Enemy.Enemy, IDisposable> EnemiesInAttackZone = new();
 
         [Header("References")]
         [SerializeField] private Trigger _attackZone;
@@ -56,11 +58,9 @@ namespace _Project.Scripts.Construction
         {
             if (collider.TryGetComponent(out Enemy.Enemy enemy))
             {
-                if (EnemiesInAttackZone.Contains(enemy) == false && enemy.Alive)
+                if (EnemiesInAttackZone.ContainsKey(enemy) == false && enemy.Alive)
                 {
-                    EnemiesInAttackZone.Add(enemy);
-
-                    enemy.OnDied += OnDiedEnemy;
+                    EnemiesInAttackZone.Add(enemy, enemy.OnDied.Subscribe(OnDiedEnemy));
 
                     if (_targetEnemy == null)
                     {
@@ -75,26 +75,25 @@ namespace _Project.Scripts.Construction
         {
             if (collider.TryGetComponent(out Enemy.Enemy enemy))
             {
-                if (EnemiesInAttackZone.Contains(enemy))
+                if (EnemiesInAttackZone.ContainsKey(enemy))
                 {
+                    EnemiesInAttackZone[enemy].Dispose();
                     EnemiesInAttackZone.Remove(enemy);
 
-                    enemy.OnDied -= OnDiedEnemy;
-
                     if (_targetEnemy == enemy)
-                        _targetEnemy = EnemiesInAttackZone.FirstOrDefault();
+                        _targetEnemy = EnemiesInAttackZone.FirstOrDefault().Key;
                 }
             }
         }
 
         private void OnDiedEnemy(Enemy.Enemy enemy)
         {
-            if (EnemiesInAttackZone.Contains(enemy))
+            if (EnemiesInAttackZone.ContainsKey(enemy))
             {
                 EnemiesInAttackZone.Remove(enemy);
 
                 if (enemy == _targetEnemy)
-                    _targetEnemy = EnemiesInAttackZone.FirstOrDefault();
+                    _targetEnemy = EnemiesInAttackZone.FirstOrDefault().Key;
             }
         }
     }

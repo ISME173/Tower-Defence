@@ -1,5 +1,6 @@
 ﻿using LitMotion;
 using LitMotion.Extensions;
+using R3;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace _Project.Scripts.Enemy
         private Transform _transform;
         private Collider _collider;
 
-        public event Action<Enemy> OnDied;
+        public readonly Subject<Enemy> OnDied = new(), OnMovedToLastPoint = new();
 
         protected event Action OnMovedEvent;
 
@@ -99,7 +100,7 @@ namespace _Project.Scripts.Enemy
             _movingHandle.TryCancel();
             _rotationHandle.TryCancel();
 
-            OnDied?.Invoke(this);
+            OnDied?.OnNext(this);
         }
 
         private void OnMoved()
@@ -108,6 +109,9 @@ namespace _Project.Scripts.Enemy
 
             if (_currentPointIndex < MovingPoints.Count)
                 MoveToPoint(MovingPoints[_currentPointIndex]);
+            else
+                OnMovedToLastPoint?.OnNext(this);
+
         }
     }
 }
