@@ -11,11 +11,13 @@ namespace _Project.Scripts.LevelsManagement
         [SerializeField] private EnemysInLevelSpawnSeqence _enemySpawnSequence;
         [SerializeField] private Transform _cameraPivot;
         [SerializeField] private Transform _npcSpawnPoint;
+        [SerializeField] private GameObject _castleView;
 
         [Header("Settings")]
         [SerializeField, Min(1)] private int _levelNumber;
         [SerializeField, Min(0)] private int _maxLevelHealth;
 
+        public GameObject CastleView => _castleView;
         public int MaxLevelHealth => _maxLevelHealth;
         public int LevelNumber => _levelNumber;
         public IReadOnlyList<Transform> MovingPoints => _movingPoints;

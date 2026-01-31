@@ -14,9 +14,11 @@ namespace _Project.Scripts.Castle
         private int _maxHealth;
 
         private readonly Subject<Unit> CastleDestroyed = new();
+        private readonly Subject<int> CastleDamageTaken = new();
         private readonly ReactiveProperty<int> CurrentHealth = new();
 
-        public IObservable<Unit> ReadOnlyCastleDestroyed => (IObservable<Unit>)CastleDestroyed;
+        public Observable<Unit> ReadOnlyCastleDestroyed => CastleDestroyed;
+        public Observable<int> ReadOnlyCastleDamageTaken => CastleDamageTaken;
         public ReadOnlyReactiveProperty<int> ReadOnlyCurrentHealth => CurrentHealth;
         public int MaxHealth => _maxHealth;
 
@@ -50,6 +52,8 @@ namespace _Project.Scripts.Castle
 
             int finalDamage = Math.Clamp(enemyAttackDamage, 0, CurrentHealth.CurrentValue);
             CurrentHealth.Value -= finalDamage;
+
+            CastleDamageTaken.OnNext(CurrentHealth.CurrentValue);
 
             if (CurrentHealth.CurrentValue == 0)
             {

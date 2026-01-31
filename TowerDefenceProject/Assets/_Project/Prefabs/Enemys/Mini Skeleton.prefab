@@ -1474,7 +1474,7 @@ MonoBehaviour:
   _enemyName: Skeleton
   _maxHealth: 50
   _movingSpeed: 1
-  _attackDamage: 5
+  _attackDamage: 1
   _isWalkingStateName: IsWalk
   _rotationTime: 0.1
 --- !u!1 &9033545015223484084

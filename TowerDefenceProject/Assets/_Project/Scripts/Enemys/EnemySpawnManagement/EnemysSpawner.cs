@@ -99,7 +99,7 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
                             EnemiesInLevel.Add(spawnedEnemy, new CompositeDisposable());
 
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
-                            EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnMovedToLastPoint.Subscribe(enemy => EnemyMovedToLastPoint?.OnNext(enemy)));
+                            EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
 
                             await UniTask.Delay(
                                 Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
@@ -112,6 +112,13 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             {
                 Debug.LogException(ex);
             }
+        }
+
+        private void OnEnemyMovedToLastPoint(Enemy enemy)
+        {
+            OnEnemyDied(enemy);
+
+            EnemyMovedToLastPoint?.OnNext(enemy);
         }
 
         private void OnEnemyDied(Enemy enemy)
@@ -155,7 +162,10 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
 
                 if (enemy != null)
                 {
-                    OnEnemyDied(enemiesInLevel[i]);
+                    enemy.Dispose();
+
+                    EnemiesInLevel[enemy].Dispose();
+                    EnemiesInLevel.Remove(enemy);
                 }
             }
 
