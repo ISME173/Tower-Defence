@@ -2,7 +2,6 @@
 using _Project.Scripts.Utilities;
 using Cysharp.Threading.Tasks;
 using R3;
-using Reflex.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,46 +10,54 @@ using UnityEngine;
 
 namespace _Project.Scripts.EnemiesManagement.Spawn
 {
-    public class EnemiesSpawner : MonoBehaviour
+    public class EnemiesSpawner : IDisposable
     {
         private readonly Dictionary<Enemy, CompositeDisposable> EnemiesInLevel = new();
         private readonly Dictionary<string, ObjectPoolWithQueue<Enemy>> ObjectPoolsByEnemy = new();
+        private readonly CompositeDisposable Disposables = new();
+
+        private Transform _enemiesContainer;
+        private Transform _currentSpawnEnemiesPoint;
 
         private LevelCompletionManagement _levelCompletionManagement;
-        private Transform _currentSpawnEnemiesPoint;
         private LevelsCreator _levelsCreator;
-        private CompositeDisposable _compositeDisposable = new();
+
         private List<Transform> _currentMovingPoints;
         private EnemysInLevelSpawnSeqence _currentEnemiesInLevelSpawnSequence;
         private CancellationTokenSource _spawnCancellationTokenSource;
         private bool _spawningProcessActive = false;
 
+        // R3 events
         private readonly Subject<Enemy> EnemyMovedToLastPoint = new();
         private readonly Subject<Unit> AllEnemiesDefeated = new();
 
         public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
         public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
 
-        private void OnEnable()
+        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, Transform enemiesContainer)
         {
+            _enemiesContainer = enemiesContainer;
+            _levelsCreator = levelsCreator;
+            _levelCompletionManagement = levelCompletionManagement;
+
             _levelsCreator.LevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
-                .AddTo(_compositeDisposable);
+                .AddTo(Disposables);
 
             _levelCompletionManagement.ReadOnlyLevelFailed
-                .Subscribe(_ => CancelSpawn())
-                .AddTo(_compositeDisposable);
+                .Subscribe(_ => CancelSpawnProcess())
+                .AddTo(Disposables);
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
-            _compositeDisposable.Dispose();
-            CancelSpawn();
+            Disposables.Dispose();
+            CancelSpawnProcess();
         }
 
         private void OnLevelCreated(LevelObject levelObject)
         {
-            CancelSpawn();
+            CancelSpawnProcess();
             UpdatePoolsByLevel(levelObject);
 
             _currentMovingPoints = levelObject.MovingPoints.ToList();
@@ -67,16 +74,12 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                     Enemy enemyPrefab = enemySpawnSettings.EnemyPrefab;
 
                     if (ObjectPoolsByEnemy.ContainsKey(enemyPrefab.EnemyName) == false)
-                        ObjectPoolsByEnemy.Add(enemyPrefab.EnemyName, new ObjectPoolWithQueue<Enemy>(enemyPrefab, transform));
-
-                    //for (int i = 0; i < enemySpawnSettings.SpawnCount; i++)
-                    //    ObjectPoolsByEnemy[enemyPrefab.EnemyName].AddObject(Instantiate(enemyPrefab));
+                        ObjectPoolsByEnemy.Add(enemyPrefab.EnemyName, new ObjectPoolWithQueue<Enemy>(enemyPrefab, _enemiesContainer));
                 }
             }
         }
 
-        [ContextMenu("StartSpawnProcess")]
-        private async void StartSpawnProcess()
+        public async void StartSpawnProcess()
         {
             if (Application.isPlaying == false)
             {
@@ -90,7 +93,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                 return;
             }
 
-            CancelSpawn();
+            CancelSpawnProcess();
             _spawnCancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = _spawnCancellationTokenSource.Token;
 
@@ -106,6 +109,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             {
                 foreach (var enemysGroupSettings in _currentEnemiesInLevelSpawnSequence.EnemyGroupsSpawnSettings)
                 {
+                    // Await delay between spawn enemy groups
                     await UniTask.Delay(
                         Mathf.RoundToInt(enemysGroupSettings.SecondsDelayForSpawnAfterPreviousSpawn * 1000),
                         cancellationToken: cancellationToken);
@@ -116,17 +120,20 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                         {
                             cancellationToken.ThrowIfCancellationRequested();
 
+                            // Spawn enemy
                             Enemy spawnedEnemy = ObjectPoolsByEnemy[enemySpawnSettings.EnemyPrefab.EnemyName].GetObject();
                             spawnedEnemy.transform.position = _currentSpawnEnemiesPoint.position;
                             spawnedEnemy.Initialize(movingPositions);
 
                             EnemiesInLevel.Add(spawnedEnemy, new CompositeDisposable());
 
+                            // Subscribe to spawned enemy events
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
 
                             try
                             {
+                                // Await delay between spawn enemies
                                 await UniTask.Delay(
                                     Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
                                     cancellationToken: cancellationToken);
@@ -134,6 +141,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                             catch (OperationCanceledException)
                             {
                                 // Its normal
+                                _spawningProcessActive = false;
                                 return;
                             }
                         }
@@ -166,12 +174,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                 ObjectPoolsByEnemy[enemy.EnemyName].AddObject(enemy);
 
             if (_spawningProcessActive == false && EnemiesInLevel.Count == 0)
-            {
                 AllEnemiesDefeated?.OnNext(Unit.Default);
-            }
         }
 
-        private void CancelSpawn()
+        private void CancelSpawnProcess()
         {
             if (_spawnCancellationTokenSource == null)
                 return;
@@ -179,16 +185,6 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             _spawnCancellationTokenSource.Cancel();
             _spawnCancellationTokenSource.Dispose();
             _spawnCancellationTokenSource = null;
-
-            //for (int i = 0; i < EnemiesInLevel.Count; i++)
-            //{
-            //    if (EnemiesInLevel[i] != null)
-            //    {
-            //        OnEnemyDied(EnemiesInLevel[i]);
-            //        Destroy(EnemiesInLevel[i].gameObject);
-            //        i--;
-            //    }
-            //}
 
             List<Enemy> enemiesInLevel = new();
 
@@ -205,17 +201,13 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
                     EnemiesInLevel[enemy].Dispose();
                     EnemiesInLevel.Remove(enemy);
+
+                    if (ObjectPoolsByEnemy[enemy.EnemyName].ContainsObject(enemy) == false)
+                        ObjectPoolsByEnemy[enemy.EnemyName].AddObject(enemy);
                 }
             }
 
             EnemiesInLevel.Clear();
-        }
-
-        [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
-        {
-            _levelsCreator = levelsCreator;
-            _levelCompletionManagement = levelCompletionManagement;
         }
     }
 }

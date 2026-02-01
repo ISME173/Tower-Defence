@@ -1483,7 +1483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06f9e7c1dd36f94aa75f5ef108b3fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Castle.CastleBindingsModule
-  _enemysSpawner: {fileID: 1586735818}
   _castleHealthView: {fileID: 1262932436}
   _shakeSerializableSettings:
     _startValue: 0
@@ -1591,51 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b91ab1c7f67c14caaf5c11400c68f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.EnemiesManagement.EnemiesManagementBindingModule
-  _enemiesSpawner: {fileID: 1586735818}
---- !u!1 &1586735816
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1586735817}
-  - component: {fileID: 1586735818}
-  m_Layer: 0
-  m_Name: Enemys Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1586735817
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586735816}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1772137881}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1586735818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586735816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07573953c99abcf4bbae1d6cfecfb08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.EnemysMover
+  _enemiesInPoolContainer: {fileID: 0}
 --- !u!1 &1677888360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,7 +1697,6 @@ Transform:
   m_Children:
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1586735817}
   - {fileID: 1804363958}
   - {fileID: 720838214}
   - {fileID: 330585546}
@@ -1796,15 +1750,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 565078028}
   - {fileID: 1482966217}
-  - {fileID: 2060574963}
+  - {fileID: 565078028}
   - {fileID: 1285109656}
+  - {fileID: 2060574963}
   _readOnlyBindingModules:
-  - {fileID: 565078028}
   - {fileID: 1482966217}
-  - {fileID: 2060574963}
+  - {fileID: 565078028}
   - {fileID: 1285109656}
+  - {fileID: 2060574963}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0

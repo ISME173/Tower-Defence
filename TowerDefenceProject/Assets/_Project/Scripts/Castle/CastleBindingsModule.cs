@@ -11,7 +11,6 @@ namespace _Project.Scripts.Castle
     public class CastleBindingsModule : BindingModule
     {
         [Header("References")]
-        [SerializeField] private EnemiesSpawner _enemysSpawner;
         [SerializeField] private CastleHealthView _castleHealthView;
 
         [Header("Settings")]
@@ -37,9 +36,9 @@ namespace _Project.Scripts.Castle
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator)
+        private void Initialize(LevelsCreator levelsCreator, EnemiesSpawner enemiesSpawner)
         {
-            _castleHealthManagement.Initialize(_enemysSpawner, levelsCreator);
+            _castleHealthManagement.Initialize(enemiesSpawner, levelsCreator);
             _castleEffectsManagement.Initialize(levelsCreator);
         }
     }
