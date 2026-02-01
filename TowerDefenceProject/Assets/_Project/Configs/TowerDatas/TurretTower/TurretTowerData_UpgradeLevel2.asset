@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5745b7ee015c3b745bb33a8fd7e9a70e, type: 3}
-  m_Name: TurretTowerData
+  m_Name: TurretTowerData_UpgradeLevel2
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Turret.TurretTowerData
-  _attackDamage: 10
-  _delayBetweenAttacks: 0.5
+  _attackDamage: 15
+  _delayBetweenAttacks: 0.4
   _rotateWeaponToEnemySpeed: 5
-  _buildPrice: 10
+  _buildPrice: 20

@@ -31,7 +31,26 @@ namespace _Project.Scripts.Construction
 
         public bool CanBuildTower()
         {
-            return CurrentTower == null;
+            return _currentTower == null;
+        }
+
+        public void UpgradeCurrentTower()
+        {
+            if (_currentTower == null)
+            {
+                Debug.LogError("Tower is not placed!");
+                return;
+            }
+
+            if (_currentTower.CanUpgrade() == false)
+            {
+                Debug.LogWarning("Cannot upgrade current tower!");
+                return;
+            }
+
+            _mainView.SetActive(false);
+
+            _currentTower.Upgrade();
         }
 
         public void BuildTower(Tower towerPrefab)

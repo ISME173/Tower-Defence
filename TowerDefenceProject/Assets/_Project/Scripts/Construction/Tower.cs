@@ -16,15 +16,17 @@ namespace _Project.Scripts.Construction
         [SerializeField] private Trigger _attackZone;
 
         [Header("Settings")]
-        [SerializeField] private TowerData _towerData;
+        [SerializeField] private List<UpgradeLevelDatas> _upgradeLevelDatas;
 
+        private int _upgradeLevelIndex;
+        private TowerData _currentTowerData;
         private Enemy _targetEnemy;
         private float _attackDelayTimer;
 
         protected Enemy TargetEnemy => _targetEnemy;
-        protected TowerData TowerData => _towerData;
+        protected TowerData TowerData => _currentTowerData;
 
-        public int BuildPrice => _towerData.BuildPrice;
+        public int BuildPrice => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.BuildPrice;
 
         protected virtual void Update()
         {
@@ -33,7 +35,7 @@ namespace _Project.Scripts.Construction
 
             _attackDelayTimer += Time.deltaTime;
 
-            if (_attackDelayTimer >= _towerData.DelayBetweenAttacks)
+            if (_attackDelayTimer >= _currentTowerData.DelayBetweenAttacks)
             {
                 AttackEnemy(_targetEnemy);
                 _attackDelayTimer = 0;
@@ -42,16 +44,55 @@ namespace _Project.Scripts.Construction
 
         private void OnValidate()
         {
-            if (TowerData != null && TowerData.GetType() != GetTowerDataType())
+            for (int i = 0; i < _upgradeLevelDatas.Count; i++)
             {
-                Debug.LogError($"Incorrect tower settings! Needed type: {GetTowerDataType()}. Current type: {TowerData.GetType()}");
-                _towerData = null;
+                TowerData towerData = _upgradeLevelDatas[i].TowerData;
+
+                if (towerData != null && towerData.GetType() != GetTowerDataType())
+                {
+                    Debug.LogError($"Incorrect tower settings! Needed type: {GetTowerDataType()}. Current type: {TowerData.GetType()}");
+                    _upgradeLevelDatas.Clear();
+                    return;
+                }
+            }
+        }
+
+        public bool CanUpgrade()
+        {
+            return _upgradeLevelIndex + 1 < _upgradeLevelDatas.Count;
+        }
+
+        public int GetBuildPriceForNextLevel()
+        {
+            if (CanUpgrade() == false)
+            {
+                throw new Exception($"Tower '{gameObject.name}' already in last upgrade level!");
+            }
+
+            return _upgradeLevelDatas[_upgradeLevelIndex + 1].TowerData.BuildPrice;
+        }
+
+        public virtual void Upgrade()
+        {
+            if (CanUpgrade() == false)
+            {
+                Debug.LogWarning($"Tower '{gameObject.name}' already in last upgrade level!");
                 return;
             }
+
+            _upgradeLevelDatas[_upgradeLevelIndex].UpgradeTowerView.SetActive(false);
+            _upgradeLevelDatas[_upgradeLevelIndex + 1].UpgradeTowerView.SetActive(true);
+
+            _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex + 1].TowerData;
+
+            _upgradeLevelIndex++;
         }
 
         public virtual void Initialize()
         {
+            _upgradeLevelIndex = 0;
+            _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex].TowerData;
+
             _attackZone.OnTriggerEnterEvent += OnTriggerEnterInAttackZone;
             _attackZone.OnTrggerExitEvent += OnTriggerExitFromAttackZone;
         }
@@ -106,6 +147,19 @@ namespace _Project.Scripts.Construction
                 if (enemy == _targetEnemy)
                     _targetEnemy = EnemiesInAttackZone.FirstOrDefault().Key;
             }
+        }
+
+        [Serializable]
+        protected struct UpgradeLevelDatas
+        {
+            [SerializeField] private GameObject _upgradeTowerView;
+            [Space]
+            [SerializeField, Min(1)] private int _upgradeLevel;
+            [SerializeField] private TowerData _towerData;
+
+            public GameObject UpgradeTowerView => _upgradeTowerView;
+            public int UpgradeLevel => _upgradeLevel;
+            public TowerData TowerData => _towerData;
         }
     }
 }
