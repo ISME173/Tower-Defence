@@ -512,8 +512,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Building.TowerTypes.TurretTower
   _attackZone: {fileID: 8011934008601780315}
-  _attackDamage: 5
-  _delayBetweenAttacks: 1
-  _rotateWeaponToEnemySpeed: 1
-  _buildPrice: 10
+  _towerData: {fileID: 11400000, guid: 58f588e6340edcc489f447b2f6425cd6, type: 2}
   _turretRotateTransform: {fileID: 5900298020811517591}

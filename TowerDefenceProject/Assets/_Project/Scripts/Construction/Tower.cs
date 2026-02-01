@@ -16,20 +16,15 @@ namespace _Project.Scripts.Construction
         [SerializeField] private Trigger _attackZone;
 
         [Header("Settings")]
-        [SerializeField, Min(0)] private int _attackDamage;
-        [SerializeField, Min(0)] private float _delayBetweenAttacks;
-        [SerializeField, Min(0)] private float _rotateWeaponToEnemySpeed;
-        [Space]
-        [SerializeField, Min(0)] private int _buildPrice;
+        [SerializeField] private TowerData _towerData;
 
         private Enemy _targetEnemy;
         private float _attackDelayTimer;
 
         protected Enemy TargetEnemy => _targetEnemy;
-        protected int AttackDamage => _attackDamage;
-        protected float RotateWeaponToEnemySpeed => _rotateWeaponToEnemySpeed;
+        protected TowerData TowerData => _towerData;
 
-        public int BuildPrice => _buildPrice;
+        public int BuildPrice => _towerData.BuildPrice;
 
         protected virtual void Update()
         {
@@ -38,10 +33,20 @@ namespace _Project.Scripts.Construction
 
             _attackDelayTimer += Time.deltaTime;
 
-            if (_attackDelayTimer >= _delayBetweenAttacks)
+            if (_attackDelayTimer >= _towerData.DelayBetweenAttacks)
             {
                 AttackEnemy(_targetEnemy);
                 _attackDelayTimer = 0;
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (TowerData != null && TowerData.GetType() != GetTowerDataType())
+            {
+                Debug.LogError($"Incorrect tower settings! Needed type: {GetTowerDataType()}. Current type: {TowerData.GetType()}");
+                _towerData = null;
+                return;
             }
         }
 
@@ -57,6 +62,7 @@ namespace _Project.Scripts.Construction
             _attackZone.OnTrggerExitEvent -= OnTriggerExitFromAttackZone;
         }
 
+        protected abstract Type GetTowerDataType();
         protected abstract void AttackEnemy(Enemy enemy);
 
         private void OnTriggerEnterInAttackZone(Collider collider)

@@ -37,7 +37,7 @@ namespace _Project.Scripts.EnemiesManagement
         [Inject]
         private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
         {
-            _enemiesSpawner.Initialize(levelsCreator, levelCompletionManagement, _enemiesInPoolContainer);
+            _enemiesSpawner.Initialize(levelsCreator, levelCompletionManagement, _enemiesInPoolContainer ?? transform);
         }
     }
 }
