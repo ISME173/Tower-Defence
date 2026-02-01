@@ -48,6 +48,7 @@ namespace _Project.Scripts.EnemiesManagement
             _collider.isTrigger = true;
             _currentHealth = _maxHealth;
 
+            MovingPoints.Clear();
             MovingPoints.AddRange(movingPoints);
             _currentPointIndex = 0;
 

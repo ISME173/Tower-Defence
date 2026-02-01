@@ -13,7 +13,10 @@ namespace _Project.Scripts.LevelsManagement
         private CastleHealthManagement _castleHealthManagement;
         private EnemiesSpawner _enemysSpawner;
 
-        private readonly Subject<Unit> LevelCompleted, LevelFailed;
+        private readonly Subject<Unit> LevelCompleted = new(), LevelFailed = new();
+
+        public Observable<Unit> ReadOnlyLevelCompleted => LevelCompleted;
+        public Observable<Unit> ReadOnlyLevelFailed => LevelFailed;
 
         public void Initialize(CastleHealthManagement castleHealthManagement, EnemiesSpawner enemysSpawner)
         {
@@ -31,7 +34,7 @@ namespace _Project.Scripts.LevelsManagement
 
         private void OnAllEnemiesDefeated(Unit unit)
         {
-            Debug.Log("<color=greeb>Current level completed!</color>");
+            Debug.Log("<color=green>Current level completed!</color>");
             LevelCompleted?.OnNext(Unit.Default);
         }
 

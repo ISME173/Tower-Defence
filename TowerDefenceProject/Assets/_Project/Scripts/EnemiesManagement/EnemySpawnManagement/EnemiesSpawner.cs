@@ -16,6 +16,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         private readonly Dictionary<Enemy, CompositeDisposable> EnemiesInLevel = new();
         private readonly Dictionary<string, ObjectPoolWithQueue<Enemy>> ObjectPoolsByEnemy = new();
 
+        private LevelCompletionManagement _levelCompletionManagement;
         private Transform _currentSpawnEnemiesPoint;
         private LevelsCreator _levelsCreator;
         private CompositeDisposable _compositeDisposable = new();
@@ -34,6 +35,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         {
             _levelsCreator.LevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
+                .AddTo(_compositeDisposable);
+
+            _levelCompletionManagement.ReadOnlyLevelFailed
+                .Subscribe(_ => CancelSpawn())
                 .AddTo(_compositeDisposable);
         }
 
@@ -73,6 +78,18 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         [ContextMenu("StartSpawnProcess")]
         private async void StartSpawnProcess()
         {
+            if (Application.isPlaying == false)
+            {
+                Debug.LogWarning($"Cannot start process when application is not playing!");
+                return;
+            }
+
+            if (_spawningProcessActive)
+            {
+                Debug.LogWarning("Spawn process already activated!");
+                return;
+            }
+
             CancelSpawn();
             _spawnCancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = _spawnCancellationTokenSource.Token;
@@ -108,9 +125,17 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
 
-                            await UniTask.Delay(
-                                Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
-                                cancellationToken: cancellationToken);
+                            try
+                            {
+                                await UniTask.Delay(
+                                    Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
+                                    cancellationToken: cancellationToken);
+                            }
+                            catch (OperationCanceledException)
+                            {
+                                // Its normal
+                                return;
+                            }
                         }
                     }
                 }
@@ -187,9 +212,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
         {
             _levelsCreator = levelsCreator;
+            _levelCompletionManagement = levelCompletionManagement;
         }
     }
 }
