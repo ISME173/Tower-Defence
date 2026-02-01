@@ -1,5 +1,5 @@
 ﻿using _Project.Scripts.DI;
-using _Project.Scripts.Enemy.EnemySpawnManagement;
+using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.Utilities;
 using Reflex.Attributes;
@@ -11,7 +11,7 @@ namespace _Project.Scripts.Castle
     public class CastleBindingsModule : BindingModule
     {
         [Header("References")]
-        [SerializeField] private EnemysSpawner _enemysSpawner;
+        [SerializeField] private EnemiesSpawner _enemysSpawner;
         [SerializeField] private CastleHealthView _castleHealthView;
 
         [Header("Settings")]

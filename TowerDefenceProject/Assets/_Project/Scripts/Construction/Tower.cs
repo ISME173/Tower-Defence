@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Utilities;
+﻿using _Project.Scripts.EnemiesManagement;
+using _Project.Scripts.Utilities;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace _Project.Scripts.Construction
 {
     public abstract class Tower : MonoBehaviour
     {
-        private readonly Dictionary<Enemy.Enemy, IDisposable> EnemiesInAttackZone = new();
+        private readonly Dictionary<Enemy, IDisposable> EnemiesInAttackZone = new();
 
         [Header("References")]
         [SerializeField] private Trigger _attackZone;
@@ -19,10 +20,10 @@ namespace _Project.Scripts.Construction
         [SerializeField, Min(0)] private float _delayBetweenAttacks;
         [SerializeField, Min(0)] private float _rotateWeaponToEnemySpeed;
 
-        private Enemy.Enemy _targetEnemy;
+        private Enemy _targetEnemy;
         private float _attackDelayTimer;
 
-        protected Enemy.Enemy TargetEnemy => _targetEnemy;
+        protected Enemy TargetEnemy => _targetEnemy;
         protected int AttackDamage => _attackDamage;
         protected float RotateWeaponToEnemySpeed => _rotateWeaponToEnemySpeed;
 
@@ -52,11 +53,11 @@ namespace _Project.Scripts.Construction
             _attackZone.OnTrggerExitEvent -= OnTriggerExitFromAttackZone;
         }
 
-        protected abstract void AttackEnemy(Enemy.Enemy enemy);
+        protected abstract void AttackEnemy(Enemy enemy);
 
         private void OnTriggerEnterInAttackZone(Collider collider)
         {
-            if (collider.TryGetComponent(out Enemy.Enemy enemy))
+            if (collider.TryGetComponent(out Enemy enemy))
             {
                 if (EnemiesInAttackZone.ContainsKey(enemy) == false && enemy.Alive)
                 {
@@ -73,7 +74,7 @@ namespace _Project.Scripts.Construction
 
         private void OnTriggerExitFromAttackZone(Collider collider)
         {
-            if (collider.TryGetComponent(out Enemy.Enemy enemy))
+            if (collider.TryGetComponent(out Enemy enemy))
             {
                 if (EnemiesInAttackZone.ContainsKey(enemy))
                 {
@@ -86,7 +87,7 @@ namespace _Project.Scripts.Construction
             }
         }
 
-        private void OnDiedEnemy(Enemy.Enemy enemy)
+        private void OnDiedEnemy(Enemy enemy)
         {
             if (EnemiesInAttackZone.ContainsKey(enemy))
             {

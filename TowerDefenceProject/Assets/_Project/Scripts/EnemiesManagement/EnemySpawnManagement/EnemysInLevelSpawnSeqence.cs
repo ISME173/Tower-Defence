@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Scripts.Enemy.EnemySpawnManagement
+namespace _Project.Scripts.EnemiesManagement.Spawn
 {
     [CreateAssetMenu(fileName = "EnemyGroupSpawnSettings", menuName = "EnemySpawnManagement/EnemyGroupSpawnSettings")]
     public class EnemysInLevelSpawnSeqence : ScriptableObject

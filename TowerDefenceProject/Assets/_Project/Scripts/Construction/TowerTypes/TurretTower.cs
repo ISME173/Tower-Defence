@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.EnemiesManagement;
+using UnityEngine;
 
 namespace _Project.Scripts.Construction.TowerTypes
 {
@@ -15,7 +16,7 @@ namespace _Project.Scripts.Construction.TowerTypes
                 RotateTurretToTarget(TargetEnemy.Transform);
         }
 
-        protected override void AttackEnemy(Enemy.Enemy enemy)
+        protected override void AttackEnemy(Enemy enemy)
         {
             enemy.TakeDamage(AttackDamage);
         }

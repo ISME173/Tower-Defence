@@ -9,9 +9,9 @@ using System.Linq;
 using System.Threading;
 using UnityEngine;
 
-namespace _Project.Scripts.Enemy.EnemySpawnManagement
+namespace _Project.Scripts.EnemiesManagement.Spawn
 {
-    public class EnemysSpawner : MonoBehaviour
+    public class EnemiesSpawner : MonoBehaviour
     {
         private readonly Dictionary<Enemy, CompositeDisposable> EnemiesInLevel = new();
         private readonly Dictionary<string, ObjectPoolWithQueue<Enemy>> ObjectPoolsByEnemy = new();
@@ -22,8 +22,13 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
         private List<Transform> _currentMovingPoints;
         private EnemysInLevelSpawnSeqence _currentEnemiesInLevelSpawnSequence;
         private CancellationTokenSource _spawnCancellationTokenSource;
+        private bool _spawningProcessActive = false;
 
-        public readonly Subject<Enemy> EnemyMovedToLastPoint = new();
+        private readonly Subject<Enemy> EnemyMovedToLastPoint = new();
+        private readonly Subject<Unit> AllEnemiesDefeated = new();
+
+        public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
+        public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
 
         private void OnEnable()
         {
@@ -78,6 +83,8 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             for (int i = 0; i < movingPositions.Length; i++)
                 movingPositions[i] = _currentMovingPoints[i].position;
 
+            _spawningProcessActive = true;
+
             try
             {
                 foreach (var enemysGroupSettings in _currentEnemiesInLevelSpawnSequence.EnemyGroupsSpawnSettings)
@@ -112,6 +119,8 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
             {
                 Debug.LogException(ex);
             }
+
+            _spawningProcessActive = false;
         }
 
         private void OnEnemyMovedToLastPoint(Enemy enemy)
@@ -130,6 +139,11 @@ namespace _Project.Scripts.Enemy.EnemySpawnManagement
 
             if (ObjectPoolsByEnemy[enemy.EnemyName].ContainsObject(enemy) == false)
                 ObjectPoolsByEnemy[enemy.EnemyName].AddObject(enemy);
+
+            if (_spawningProcessActive == false && EnemiesInLevel.Count == 0)
+            {
+                AllEnemiesDefeated?.OnNext(Unit.Default);
+            }
         }
 
         private void CancelSpawn()

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Scripts.Enemy
+namespace _Project.Scripts.EnemiesManagement
 {
     [RequireComponent(typeof(Collider), typeof(Animator))]
     public class Enemy : MonoBehaviour, IDisposable

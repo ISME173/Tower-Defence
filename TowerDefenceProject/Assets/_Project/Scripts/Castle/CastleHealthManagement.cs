@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Enemy.EnemySpawnManagement;
+﻿using _Project.Scripts.EnemiesManagement;
+using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.LevelsManagement;
 using R3;
 using System;
@@ -9,7 +10,7 @@ namespace _Project.Scripts.Castle
     {
         private readonly CompositeDisposable Disposables = new();
 
-        private EnemysSpawner _enemysSpawner;
+        private EnemiesSpawner _enemysSpawner;
         private LevelsCreator _levelsCreator;
         private int _maxHealth;
 
@@ -22,13 +23,13 @@ namespace _Project.Scripts.Castle
         public ReadOnlyReactiveProperty<int> ReadOnlyCurrentHealth => CurrentHealth;
         public int MaxHealth => _maxHealth;
 
-        public void Initialize(EnemysSpawner enemysSpawner, LevelsCreator levelsCreator)
+        public void Initialize(EnemiesSpawner enemysSpawner, LevelsCreator levelsCreator)
         {
             _enemysSpawner = enemysSpawner;
             _levelsCreator = levelsCreator;
 
             Disposables.Add(_levelsCreator.LevelCreated.Subscribe(OnLevelCreated));
-            Disposables.Add(_enemysSpawner.EnemyMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
+            Disposables.Add(_enemysSpawner.ReadOnlyEnemyMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
         }
 
         public void Dispose()
@@ -43,7 +44,7 @@ namespace _Project.Scripts.Castle
             CurrentHealth.Value = _maxHealth;
         }
 
-        private void OnEnemyMovedToLastPoint(Enemy.Enemy enemy)
+        private void OnEnemyMovedToLastPoint(Enemy enemy)
         {
             if (CurrentHealth.CurrentValue == 0)
                 return;
