@@ -16,7 +16,9 @@ namespace _Project.Scripts.LevelsManagement
         [Header("Settings")]
         [SerializeField, Min(1)] private int _levelNumber;
         [SerializeField, Min(0)] private int _maxLevelHealth;
+        [SerializeField, Min(0)] private int _initialAmountOfMoney;
 
+        public int InitialAmountOfMoney => _initialAmountOfMoney;
         public GameObject CastleView => _castleView;
         public int MaxLevelHealth => _maxLevelHealth;
         public int LevelNumber => _levelNumber;

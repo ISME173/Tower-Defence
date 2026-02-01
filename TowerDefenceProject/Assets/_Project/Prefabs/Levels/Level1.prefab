@@ -402,6 +402,7 @@ MonoBehaviour:
   _castleView: {fileID: 3504092284745765774}
   _levelNumber: 1
   _maxLevelHealth: 5
+  _initialAmountOfMoney: 30
 --- !u!1001 &603688809460245710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1774,7 +1775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b9264c372956b34795c6a156fc0200f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.945551
+      value: 10.8484745
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b9264c372956b34795c6a156fc0200f, type: 3}
       propertyPath: m_LocalRotation.w

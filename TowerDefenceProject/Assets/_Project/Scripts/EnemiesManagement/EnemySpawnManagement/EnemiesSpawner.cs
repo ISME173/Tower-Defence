@@ -28,9 +28,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         private bool _spawningProcessActive = false;
 
         // R3 events
-        private readonly Subject<Enemy> EnemyMovedToLastPoint = new();
+        private readonly Subject<Enemy> EnemyMovedToLastPoint = new(), EnemyDied = new();
         private readonly Subject<Unit> AllEnemiesDefeated = new();
 
+        public Observable<Enemy> ReadOnlyEnemyDied => EnemyDied;
         public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
         public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
 
@@ -169,6 +170,8 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
             EnemiesInLevel[enemy].Dispose();
             EnemiesInLevel.Remove(enemy);
+
+            EnemyDied?.OnNext(enemy);
 
             if (ObjectPoolsByEnemy[enemy.EnemyName].ContainsObject(enemy) == false)
                 ObjectPoolsByEnemy[enemy.EnemyName].AddObject(enemy);

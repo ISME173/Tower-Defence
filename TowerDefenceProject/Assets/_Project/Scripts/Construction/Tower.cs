@@ -19,6 +19,8 @@ namespace _Project.Scripts.Construction
         [SerializeField, Min(0)] private int _attackDamage;
         [SerializeField, Min(0)] private float _delayBetweenAttacks;
         [SerializeField, Min(0)] private float _rotateWeaponToEnemySpeed;
+        [Space]
+        [SerializeField, Min(0)] private int _buildPrice;
 
         private Enemy _targetEnemy;
         private float _attackDelayTimer;
@@ -26,6 +28,8 @@ namespace _Project.Scripts.Construction
         protected Enemy TargetEnemy => _targetEnemy;
         protected int AttackDamage => _attackDamage;
         protected float RotateWeaponToEnemySpeed => _rotateWeaponToEnemySpeed;
+
+        public int BuildPrice => _buildPrice;
 
         protected virtual void Update()
         {

@@ -1,5 +1,7 @@
 ﻿using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
+using _Project.Scripts.MoneySystem;
+using Reflex.Attributes;
 using Reflex.Core;
 using UnityEngine;
 
@@ -28,6 +30,12 @@ namespace _Project.Scripts.Construction
 
             containerBuilder.RegisterValue(_constructionController);
             containerBuilder.RegisterValue(_constructionView);
+        }
+
+        [Inject]
+        private void Initialize(MoneyManagement moneyManagement)
+        {
+            _constructionController.Initialize(moneyManagement);
         }
     }
 }

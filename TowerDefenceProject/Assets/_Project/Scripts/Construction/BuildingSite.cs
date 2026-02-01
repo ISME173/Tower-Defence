@@ -29,10 +29,18 @@ namespace _Project.Scripts.Construction
             _selectView.SetActive(false);
         }
 
-        public bool TryBuildTower(Tower towerPrefab)
+        public bool CanBuildTower()
         {
-            if (CurrentTower != null)
-                return false;
+            return CurrentTower == null;
+        }
+
+        public void BuildTower(Tower towerPrefab)
+        {
+            if (CanBuildTower() == false)
+            {
+                Debug.LogError($"You can't build a tower!");
+                return;
+            }
 
             _mainView.SetActive(false);
 
@@ -41,8 +49,6 @@ namespace _Project.Scripts.Construction
 
             newTower.transform.SetParent(transform);
             newTower.transform.localPosition = Vector3.zero;
-
-            return true;
         }
 
         public bool TryRemoveCurrentTower()

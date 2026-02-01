@@ -515,4 +515,5 @@ MonoBehaviour:
   _attackDamage: 5
   _delayBetweenAttacks: 1
   _rotateWeaponToEnemySpeed: 1
+  _buildPrice: 10
   _turretRotateTransform: {fileID: 5900298020811517591}

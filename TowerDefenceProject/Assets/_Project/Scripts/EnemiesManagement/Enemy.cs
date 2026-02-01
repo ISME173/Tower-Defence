@@ -14,9 +14,12 @@ namespace _Project.Scripts.EnemiesManagement
 
         [Header("Base enemy settings")]
         [SerializeField] private string _enemyName;
+        [Space]
         [SerializeField, Min(0)] private int _maxHealth;
         [SerializeField, Min(0)] private float _movingSpeed;
         [SerializeField, Min(0)] private int _attackDamage;
+        [Space]
+        [SerializeField, Min(0)] private int _moneyForMurder;
 
         [Header("Base enemy animation states")]
         [SerializeField] private string _isWalkingStateName;
@@ -35,6 +38,7 @@ namespace _Project.Scripts.EnemiesManagement
 
         protected event Action OnMovedEvent;
 
+        public int MoneyForMurder => _moneyForMurder;
         public string EnemyName => _enemyName;
         public Transform Transform => _transform ?? transform;
         public int AttackDamage => _attackDamage;

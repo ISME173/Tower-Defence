@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.CameraControll;
+using _Project.Scripts.MoneySystem;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,11 +14,11 @@ namespace _Project.Scripts.Construction
 
         private ConstructionControllerParameters _constructionControllerParameters;
         private BuildingSite _selectedBuildingSite;
+        private DeferredClickProcessor _deferredClickProcessor;
+        private MoneyManagement _moneyManagement;
 
         private InputAction _pointerPositionAction;
         private InputAction _pointerPressAction;
-
-        private readonly DeferredClickProcessor _deferredClickProcessor;
 
         public ConstructionController(ConstructionView constructionView, CameraMoving cameraMoving, ConstructionControllerParameters constructionControllerParameters)
         {
@@ -44,6 +45,11 @@ namespace _Project.Scripts.Construction
             _pointerPressAction.Enable();
 
             _deferredClickProcessor = CreateDeferredClickProcessor();
+        }
+
+        public void Initialize(MoneyManagement moneyManagement)
+        {
+            _moneyManagement = moneyManagement;
         }
 
         public void Dispose()
@@ -116,8 +122,10 @@ namespace _Project.Scripts.Construction
             if (_selectedBuildingSite == null)
                 return;
 
-            if (_selectedBuildingSite.TryBuildTower(towerPrefab))
+            if (_selectedBuildingSite.CanBuildTower() && _moneyManagement.TryGetMoneyForBuildTower(towerPrefab))
             {
+                _selectedBuildingSite.BuildTower(towerPrefab);
+
                 ConstructionView.HideSelectView();
                 CameraMoving.UnlockMoving();
             }
