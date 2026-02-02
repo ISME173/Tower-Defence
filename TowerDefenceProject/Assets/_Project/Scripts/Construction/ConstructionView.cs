@@ -7,6 +7,8 @@ namespace _Project.Scripts.Construction
 {
     public class ConstructionView : MonoBehaviour, IDisposable
     {
+        private readonly Dictionary<TowerSlotUI, Tower> TowerSlotUIsWithTowerPrefabs = new();
+
         [Header("References")]
         [SerializeField] private GameObject _selectTowerView;
         [Space]
@@ -19,15 +21,58 @@ namespace _Project.Scripts.Construction
         public void Dispose()
         {
             for (int i = 0; i < _towerSlotUIs.Count; i++)
-                _towerSlotUIs[i].OnBuildTowerButtonClick -= OnBuildTowerButtonClicked;
+                _towerSlotUIs[i].BuildTowerButton.onClick.RemoveAllListeners();
         }
 
-        public void Initialize()
+        public void Initialize(ICollection<Tower> towerPrefabs)
         {
-            for (int i = 0; i < _towerSlotUIs.Count; i++)
+            if (towerPrefabs.Count > _towerSlotUIs.Count)
             {
-                _towerSlotUIs[i].Initialize();
-                _towerSlotUIs[i].OnBuildTowerButtonClick += OnBuildTowerButtonClicked;
+                Debug.LogError("Tower prefabs count > tower slot UIs count");
+                return;
+            }
+
+            TowerSlotUIsWithTowerPrefabs.Clear();
+
+            for (int i = 0; i < _towerSlotUIs.Count; i++)
+                _towerSlotUIs[i].gameObject.SetActive(false);
+
+            int currentTowerSlotUiIndex = 0;
+            foreach (var towerPrefab in towerPrefabs)
+            {
+                TowerSlotUI towerSlotUI = _towerSlotUIs[currentTowerSlotUiIndex];
+                towerSlotUI.UpdateView(towerPrefab.TowerIconSprite, towerPrefab.BuildPrice);
+                towerSlotUI.gameObject.SetActive(true);
+
+                towerSlotUI.BuildTowerButton.onClick.AddListener(() =>
+                {
+                    OnBuildTowerButtonClickedEvent?.Invoke(towerPrefab);
+                });
+
+                TowerSlotUIsWithTowerPrefabs.Add(towerSlotUI, towerPrefab);
+                currentTowerSlotUiIndex++;
+            }
+        }
+
+        public void UpdateTowerUiViews(ICollection<Tower> towerPrefabs)
+        {
+            if (towerPrefabs.Count > _towerSlotUIs.Count)
+            {
+                Debug.LogError("Tower prefabs count > tower slot UIs count");
+                return;
+            }
+
+            for (int i = 0; i < _towerSlotUIs.Count; i++)
+                _towerSlotUIs[i].gameObject.SetActive(false);
+
+            int currentTowerSlotUiIndex = 0;
+            foreach (var towerPrefab in towerPrefabs)
+            {
+                TowerSlotUI towerSlotUI = _towerSlotUIs[currentTowerSlotUiIndex];
+                towerSlotUI.UpdateView(towerPrefab.GetTowerIconForNextLevel(), towerPrefab.GetBuildPriceForNextLevel());
+                towerSlotUI.gameObject.SetActive(true);
+
+                currentTowerSlotUiIndex++;
             }
         }
 
@@ -48,11 +93,6 @@ namespace _Project.Scripts.Construction
         {
             _selectTowerView.SetActive(false);
             IsShowedSelectView = false;
-        }
-
-        private void OnBuildTowerButtonClicked(Tower tower)
-        {
-            OnBuildTowerButtonClickedEvent?.Invoke(tower);
         }
     }
 }

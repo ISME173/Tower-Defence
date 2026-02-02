@@ -59,6 +59,28 @@ namespace _Project.Scripts.MoneySystem
             return false;
         }
 
+        public bool TryGetMoneyForUpgradeTower(Tower towerPrefab)
+        {
+            if (towerPrefab == null)
+                return false;
+
+            int towerBuildPrice = towerPrefab.GetBuildPriceForNextLevel();
+
+            if (towerBuildPrice < 0)
+            {
+                Debug.LogError($"Tower '{towerPrefab.gameObject.name}' build price < 0: {towerBuildPrice}");
+                return false;
+            }
+
+            if (CurrentAmountOfMoney.CurrentValue >= towerBuildPrice)
+            {
+                CurrentAmountOfMoney.Value -= towerBuildPrice;
+                return true;
+            }
+
+            return false;
+        }
+
         private void OnLevelCreated(LevelObject levelObject)
         {
             CurrentAmountOfMoney.Value = levelObject.InitialAmountOfMoney;

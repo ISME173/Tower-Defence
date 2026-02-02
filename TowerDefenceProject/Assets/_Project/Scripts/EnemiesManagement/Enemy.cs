@@ -70,9 +70,14 @@ namespace _Project.Scripts.EnemiesManagement
 
         public virtual void TakeDamage(int damage)
         {
-            float finalDamage = Math.Clamp(damage, 0, _currentHealth);
+            if (_currentHealth == 0)
+                return;
 
-            _currentHealth -= damage;
+            int finalDamage = Math.Clamp(damage, 0, _currentHealth);
+
+            Debug.Log($"Enemy {gameObject.name} damage taken: {finalDamage}");
+
+            _currentHealth -= finalDamage;
 
             if (_currentHealth == 0)
                 Died();

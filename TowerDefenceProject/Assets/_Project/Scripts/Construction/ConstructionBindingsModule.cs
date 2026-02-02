@@ -23,7 +23,6 @@ namespace _Project.Scripts.Construction
 
         public override void Bind(ContainerBuilder containerBuilder)
         {
-            _constructionView.Initialize();
             _constructionController = new ConstructionController(_constructionView, _cameraMoving, _constructionControllerParameters);
 
             //containerBuilder.AddSingleton(_constructionView);

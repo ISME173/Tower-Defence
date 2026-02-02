@@ -14,6 +14,7 @@ namespace _Project.Scripts.Construction
 
         [Header("References")]
         [SerializeField] private Trigger _attackZone;
+        [SerializeField] private Sprite _towerIconSprite;
 
         [Header("Settings")]
         [SerializeField] private List<UpgradeLevelDatas> _upgradeLevelDatas;
@@ -27,6 +28,7 @@ namespace _Project.Scripts.Construction
         protected TowerData TowerData => _currentTowerData;
 
         public int BuildPrice => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.BuildPrice;
+        public Sprite TowerIconSprite => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.TowerIconSprite;
 
         protected virtual void Update()
         {
@@ -70,6 +72,16 @@ namespace _Project.Scripts.Construction
             }
 
             return _upgradeLevelDatas[_upgradeLevelIndex + 1].TowerData.BuildPrice;
+        }
+
+        public Sprite GetTowerIconForNextLevel()
+        {
+            if (CanUpgrade() == false)
+            {
+                throw new Exception($"Tower '{gameObject.name}' already in last upgrade level!");
+            }
+
+            return _upgradeLevelDatas[_upgradeLevelIndex + 1].TowerData.TowerIconSprite;
         }
 
         public virtual void Upgrade()

@@ -1,25 +1,21 @@
-﻿using System;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Project.Scripts.Construction
 {
-    [RequireComponent(typeof(Button))]
     public class TowerSlotUI : MonoBehaviour
     {
-        [SerializeField] private Tower _towerPrefab;
+        [SerializeField] private Image _towerIcon;
+        [SerializeField] private TextMeshProUGUI _towerBuildPriceText;
+        [SerializeField] private Button _buildTowerButton;
 
-        private Button _button;
+        public Button BuildTowerButton => _buildTowerButton;
 
-        public event Action<Tower> OnBuildTowerButtonClick;
-
-        public Tower TowerPrefab => _towerPrefab;
-
-        public void Initialize()
+        public void UpdateView(Sprite towerIcon, int towerBuildPrice)
         {
-            _button = GetComponent<Button>();
-
-            _button.onClick.AddListener(() => OnBuildTowerButtonClick?.Invoke(_towerPrefab));
+            _towerIcon.sprite = towerIcon;
+            _towerBuildPriceText.text = towerBuildPrice.ToString();
         }
     }
 }

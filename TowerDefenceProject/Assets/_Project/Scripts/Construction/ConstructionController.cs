@@ -1,6 +1,8 @@
 ﻿using _Project.Scripts.CameraControll;
 using _Project.Scripts.MoneySystem;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -24,6 +26,8 @@ namespace _Project.Scripts.Construction
         {
             ConstructionView = constructionView;
             CameraMoving = cameraMoving;
+
+            ConstructionView.Initialize(constructionControllerParameters.TowerPrefabs);
 
             ConstructionView.OnBuildTowerButtonClickedEvent += OnBuildTowerButtonClicked;
 
@@ -88,14 +92,22 @@ namespace _Project.Scripts.Construction
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, _constructionControllerParameters.MaxRaycastMaxDistance, _constructionControllerParameters.TargetLayerMask))
             {
-                if (hit.collider != null && hit.collider.TryGetComponent(out BuildingSite buildingSite))
+                if (hit.collider != null)
                 {
-                    _selectedBuildingSite = buildingSite;
+                    BuildingSite buildingSite = hit.collider.GetComponent<BuildingSite>() ?? hit.collider.GetComponentInParent<BuildingSite>();
 
-                    ConstructionView.ShowSelectView();
-                    CameraMoving.LockMoving();
+                    if (buildingSite != null)
+                    {
+                        _selectedBuildingSite = buildingSite;
 
-                    return;
+                        if (buildingSite.CanUpgradeCurrentTower())
+                            ConstructionView.UpdateTowerUiViews(_constructionControllerParameters.TowerPrefabs);
+                        
+                        ConstructionView.ShowSelectView();
+                        CameraMoving.LockMoving();
+
+                        return;
+                    }
                 }
             }
 
@@ -125,6 +137,13 @@ namespace _Project.Scripts.Construction
             if (_selectedBuildingSite.CanBuildTower() && _moneyManagement.TryGetMoneyForBuildTower(towerPrefab))
             {
                 _selectedBuildingSite.BuildTower(towerPrefab);
+
+                ConstructionView.HideSelectView();
+                CameraMoving.UnlockMoving();
+            }
+            else if (_selectedBuildingSite.CanUpgradeCurrentTower() && _moneyManagement.TryGetMoneyForUpgradeTower(towerPrefab))
+            {
+                _selectedBuildingSite.UpgradeCurrentTower();
 
                 ConstructionView.HideSelectView();
                 CameraMoving.UnlockMoving();
@@ -172,7 +191,10 @@ namespace _Project.Scripts.Construction
         {
             [SerializeField, Min(0)] private float _raycastMaxDistance;
             [SerializeField] private LayerMask _targetLayerMask;
+            [Space]
+            [SerializeField] private List<Tower> _towerPrefabs;
 
+            public ICollection<Tower> TowerPrefabs => _towerPrefabs;
             public float MaxRaycastMaxDistance => _raycastMaxDistance;
             public LayerMask TargetLayerMask => _targetLayerMask;
         }

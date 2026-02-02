@@ -34,6 +34,14 @@ namespace _Project.Scripts.Construction
             return _currentTower == null;
         }
 
+        public bool CanUpgradeCurrentTower()
+        {
+            if (_currentTower == null)
+                return false;
+
+            return _currentTower.CanUpgrade();
+        }
+
         public void UpgradeCurrentTower()
         {
             if (_currentTower == null)
@@ -68,6 +76,8 @@ namespace _Project.Scripts.Construction
 
             newTower.transform.SetParent(transform);
             newTower.transform.localPosition = Vector3.zero;
+
+            _currentTower = newTower;
         }
 
         public bool TryRemoveCurrentTower()
@@ -77,6 +87,7 @@ namespace _Project.Scripts.Construction
 
             _currentTower.Deinitialize();
             GameObject.Destroy(_currentTower.gameObject);
+            _currentTower = null;
 
             _mainView.SetActive(true);
 
