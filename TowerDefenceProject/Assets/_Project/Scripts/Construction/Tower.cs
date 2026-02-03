@@ -43,7 +43,8 @@ namespace _Project.Scripts.Construction
                 _attackDelayTimer = 0;
             }
 
-            RotateWeaponToTarget(_targetEnemy.Transform);
+            if (_targetEnemy != null)
+                RotateWeaponToTarget(_targetEnemy.Transform);
         }
 
         private void OnValidate()
