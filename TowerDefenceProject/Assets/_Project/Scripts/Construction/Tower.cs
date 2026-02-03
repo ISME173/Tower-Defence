@@ -32,7 +32,7 @@ namespace _Project.Scripts.Construction
 
         protected virtual void Update()
         {
-            if (_targetEnemy == null)
+            if (_targetEnemy == null || _targetEnemy.Transform == null)
                 return;
 
             _attackDelayTimer += Time.deltaTime;
@@ -42,6 +42,8 @@ namespace _Project.Scripts.Construction
                 AttackEnemy(_targetEnemy);
                 _attackDelayTimer = 0;
             }
+
+            RotateWeaponToTarget(_targetEnemy.Transform);
         }
 
         private void OnValidate()
@@ -52,7 +54,7 @@ namespace _Project.Scripts.Construction
 
                 if (towerData != null && towerData.GetType() != GetTowerDataType())
                 {
-                    Debug.LogError($"Incorrect tower settings! Needed type: {GetTowerDataType()}. Current type: {TowerData.GetType()}");
+                    Debug.LogError($"Incorrect tower settings! Needed type: {GetTowerDataType()}. Current type: {towerData.GetType()}");
                     _upgradeLevelDatas.Clear();
                     return;
                 }
@@ -105,6 +107,11 @@ namespace _Project.Scripts.Construction
             _upgradeLevelIndex = 0;
             _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex].TowerData;
 
+            if (TowerData.GetType() != GetTowerDataType())
+            {
+                Debug.LogError($"Invalid tower data type: {TowerData.GetType()}. Needed type: {GetTowerDataType()}");
+            }
+
             _attackZone.OnTriggerEnterEvent += OnTriggerEnterInAttackZone;
             _attackZone.OnTrggerExitEvent += OnTriggerExitFromAttackZone;
         }
@@ -117,6 +124,7 @@ namespace _Project.Scripts.Construction
 
         protected abstract Type GetTowerDataType();
         protected abstract void AttackEnemy(Enemy enemy);
+        protected abstract void RotateWeaponToTarget(Transform targetTransform);
 
         private void OnTriggerEnterInAttackZone(Collider collider)
         {

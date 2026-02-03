@@ -11,24 +11,11 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
 
         private TurretTowerData _turretTowerData;
 
-        protected override void Update()
-        {
-            base.Update();
-
-            if (TargetEnemy != null)
-                RotateTurretToTarget(TargetEnemy.Transform);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
             _turretTowerData = TowerData as TurretTowerData;
-
-            if (_turretTowerData == null)
-            {
-                Debug.LogError($"Invalid tower data type: {TowerData.GetType()}. Needed type: {GetTowerDataType()}");
-            }
         }
 
         protected override void AttackEnemy(Enemy enemy)
@@ -41,9 +28,9 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
             return typeof(TurretTowerData);
         }
 
-        private void RotateTurretToTarget(Transform target)
+        protected override void RotateWeaponToTarget(Transform targetTransform)
         {
-            _turretRotateTransform.LookAt(target);
+            _turretRotateTransform.LookAt(targetTransform);
         }
     }
 }

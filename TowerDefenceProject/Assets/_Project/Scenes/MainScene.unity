@@ -1481,9 +1481,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300042, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1694,9 +1694,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300040, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1796,15 +1796,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2108613273}
   - {fileID: 1482966217}
   - {fileID: 565078028}
+  - {fileID: 2108613273}
   - {fileID: 1285109656}
   - {fileID: 2060574963}
   _readOnlyBindingModules:
-  - {fileID: 2108613273}
   - {fileID: 1482966217}
   - {fileID: 565078028}
+  - {fileID: 2108613273}
   - {fileID: 1285109656}
   - {fileID: 2060574963}
 --- !u!114 &1804363960
@@ -2021,6 +2021,8 @@ MonoBehaviour:
       m_Bits: 128
     _towerPrefabs:
     - {fileID: 8413731694476568919, guid: d72875ec2a66709439ca3d1b9924ecf0, type: 3}
+    - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
+    - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
 --- !u!1 &2108613271
 GameObject:
   m_ObjectHideFlags: 0
