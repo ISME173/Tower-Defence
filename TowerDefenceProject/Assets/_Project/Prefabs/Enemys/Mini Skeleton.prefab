@@ -1472,8 +1472,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.Enemy
   _enemyName: Skeleton
-  _maxHealth: 50
-  _movingSpeed: 1
+  _maxHealth: 100
+  _movingSpeed: 0.8
   _attackDamage: 1
   _moneyForMurder: 5
   _isWalkingStateName: IsWalk

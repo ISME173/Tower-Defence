@@ -1,7 +1,9 @@
-﻿using System;
+﻿using R3;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.Construction
 {
@@ -10,23 +12,33 @@ namespace _Project.Scripts.Construction
         private readonly Dictionary<TowerSlotUI, Tower> TowerSlotUIsWithTowerPrefabs = new();
 
         [Header("References")]
-        [SerializeField] private GameObject _selectTowerView;
+        [SerializeField] private GameObject _buildTowerView;
+        [SerializeField] private List<TowerSlotUI> _towerSlotsInBuildTowerView;
         [Space]
-        [SerializeField] private List<TowerSlotUI> _towerSlotUIs;
+        [SerializeField] private GameObject _upgradeTowerView;
+        [SerializeField] private TowerSlotUI _upgradeTowerSlot;
+        [Space]
+        [SerializeField] private Button _destroyTowerButtom;
 
         public event Action<Tower> OnBuildTowerButtonClickedEvent;
+
+        private readonly Subject<Unit> OnUpgradeCurrentTowerButtonClicked = new();
+
+        public Observable<Unit> ReadOnlyOnUpgradeCurrentTowerButtonClicked => OnUpgradeCurrentTowerButtonClicked;
 
         public bool IsShowedSelectView { get; private set; } = false;
 
         public void Dispose()
         {
-            for (int i = 0; i < _towerSlotUIs.Count; i++)
-                _towerSlotUIs[i].BuildTowerButton.onClick.RemoveAllListeners();
+            for (int i = 0; i < _towerSlotsInBuildTowerView.Count; i++)
+                _towerSlotsInBuildTowerView[i].BuildTowerButton.onClick.RemoveAllListeners();
+
+            _upgradeTowerSlot.BuildTowerButton.onClick.RemoveAllListeners();
         }
 
         public void Initialize(ICollection<Tower> towerPrefabs)
         {
-            if (towerPrefabs.Count > _towerSlotUIs.Count)
+            if (towerPrefabs.Count > _towerSlotsInBuildTowerView.Count)
             {
                 Debug.LogError("Tower prefabs count > tower slot UIs count");
                 return;
@@ -34,13 +46,13 @@ namespace _Project.Scripts.Construction
 
             TowerSlotUIsWithTowerPrefabs.Clear();
 
-            for (int i = 0; i < _towerSlotUIs.Count; i++)
-                _towerSlotUIs[i].gameObject.SetActive(false);
+            for (int i = 0; i < _towerSlotsInBuildTowerView.Count; i++)
+                _towerSlotsInBuildTowerView[i].gameObject.SetActive(false);
 
             int currentTowerSlotUiIndex = 0;
             foreach (var towerPrefab in towerPrefabs)
             {
-                TowerSlotUI towerSlotUI = _towerSlotUIs[currentTowerSlotUiIndex];
+                TowerSlotUI towerSlotUI = _towerSlotsInBuildTowerView[currentTowerSlotUiIndex];
                 towerSlotUI.UpdateView(towerPrefab.TowerIconSprite, towerPrefab.BuildPrice);
                 towerSlotUI.gameObject.SetActive(true);
 
@@ -52,23 +64,33 @@ namespace _Project.Scripts.Construction
                 TowerSlotUIsWithTowerPrefabs.Add(towerSlotUI, towerPrefab);
                 currentTowerSlotUiIndex++;
             }
+
+            _upgradeTowerSlot.BuildTowerButton.onClick.AddListener(() =>
+            {
+                OnUpgradeCurrentTowerButtonClicked?.OnNext(Unit.Default);
+            });
         }
 
-        public void UpdateTowerUiViews(ICollection<Tower> towerPrefabs)
+        public void UpdateUpgradeTowerView(Tower towerForUpgrade)
         {
-            if (towerPrefabs.Count > _towerSlotUIs.Count)
+            _upgradeTowerSlot.UpdateView(towerForUpgrade.GetTowerIconForNextLevel(), towerForUpgrade.GetBuildPriceForNextLevel());
+        }
+
+        public void UpdateBuildTowerView(ICollection<Tower> towerPrefabs)
+        {
+            if (towerPrefabs.Count > _towerSlotsInBuildTowerView.Count)
             {
                 Debug.LogError("Tower prefabs count > tower slot UIs count");
                 return;
             }
 
-            for (int i = 0; i < _towerSlotUIs.Count; i++)
-                _towerSlotUIs[i].gameObject.SetActive(false);
+            for (int i = 0; i < _towerSlotsInBuildTowerView.Count; i++)
+                _towerSlotsInBuildTowerView[i].gameObject.SetActive(false);
 
             int currentTowerSlotUiIndex = 0;
             foreach (var towerPrefab in towerPrefabs)
             {
-                TowerSlotUI towerSlotUI = _towerSlotUIs[currentTowerSlotUiIndex];
+                TowerSlotUI towerSlotUI = _towerSlotsInBuildTowerView[currentTowerSlotUiIndex];
                 towerSlotUI.UpdateView(towerPrefab.GetTowerIconForNextLevel(), towerPrefab.GetBuildPriceForNextLevel());
                 towerSlotUI.gameObject.SetActive(true);
 
@@ -76,22 +98,39 @@ namespace _Project.Scripts.Construction
             }
         }
 
-        public void ShowSelectView()
+        public void ShowUpgradeView()
         {
             var mouse = Mouse.current;
             if (mouse != null)
             {
                 var mousePosition = mouse.position.ReadValue();
-                _selectTowerView.transform.position = new Vector3(mousePosition.x, mousePosition.y, _selectTowerView.transform.position.z);
+                _upgradeTowerView.transform.position = new Vector3(mousePosition.x, mousePosition.y, _buildTowerView.transform.position.z);
             }
 
-            _selectTowerView.SetActive(true);
+            _upgradeTowerView.SetActive(true);
+        }
+
+        public void HideUpgradeView()
+        {
+            _upgradeTowerView.SetActive(false);
+        }
+
+        public void ShowBuildView()
+        {
+            var mouse = Mouse.current;
+            if (mouse != null)
+            {
+                var mousePosition = mouse.position.ReadValue();
+                _buildTowerView.transform.position = new Vector3(mousePosition.x, mousePosition.y, _buildTowerView.transform.position.z);
+            }
+
+            _buildTowerView.SetActive(true);
             IsShowedSelectView = true;
         }
 
-        public void HideSelectView()
+        public void HideBuildView()
         {
-            _selectTowerView.SetActive(false);
+            _buildTowerView.SetActive(false);
             IsShowedSelectView = false;
         }
     }

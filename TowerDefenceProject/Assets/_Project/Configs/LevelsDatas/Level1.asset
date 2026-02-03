@@ -23,3 +23,8 @@ MonoBehaviour:
     - _enemyPrefab: {fileID: 5342638714384594315, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
       _spawnCount: 10
       _secondsDelayBetweenSpawn: 1
+  - _secondsDelayForSpawnAfterPreviousSpawn: 4
+    _enemySpawnSettings:
+    - _enemyPrefab: {fileID: 5342638714384594315, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 15
+      _secondsDelayBetweenSpawn: 1

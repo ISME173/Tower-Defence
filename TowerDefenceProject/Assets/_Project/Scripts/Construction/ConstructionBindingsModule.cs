@@ -25,8 +25,6 @@ namespace _Project.Scripts.Construction
         {
             _constructionController = new ConstructionController(_constructionView, _cameraMoving, _constructionControllerParameters);
 
-            //containerBuilder.AddSingleton(_constructionView);
-
             containerBuilder.RegisterValue(_constructionController);
             containerBuilder.RegisterValue(_constructionView);
         }

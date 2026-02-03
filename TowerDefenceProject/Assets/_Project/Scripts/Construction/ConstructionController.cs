@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.CameraControll;
 using _Project.Scripts.MoneySystem;
+using R3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace _Project.Scripts.Construction
     {
         private readonly ConstructionView ConstructionView;
         private readonly CameraMoving CameraMoving;
+        private readonly CompositeDisposable Disposables = new();
 
         private ConstructionControllerParameters _constructionControllerParameters;
         private BuildingSite _selectedBuildingSite;
@@ -30,6 +32,9 @@ namespace _Project.Scripts.Construction
             ConstructionView.Initialize(constructionControllerParameters.TowerPrefabs);
 
             ConstructionView.OnBuildTowerButtonClickedEvent += OnBuildTowerButtonClicked;
+            ConstructionView.ReadOnlyOnUpgradeCurrentTowerButtonClicked
+                .Subscribe(_ => OnUpgradeCurrentTowerButtonClicked())
+                .AddTo(Disposables);
 
             _constructionControllerParameters = constructionControllerParameters;
 
@@ -62,6 +67,7 @@ namespace _Project.Scripts.Construction
                 UnityEngine.Object.Destroy(_deferredClickProcessor.gameObject);
 
             ConstructionView.OnBuildTowerButtonClickedEvent -= OnBuildTowerButtonClicked;
+
             _pointerPressAction.performed -= OnPointerPressPerformed;
 
             _pointerPositionAction.Disable();
@@ -69,6 +75,8 @@ namespace _Project.Scripts.Construction
 
             _pointerPositionAction.Dispose();
             _pointerPressAction.Dispose();
+
+            Disposables.Dispose();
         }
 
         private void OnPointerPressPerformed(InputAction.CallbackContext callbackContext)
@@ -98,21 +106,36 @@ namespace _Project.Scripts.Construction
 
                     if (buildingSite != null)
                     {
+                        _selectedBuildingSite?.HideSelectView();
                         _selectedBuildingSite = buildingSite;
 
-                        if (buildingSite.CanUpgradeCurrentTower())
-                            ConstructionView.UpdateTowerUiViews(_constructionControllerParameters.TowerPrefabs);
-                        
-                        ConstructionView.ShowSelectView();
-                        CameraMoving.LockMoving();
+                        if (_selectedBuildingSite.CurrentTower == null)
+                        {
+                            ConstructionView.ShowBuildView();
 
-                        return;
+                            _selectedBuildingSite.ShowSelectView();
+                            CameraMoving.LockMoving();
+                            return;
+                        }
+                        else if (_selectedBuildingSite.CurrentTower.CanUpgrade())
+                        {
+                            ConstructionView.UpdateUpgradeTowerView(buildingSite.CurrentTower);
+                            ConstructionView.ShowUpgradeView();
+
+                            _selectedBuildingSite.ShowSelectView();
+                            CameraMoving.LockMoving();
+                            return;
+                        }
                     }
                 }
             }
 
             CameraMoving.UnlockMoving();
-            ConstructionView.HideSelectView();
+
+            _selectedBuildingSite?.HideSelectView();
+
+            ConstructionView.HideBuildView();
+            ConstructionView.HideUpgradeView();
         }
 
         private bool IsPointerOverUI()
@@ -129,6 +152,22 @@ namespace _Project.Scripts.Construction
             return false;
         }
 
+        private void OnUpgradeCurrentTowerButtonClicked()
+        {
+            if (_selectedBuildingSite == null)
+                return;
+
+            if ((_selectedBuildingSite.CurrentTower != null && _selectedBuildingSite.CurrentTower.CanUpgrade())
+                && _moneyManagement.TryGetMoneyForUpgradeTower(_selectedBuildingSite.CurrentTower))
+            {
+                _selectedBuildingSite.UpgradeCurrentTower();
+                _selectedBuildingSite.HideSelectView();
+
+                ConstructionView.HideUpgradeView();
+                CameraMoving.UnlockMoving();
+            }
+        }
+
         private void OnBuildTowerButtonClicked(Tower towerPrefab)
         {
             if (_selectedBuildingSite == null)
@@ -137,15 +176,9 @@ namespace _Project.Scripts.Construction
             if (_selectedBuildingSite.CanBuildTower() && _moneyManagement.TryGetMoneyForBuildTower(towerPrefab))
             {
                 _selectedBuildingSite.BuildTower(towerPrefab);
+                _selectedBuildingSite.HideSelectView();
 
-                ConstructionView.HideSelectView();
-                CameraMoving.UnlockMoving();
-            }
-            else if (_selectedBuildingSite.CanUpgradeCurrentTower() && _moneyManagement.TryGetMoneyForUpgradeTower(towerPrefab))
-            {
-                _selectedBuildingSite.UpgradeCurrentTower();
-
-                ConstructionView.HideSelectView();
+                ConstructionView.HideBuildView();
                 CameraMoving.UnlockMoving();
             }
         }

@@ -34,14 +34,6 @@ namespace _Project.Scripts.Construction
             return _currentTower == null;
         }
 
-        public bool CanUpgradeCurrentTower()
-        {
-            if (_currentTower == null)
-                return false;
-
-            return _currentTower.CanUpgrade();
-        }
-
         public void UpgradeCurrentTower()
         {
             if (_currentTower == null)
