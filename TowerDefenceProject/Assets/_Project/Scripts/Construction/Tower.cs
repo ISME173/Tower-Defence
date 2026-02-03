@@ -49,6 +49,9 @@ namespace _Project.Scripts.Construction
 
         private void OnValidate()
         {
+            if (_upgradeLevelDatas == null || _upgradeLevelDatas.Count == 0)
+                return;
+
             for (int i = 0; i < _upgradeLevelDatas.Count; i++)
             {
                 TowerData towerData = _upgradeLevelDatas[i].TowerData;
