@@ -15,16 +15,28 @@ MonoBehaviour:
   _enemyGroupsSpawnSettings:
   - _secondsDelayForSpawnAfterPreviousSpawn: 4
     _enemySpawnSettings:
-    - _enemyPrefab: {fileID: 5342638714384594315, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
-      _spawnCount: 10
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 5
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
+      _spawnCount: 5
       _secondsDelayBetweenSpawn: 1
   - _secondsDelayForSpawnAfterPreviousSpawn: 4
     _enemySpawnSettings:
-    - _enemyPrefab: {fileID: 5342638714384594315, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
-      _spawnCount: 10
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
+      _spawnCount: 3
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 5
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
+      _spawnCount: 5
       _secondsDelayBetweenSpawn: 1
   - _secondsDelayForSpawnAfterPreviousSpawn: 4
     _enemySpawnSettings:
-    - _enemyPrefab: {fileID: 5342638714384594315, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 15
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
       _spawnCount: 15
       _secondsDelayBetweenSpawn: 1

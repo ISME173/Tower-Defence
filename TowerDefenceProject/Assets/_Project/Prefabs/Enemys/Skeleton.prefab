@@ -1386,9 +1386,9 @@ GameObject:
   - component: {fileID: 5861537849574213121}
   - component: {fileID: 4706111495938377168}
   - component: {fileID: 2840938463076450392}
-  - component: {fileID: 5342638714384594315}
+  - component: {fileID: 4668417689676691802}
   m_Layer: 6
-  m_Name: Mini Skeleton
+  m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1459,7 +1459,7 @@ CapsuleCollider:
   m_Height: 1.546605
   m_Direction: 1
   m_Center: {x: 0, y: 0.7275961, z: 0}
---- !u!114 &5342638714384594315
+--- !u!114 &4668417689676691802
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1468,15 +1468,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8997501912087544347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37aa91b4ecd85eb47b95535fb1b7c414, type: 3}
+  m_Script: {fileID: 11500000, guid: a3247fc3b53da4642a8f5ecf25eeec08, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.EnemiesManagement.EnemyTypes.Skeleton
   _enemyName: Skeleton
   _maxHealth: 100
-  _movingSpeed: 0.8
+  _movingSpeed: 1
   _attackDamage: 1
-  _moneyForMurder: 5
-  _isWalkingStateName: IsWalk
+  _moneyForMurder: 10
   _rotationTime: 0.1
 --- !u!1 &9033545015223484084
 GameObject:

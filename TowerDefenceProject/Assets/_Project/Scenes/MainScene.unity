@@ -977,6 +977,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98307f336d52cd145adee2c3ba2cd9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerSlotUI
+--- !u!1001 &1066802326
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 459.10425
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 58.79835
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861537849574213121, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997501912087544347, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_Name
+      value: Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997501912087544347, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
 --- !u!1 &1179997760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,17 +1857,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
+  - {fileID: 2060574963}
   - {fileID: 1285109656}
   - {fileID: 1482966217}
-  - {fileID: 2108613273}
   - {fileID: 565078028}
-  - {fileID: 2060574963}
+  - {fileID: 2108613273}
   _readOnlyBindingModules:
+  - {fileID: 2060574963}
   - {fileID: 1285109656}
   - {fileID: 1482966217}
-  - {fileID: 2108613273}
   - {fileID: 565078028}
-  - {fileID: 2060574963}
+  - {fileID: 2108613273}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2020,10 +2081,10 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 128
     _towerPrefabs:
-    - {fileID: 8413731694476568919, guid: d72875ec2a66709439ca3d1b9924ecf0, type: 3}
     - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
     - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
     - {fileID: 1465518390504469703, guid: f7a20566111585c4f8e7d914d65da994, type: 3}
+    - {fileID: 8613262054551672572, guid: 1a2d1023f61a23f42ba4cb292126436a, type: 3}
 --- !u!1 &2108613271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,3 +2347,4 @@ SceneRoots:
   - {fileID: 1772137881}
   - {fileID: 1263585418}
   - {fileID: 76481115}
+  - {fileID: 1066802326}

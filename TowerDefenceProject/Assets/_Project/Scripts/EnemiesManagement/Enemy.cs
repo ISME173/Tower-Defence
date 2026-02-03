@@ -8,7 +8,7 @@ using UnityEngine;
 namespace _Project.Scripts.EnemiesManagement
 {
     [RequireComponent(typeof(Collider), typeof(Animator))]
-    public class Enemy : MonoBehaviour, IDisposable
+    public abstract class Enemy : MonoBehaviour, IDisposable
     {
         private readonly List<Vector3> MovingPoints = new();
 
@@ -20,9 +20,6 @@ namespace _Project.Scripts.EnemiesManagement
         [SerializeField, Min(0)] private int _attackDamage;
         [Space]
         [SerializeField, Min(0)] private int _moneyForMurder;
-
-        [Header("Base enemy animation states")]
-        [SerializeField] private string _isWalkingStateName;
 
         [Header("Rotation settings")]
         [SerializeField, Min(0)] private float _rotationTime = 0.1f;
