@@ -80,7 +80,13 @@ namespace _Project.Scripts.Construction
 
         public void UpdateUpgradeTowerView(Tower towerForUpgrade)
         {
-            _upgradeTowerSlot.UpdateView(towerForUpgrade.GetTowerIconForNextLevel(), towerForUpgrade.GetBuildPriceForNextLevel());
+            if (towerForUpgrade.CanUpgrade())
+            {
+                _upgradeTowerSlot.gameObject.SetActive(true);
+                _upgradeTowerSlot.UpdateView(towerForUpgrade.GetTowerIconForNextLevel(), towerForUpgrade.GetBuildPriceForNextLevel());
+            }
+            else
+                _upgradeTowerSlot.gameObject.SetActive(false);
         }
 
         public void UpdateBuildTowerView(ICollection<Tower> towerPrefabs)

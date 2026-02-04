@@ -117,7 +117,7 @@ namespace _Project.Scripts.Construction
                         {
                             ConstructionView.ShowBuildView();
                         }
-                        else if (_selectedBuildingSite.CurrentTower.CanUpgrade())
+                        else
                         {
                             ConstructionView.UpdateUpgradeTowerView(buildingSite.CurrentTower);
                             ConstructionView.ShowUpgradeView();
