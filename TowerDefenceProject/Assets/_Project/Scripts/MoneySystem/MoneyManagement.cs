@@ -37,6 +37,13 @@ namespace _Project.Scripts.MoneySystem
             Disposables?.Dispose();
         }
 
+        public void OnDestroyedTower(Tower tower)
+        {
+            int refundAfterDestruction = Math.Max(0, tower.RefundAfterDestruction);
+
+            CurrentAmountOfMoney.Value += refundAfterDestruction;
+        }
+
         public bool TryGetMoneyForBuildTower(Tower towerPrefab)
         {
             if (towerPrefab == null)
@@ -59,16 +66,16 @@ namespace _Project.Scripts.MoneySystem
             return false;
         }
 
-        public bool TryGetMoneyForUpgradeTower(Tower towerPrefab)
+        public bool TryGetMoneyForUpgradeTower(Tower tower)
         {
-            if (towerPrefab == null)
+            if (tower == null)
                 return false;
 
-            int towerBuildPrice = towerPrefab.GetBuildPriceForNextLevel();
+            int towerBuildPrice = tower.GetBuildPriceForNextLevel();
 
             if (towerBuildPrice < 0)
             {
-                Debug.LogError($"Tower '{towerPrefab.gameObject.name}' build price < 0: {towerBuildPrice}");
+                Debug.LogError($"Tower '{tower.gameObject.name}' build price < 0: {towerBuildPrice}");
                 return false;
             }
 

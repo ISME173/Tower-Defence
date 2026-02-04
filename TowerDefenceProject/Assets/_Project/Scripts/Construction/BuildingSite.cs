@@ -72,18 +72,27 @@ namespace _Project.Scripts.Construction
             _currentTower = newTower;
         }
 
-        public bool TryRemoveCurrentTower()
+        public bool CanRemoveCurrentTower()
         {
             if (_currentTower == null)
                 return false;
+
+            return true;
+        }
+
+        public void RemoveCurrentTower()
+        {
+            if (CanRemoveCurrentTower() == false)
+            {
+                Debug.LogError($"You can't remove a tower!");
+                return;
+            }
 
             _currentTower.Deinitialize();
             GameObject.Destroy(_currentTower.gameObject);
             _currentTower = null;
 
             _mainView.SetActive(true);
-
-            return true;
         }
     }
 }

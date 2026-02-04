@@ -32,8 +32,13 @@ namespace _Project.Scripts.Construction
             ConstructionView.Initialize(constructionControllerParameters.TowerPrefabs);
 
             ConstructionView.OnBuildTowerButtonClickedEvent += OnBuildTowerButtonClicked;
+
             ConstructionView.ReadOnlyOnUpgradeCurrentTowerButtonClicked
                 .Subscribe(_ => OnUpgradeCurrentTowerButtonClicked())
+                .AddTo(Disposables);
+
+            ConstructionView.ReadOnlyOnDestroyCurrentTowerButtonClicled
+                .Subscribe(_ => OnDestroyCurrentTowerButtonClicked())
                 .AddTo(Disposables);
 
             _constructionControllerParameters = constructionControllerParameters;
@@ -112,20 +117,17 @@ namespace _Project.Scripts.Construction
                         if (_selectedBuildingSite.CurrentTower == null)
                         {
                             ConstructionView.ShowBuildView();
-
-                            _selectedBuildingSite.ShowSelectView();
-                            CameraMoving.LockMoving();
-                            return;
                         }
                         else if (_selectedBuildingSite.CurrentTower.CanUpgrade())
                         {
                             ConstructionView.UpdateUpgradeTowerView(buildingSite.CurrentTower);
                             ConstructionView.ShowUpgradeView();
-
-                            _selectedBuildingSite.ShowSelectView();
-                            CameraMoving.LockMoving();
-                            return;
                         }
+
+                        _selectedBuildingSite.ShowSelectView();
+                        CameraMoving.LockMoving();
+
+                        return;
                     }
                 }
             }
@@ -166,6 +168,20 @@ namespace _Project.Scripts.Construction
                 ConstructionView.HideUpgradeView();
                 CameraMoving.UnlockMoving();
             }
+        }
+
+        private void OnDestroyCurrentTowerButtonClicked()
+        {
+            if ((_selectedBuildingSite == null || _selectedBuildingSite.CurrentTower == null)
+                || _selectedBuildingSite.CanRemoveCurrentTower() == false)
+                return;
+
+            _moneyManagement.OnDestroyedTower(_selectedBuildingSite.CurrentTower);
+            _selectedBuildingSite.RemoveCurrentTower();
+
+            _selectedBuildingSite.HideSelectView();
+
+            ConstructionView.HideUpgradeView();
         }
 
         private void OnBuildTowerButtonClicked(Tower towerPrefab)

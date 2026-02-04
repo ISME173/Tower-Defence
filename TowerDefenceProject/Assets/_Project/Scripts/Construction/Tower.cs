@@ -28,6 +28,7 @@ namespace _Project.Scripts.Construction
         protected TowerData TowerData => _currentTowerData;
 
         public int BuildPrice => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.BuildPrice;
+        public int RefundAfterDestruction => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.RefundAfterDestruction;
         public Sprite TowerIconSprite => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.TowerIconSprite;
 
         protected virtual void Update()

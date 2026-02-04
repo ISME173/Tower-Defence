@@ -23,8 +23,10 @@ namespace _Project.Scripts.Construction
         public event Action<Tower> OnBuildTowerButtonClickedEvent;
 
         private readonly Subject<Unit> OnUpgradeCurrentTowerButtonClicked = new();
+        private readonly Subject<Unit> OnDestroyCurrentTowerButtonClicked = new();
 
         public Observable<Unit> ReadOnlyOnUpgradeCurrentTowerButtonClicked => OnUpgradeCurrentTowerButtonClicked;
+        public Observable<Unit> ReadOnlyOnDestroyCurrentTowerButtonClicled => OnDestroyCurrentTowerButtonClicked;
 
         public bool IsShowedSelectView { get; private set; } = false;
 
@@ -68,6 +70,11 @@ namespace _Project.Scripts.Construction
             _upgradeTowerSlot.BuildTowerButton.onClick.AddListener(() =>
             {
                 OnUpgradeCurrentTowerButtonClicked?.OnNext(Unit.Default);
+            });
+
+            _destroyTowerButtom.onClick.AddListener(() =>
+            {
+                OnDestroyCurrentTowerButtonClicked?.OnNext(Unit.Default);
             });
         }
 

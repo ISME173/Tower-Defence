@@ -15,4 +15,5 @@ MonoBehaviour:
   _attackDamage: 10
   _delayBetweenAttacks: 0.6
   _buildPrice: 10
+  _refundAfterDestruction: 5
   _towerIconSprite: {fileID: 0}

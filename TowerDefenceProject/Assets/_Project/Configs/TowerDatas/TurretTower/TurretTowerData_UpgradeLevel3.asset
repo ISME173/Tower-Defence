@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Turret.TurretTowerData
   _attackDamage: 20
   _delayBetweenAttacks: 0.3
-  _rotateWeaponToEnemySpeed: 5
   _buildPrice: 30
+  _refundAfterDestruction: 15
+  _towerIconSprite: {fileID: 0}
