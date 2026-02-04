@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c16039c2a8fc649b61a9301d4239ea, type: 3}
   m_Name: CatapultData_UpgradeLevel2
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Catapult.CatapultTowerData
-  _attackDamage: 25
-  _delayBetweenAttacks: 0.8
-  _buildPrice: 25
+  _attackDamage: 35
+  _delayBetweenAttacks: 1
+  _buildPrice: 35
   _towerIconSprite: {fileID: 0}

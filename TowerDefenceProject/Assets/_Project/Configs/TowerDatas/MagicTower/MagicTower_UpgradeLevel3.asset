@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0bf8ba102180449aad7ca3b7493493, type: 3}
   m_Name: MagicTower_UpgradeLevel3
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Magic.MagicTowerData
-  _attackDamage: 50
-  _delayBetweenAttacks: 0.8
-  _buildPrice: 40
+  _attackDamage: 150
+  _delayBetweenAttacks: 1.6
+  _buildPrice: 60
   _towerIconSprite: {fileID: 0}

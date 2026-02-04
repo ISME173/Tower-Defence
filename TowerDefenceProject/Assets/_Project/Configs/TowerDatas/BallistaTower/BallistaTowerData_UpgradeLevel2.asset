@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f56fe4b18668714d888674bcffa345c, type: 3}
   m_Name: BallistaTowerData_UpgradeLevel2
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Ballista.BallistaTowerData
-  _attackDamage: 15
+  _attackDamage: 17
   _delayBetweenAttacks: 0.5
-  _buildPrice: 15
+  _buildPrice: 25
   _towerIconSprite: {fileID: 0}
