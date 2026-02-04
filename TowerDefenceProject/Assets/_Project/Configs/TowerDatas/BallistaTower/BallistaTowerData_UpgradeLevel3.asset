@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Ballista.BallistaTowerData
   _attackDamage: 30
   _delayBetweenAttacks: 0.4
+  _projectileSpeed: 5
   _buildPrice: 40
   _refundAfterDestruction: 20
   _towerIconSprite: {fileID: 0}
+  _projectilePrefab: {fileID: 4043418627058810670, guid: c4e6c92a20e0bbe4aaf2921bb5bfe572, type: 3}

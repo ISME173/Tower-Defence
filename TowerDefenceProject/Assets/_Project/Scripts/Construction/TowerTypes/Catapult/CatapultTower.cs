@@ -45,5 +45,10 @@ namespace _Project.Scripts.Construction.TowerTypes.Catapult
             if (horizontalToTarget.sqrMagnitude > 0.0001f)
                 _weaponHorizontalRotationPivot.rotation = Quaternion.LookRotation(horizontalToTarget, Vector3.up);
         }
+
+        protected override void UpdateWeaponProjectileView()
+        {
+
+        }
     }
 }

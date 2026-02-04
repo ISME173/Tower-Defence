@@ -3,7 +3,6 @@ using _Project.Scripts.MoneySystem;
 using R3;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;

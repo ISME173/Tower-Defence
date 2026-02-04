@@ -30,5 +30,10 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
             // No need to rotate
             return;
         }
+
+        protected override void UpdateWeaponProjectileView()
+        {
+
+        }
     }
 }

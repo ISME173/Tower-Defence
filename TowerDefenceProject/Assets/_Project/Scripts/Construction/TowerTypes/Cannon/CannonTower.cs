@@ -57,5 +57,10 @@ namespace _Project.Scripts.Construction.TowerTypes.Cannon
 
             _weaponVerticalRotationPivot.localRotation = Quaternion.AngleAxis(pitchDegrees, Vector3.right);
         }
+
+        protected override void UpdateWeaponProjectileView()
+        {
+
+        }
     }
 }

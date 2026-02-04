@@ -15,6 +15,7 @@ namespace _Project.Scripts.Construction
         [Header("References")]
         [SerializeField] private Trigger _attackZone;
         [SerializeField] private Sprite _towerIconSprite;
+        [SerializeField] private Transform _projectilePointInWeapon;
 
         [Header("Settings")]
         [SerializeField] private List<UpgradeLevelDatas> _upgradeLevelDatas;
@@ -23,7 +24,10 @@ namespace _Project.Scripts.Construction
         private TowerData _currentTowerData;
         private Enemy _targetEnemy;
         private float _attackDelayTimer;
+        private ObjectPoolWithQueue<Projectile> _projectilesPool;
 
+        protected ObjectPoolWithQueue<Projectile> ProjectilesPool => _projectilesPool;
+        protected Transform ProjectilePointInWeapon => _projectilePointInWeapon;
         protected Enemy TargetEnemy => _targetEnemy;
         protected TowerData TowerData => _currentTowerData;
 
@@ -112,6 +116,8 @@ namespace _Project.Scripts.Construction
             _upgradeLevelIndex = 0;
             _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex].TowerData;
 
+            _projectilesPool = new ObjectPoolWithQueue<Projectile>(_currentTowerData.ProjectilePrefab, transform);
+
             if (TowerData.GetType() != GetTowerDataType())
             {
                 Debug.LogError($"Invalid tower data type: {TowerData.GetType()}. Needed type: {GetTowerDataType()}");
@@ -119,17 +125,22 @@ namespace _Project.Scripts.Construction
 
             _attackZone.OnTriggerEnterEvent += OnTriggerEnterInAttackZone;
             _attackZone.OnTrggerExitEvent += OnTriggerExitFromAttackZone;
+
+            UpdateWeaponProjectileView();
         }
 
         public virtual void Deinitialize()
         {
             _attackZone.OnTriggerEnterEvent -= OnTriggerEnterInAttackZone;
             _attackZone.OnTrggerExitEvent -= OnTriggerExitFromAttackZone;
+
+            _targetEnemy = null;
         }
 
         protected abstract Type GetTowerDataType();
         protected abstract void AttackEnemy(Enemy enemy);
         protected abstract void RotateWeaponToTarget(Transform targetTransform);
+        protected abstract void UpdateWeaponProjectileView();
 
         private void OnTriggerEnterInAttackZone(Collider collider)
         {
@@ -159,6 +170,9 @@ namespace _Project.Scripts.Construction
 
                     if (_targetEnemy == enemy)
                         _targetEnemy = EnemiesInAttackZone.FirstOrDefault().Key;
+
+                    if (_targetEnemy == null)
+                        UpdateWeaponProjectileView();
                 }
             }
         }

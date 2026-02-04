@@ -32,5 +32,10 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
         {
             _turretRotateTransform.LookAt(targetTransform);
         }
+
+        protected override void UpdateWeaponProjectileView()
+        {
+            
+        }
     }
 }
