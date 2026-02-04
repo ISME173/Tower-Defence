@@ -66,6 +66,7 @@ Transform:
   m_Children:
   - {fileID: 1075419265868805932}
   - {fileID: 1431215962880416202}
+  - {fileID: 1222861569045616784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8194142250740709410
@@ -131,6 +132,7 @@ MonoBehaviour:
   _attackDamage: 1
   _moneyForMurder: 15
   _rotationTime: 0.1
+  _center: {fileID: 1222861569045616784}
 --- !u!1 &1413188869475677383
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +312,37 @@ Transform:
   - {fileID: 1755203032280176542}
   - {fileID: 8683408792353882531}
   m_Father: {fileID: 7155236161124385162}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3975504027737978853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222861569045616784}
+  m_Layer: 6
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1222861569045616784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3975504027737978853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.381, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1574065113083169236}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4316863269997357634
 GameObject:

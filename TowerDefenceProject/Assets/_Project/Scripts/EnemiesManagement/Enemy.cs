@@ -20,9 +20,11 @@ namespace _Project.Scripts.EnemiesManagement
         [SerializeField, Min(0)] private int _attackDamage;
         [Space]
         [SerializeField, Min(0)] private int _moneyForMurder;
-
-        [Header("Rotation settings")]
+        [Space]
         [SerializeField, Min(0)] private float _rotationTime = 0.1f;
+
+        [Header("References")]
+        [SerializeField] private Transform _center;
 
         private int _currentPointIndex;
         private int _currentHealth;
@@ -38,6 +40,7 @@ namespace _Project.Scripts.EnemiesManagement
         public int MoneyForMurder => _moneyForMurder;
         public string EnemyName => _enemyName;
         public Transform Transform => _transform ?? transform;
+        public Transform Center => _center ?? Transform;
         public int AttackDamage => _attackDamage;
         public bool Alive => _currentHealth > 0;
 

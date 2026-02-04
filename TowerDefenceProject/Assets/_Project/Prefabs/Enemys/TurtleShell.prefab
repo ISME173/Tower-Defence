@@ -316,6 +316,37 @@ Transform:
   - {fileID: 6863365754818893389}
   m_Father: {fileID: 1459801621229330007}
   m_LocalEulerAnglesHint: {x: -58.0273, y: 0.7652107, z: -62.993176}
+--- !u!1 &4880934998883263968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5994579920285154497}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5994579920285154497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4880934998883263968}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.377, z: 0}
+  m_LocalScale: {x: 2.8571427, y: 2.8571427, z: 2.8571427}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4152939693320557536}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5012808899700344659
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +506,7 @@ Transform:
   m_Children:
   - {fileID: 6645726797754192571}
   - {fileID: 5891771622245957925}
+  - {fileID: 5994579920285154497}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4690816252081466123
@@ -540,6 +572,7 @@ MonoBehaviour:
   _attackDamage: 3
   _moneyForMurder: 25
   _rotationTime: 0.1
+  _center: {fileID: 5994579920285154497}
 --- !u!1 &5857527366833642989
 GameObject:
   m_ObjectHideFlags: 0

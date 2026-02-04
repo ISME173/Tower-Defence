@@ -267,6 +267,7 @@ Transform:
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3849080631560092773}
   - {fileID: 3016424204500516536}
   - {fileID: 8232800375875506826}
   m_Father: {fileID: 0}
@@ -334,6 +335,7 @@ MonoBehaviour:
   _attackDamage: 1
   _moneyForMurder: 5
   _rotationTime: 0.1
+  _center: {fileID: 3849080631560092773}
 --- !u!1 &6274419047420644117
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,6 +367,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1633257837827179082}
   m_LocalEulerAnglesHint: {x: 3.5763357, y: -90, z: 0}
+--- !u!1 &6448281752313114068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3849080631560092773}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3849080631560092773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448281752313114068}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.22975375, y: 0.418, z: 0.4431479}
+  m_LocalScale: {x: 2.8571427, y: 2.8571427, z: 2.8571427}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 249111152049304504}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7034806406519903515
 GameObject:
   m_ObjectHideFlags: 0

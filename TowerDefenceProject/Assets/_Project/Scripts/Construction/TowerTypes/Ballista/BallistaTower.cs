@@ -1,15 +1,12 @@
 ﻿using _Project.Scripts.EnemiesManagement;
 using LitMotion;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Project.Scripts.Construction.TowerTypes.Ballista
 {
     public class BallistaTower : Tower
     {
-        private readonly HashSet<MotionHandle> ProjectileMotionHandles = new HashSet<MotionHandle>();
-
         [Space]
         [SerializeField] private Transform _weaponVerticalRotationPivot;
         [SerializeField] private Transform _weaponHorizontalRotationPivot;
@@ -25,7 +22,6 @@ namespace _Project.Scripts.Construction.TowerTypes.Ballista
 
         protected override void AttackEnemy(Enemy enemy)
         {
-            Transform enemyTransform = enemy.Transform;
             Projectile projectile = ProjectilesPool.GetObject();
 
             projectile.Transform.SetParent(ProjectilePointInWeapon);
@@ -36,26 +32,23 @@ namespace _Project.Scripts.Construction.TowerTypes.Ballista
 
             projectile.Transform.SetParent(null, true);
 
-            float projectileFlyingTime = Vector3.Distance(startPosition, enemyTransform.position) / _ballistaTowerData.ProjectileSpeed;
+            float projectileFlyingTime = Vector3.Distance(startPosition, enemy.Center.position) / _ballistaTowerData.ProjectileSpeed;
 
             MotionHandle? motionHandle = null;
             motionHandle = LMotion.Create(0f, 1f, projectileFlyingTime)
                 .WithOnComplete(() =>
                 {
-                    ProjectileMotionHandles.Remove(motionHandle.Value);
                     enemy.TakeDamage(TowerData.AttackDamage);
 
                     ProjectilesPool.AddObject(projectile);
                 })
                 .Bind(progress =>
                 {
-                    Vector3 targetPosition = enemyTransform.position;
+                    Vector3 targetPosition = enemy.Center.position;
 
                     projectile.Transform.position = Vector3.LerpUnclamped(startPosition, targetPosition, progress);
                     projectile.Transform.LookAt(targetPosition);
                 });
-
-            ProjectileMotionHandles.Add(motionHandle.Value);
         }
 
         protected override Type GetTowerDataType()
