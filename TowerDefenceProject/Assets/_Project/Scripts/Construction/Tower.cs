@@ -107,6 +107,7 @@ namespace _Project.Scripts.Construction
             _upgradeLevelDatas[_upgradeLevelIndex + 1].UpgradeTowerView.SetActive(true);
 
             _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex + 1].TowerData;
+            UpdateCurrentTowerData();
 
             _upgradeLevelIndex++;
         }
@@ -115,6 +116,7 @@ namespace _Project.Scripts.Construction
         {
             _upgradeLevelIndex = 0;
             _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex].TowerData;
+            UpdateCurrentTowerData();
 
             _projectilesPool = new ObjectPoolWithQueue<Projectile>(_currentTowerData.ProjectilePrefab, transform);
 
@@ -137,6 +139,7 @@ namespace _Project.Scripts.Construction
             _targetEnemy = null;
         }
 
+        protected abstract void UpdateCurrentTowerData();
         protected abstract Type GetTowerDataType();
         protected abstract void AttackEnemy(Enemy enemy);
         protected abstract void RotateWeaponToTarget(Transform targetTransform);

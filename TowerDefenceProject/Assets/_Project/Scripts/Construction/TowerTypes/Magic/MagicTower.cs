@@ -8,13 +8,6 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
     {
         private MagicTowerData _magicTowerData;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _magicTowerData = TowerData as MagicTowerData;
-        }
-
         protected override void AttackEnemy(Enemy enemy)
         {
             enemy.TakeDamage(TowerData.AttackDamage);
@@ -31,9 +24,14 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
             return;
         }
 
+        protected override void UpdateCurrentTowerData()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void UpdateWeaponProjectileView()
         {
-
+            _magicTowerData = TowerData as MagicTowerData;
         }
     }
 }

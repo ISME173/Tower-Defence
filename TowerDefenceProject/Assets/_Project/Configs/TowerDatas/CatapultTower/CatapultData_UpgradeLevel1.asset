@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Catapult.CatapultTowerData
   _attackDamage: 25
   _delayBetweenAttacks: 1.1
+  _projectileSpeed: 2
   _buildPrice: 25
   _refundAfterDestruction: 12
   _towerIconSprite: {fileID: 0}
+  _projectilePrefab: {fileID: 96794479901081327, guid: be59df2effabbc94abedff28fdb9c492, type: 3}
+  _trajectoryHeight: 1
+  _weaponVerticalRotationInIdle: {x: 0, y: 0, z: 0}
+  _weaponVerticalRotationInAttack: {x: 50, y: 0, z: 0}
+  _rotateTime: 0.2

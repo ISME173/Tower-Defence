@@ -11,13 +11,6 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
 
         private TurretTowerData _turretTowerData;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _turretTowerData = TowerData as TurretTowerData;
-        }
-
         protected override void AttackEnemy(Enemy enemy)
         {
             enemy.TakeDamage(TowerData.AttackDamage);
@@ -31,6 +24,11 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
         protected override void RotateWeaponToTarget(Transform targetTransform)
         {
             _turretRotateTransform.LookAt(targetTransform);
+        }
+
+        protected override void UpdateCurrentTowerData()
+        {
+            _turretTowerData = TowerData as TurretTowerData;
         }
 
         protected override void UpdateWeaponProjectileView()

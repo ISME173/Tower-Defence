@@ -13,13 +13,6 @@ namespace _Project.Scripts.Construction.TowerTypes.Ballista
 
         private BallistaTowerData _ballistaTowerData;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _ballistaTowerData = TowerData as BallistaTowerData;
-        }
-
         protected override void AttackEnemy(Enemy enemy)
         {
             Projectile projectile = ProjectilesPool.GetObject();
@@ -80,6 +73,11 @@ namespace _Project.Scripts.Construction.TowerTypes.Ballista
             float pitchDegrees = -Mathf.Atan2(localToTargetInHorizontal.y, localToTargetInHorizontal.z) * Mathf.Rad2Deg;
 
             _weaponVerticalRotationPivot.localRotation = Quaternion.AngleAxis(pitchDegrees, Vector3.right);
+        }
+
+        protected override void UpdateCurrentTowerData()
+        {
+            _ballistaTowerData = TowerData as BallistaTowerData;
         }
 
         protected override void UpdateWeaponProjectileView()

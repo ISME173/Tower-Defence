@@ -13,13 +13,6 @@ namespace _Project.Scripts.Construction.TowerTypes.Cannon
 
         private CannonTowerData _cannonTowerData;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _cannonTowerData = TowerData as CannonTowerData;
-        }
-
         protected override void AttackEnemy(Enemy enemy)
         {
             Projectile projectile = ProjectilesPool.GetObject();
@@ -83,6 +76,11 @@ namespace _Project.Scripts.Construction.TowerTypes.Cannon
             float pitchDegrees = -Mathf.Atan2(localToTargetInHorizontal.y, localToTargetInHorizontal.z) * Mathf.Rad2Deg;
 
             _weaponVerticalRotationPivot.localRotation = Quaternion.AngleAxis(pitchDegrees, Vector3.right);
+        }
+
+        protected override void UpdateCurrentTowerData()
+        {
+            _cannonTowerData = TowerData as CannonTowerData;
         }
 
         protected override void UpdateWeaponProjectileView()

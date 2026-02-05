@@ -1,4 +1,6 @@
 ﻿using _Project.Scripts.EnemiesManagement;
+using LitMotion;
+using LitMotion.Extensions;
 using System;
 using UnityEngine;
 
@@ -8,19 +10,75 @@ namespace _Project.Scripts.Construction.TowerTypes.Catapult
     {
         [Space]
         [SerializeField] private Transform _weaponHorizontalRotationPivot;
+        [SerializeField] private Transform _weaponVerticalRotationPivot;
 
+        private MotionHandle _attackHandle;
         private CatapultTowerData _catapultTowerData;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _catapultTowerData = TowerData as CatapultTowerData;
-        }
 
         protected override void AttackEnemy(Enemy enemy)
         {
-            enemy.TakeDamage(TowerData.AttackDamage);
+            if (enemy == null || enemy.Alive == false)
+                return;
+
+            Projectile projectile = ProjectilesPool.GetObject();
+
+            projectile.Transform.SetParent(ProjectilePointInWeapon);
+            projectile.Transform.localPosition = Vector3.zero;
+            projectile.Transform.localScale = Vector3.one;
+
+            Vector3 startPosition = projectile.Transform.position;
+
+            //projectile.Transform.SetParent(null, true);
+
+            float distance = Vector3.Distance(startPosition, enemy.Center.position);
+            float projectileFlyingTime = distance / Mathf.Max(0.01f, _catapultTowerData.ProjectileSpeed);
+
+            MotionHandle? motionHandle = null;
+
+            MotionSequenceBuilder motionSequenceBuilder = LSequence.Create();
+
+            motionHandle = motionSequenceBuilder
+                .Append(LMotion.Create(_catapultTowerData.WeaponVerticalRotationInIdle, _catapultTowerData.WeaponVerticalRotationInAttack, _catapultTowerData.RotateTime)
+                .WithOnComplete(() =>
+                {
+                    projectile.Transform.SetParent(null, true);
+                })
+                .BindToLocalEulerAngles(_weaponVerticalRotationPivot))
+                .Append(LMotion.Create(0f, 1f, projectileFlyingTime)
+                .WithOnComplete(() =>
+                {
+                    if (enemy != null && enemy.Alive)
+                        enemy.TakeDamage(TowerData.AttackDamage);
+
+                    ProjectilesPool.AddObject(projectile);
+                })
+                .Bind(progress =>
+                {
+                    if (enemy == null || enemy.Center == null)
+                        return;
+
+                    Vector3 targetPosition = enemy.Center.position;
+
+                    Vector3 basePosition = Vector3.LerpUnclamped(startPosition, targetPosition, progress);
+
+                    float arc = 4f * _catapultTowerData.TrajectoryHeight * progress * (1f - progress);
+                    Vector3 position = basePosition + Vector3.up * arc;
+
+                    projectile.Transform.position = position;
+
+                    Vector3 nextBasePosition = Vector3.LerpUnclamped(startPosition, targetPosition, Mathf.Min(1f, progress + 0.01f));
+                    float nextArc = 4f * _catapultTowerData.TrajectoryHeight * Mathf.Min(1f, progress + 0.01f) * (1f - Mathf.Min(1f, progress + 0.01f));
+                    Vector3 nextPosition = nextBasePosition + Vector3.up * nextArc;
+
+                    Vector3 forward = nextPosition - position;
+                    if (forward.sqrMagnitude > 0.0001f)
+                        projectile.Transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+                }))
+                .Append(LMotion.Create(_catapultTowerData.WeaponVerticalRotationInAttack, _catapultTowerData.WeaponVerticalRotationInIdle, _catapultTowerData.RotateTime)
+                .BindToLocalEulerAngles(_weaponVerticalRotationPivot))
+                .Run();
+
+            _attackHandle = motionHandle.Value;
         }
 
         protected override Type GetTowerDataType()
@@ -46,9 +104,20 @@ namespace _Project.Scripts.Construction.TowerTypes.Catapult
                 _weaponHorizontalRotationPivot.rotation = Quaternion.LookRotation(horizontalToTarget, Vector3.up);
         }
 
+        protected override void UpdateCurrentTowerData()
+        {
+            _catapultTowerData = TowerData as CatapultTowerData;
+        }
+
         protected override void UpdateWeaponProjectileView()
         {
-
+            Projectile projectile = ProjectilesPool.GetObject();
+            projectile.Transform.SetParent(ProjectilePointInWeapon);
+            projectile.Transform.localPosition = Vector3.zero;
+            projectile.Transform.localScale = Vector3.one;
+            ProjectilesPool.AddObject(projectile);
+            projectile.gameObject.SetActive(true);
+            projectile.Transform.SetParent(ProjectilePointInWeapon);
         }
     }
 }
