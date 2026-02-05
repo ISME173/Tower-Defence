@@ -2063,17 +2063,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2060574963}
   - {fileID: 2108613273}
-  - {fileID: 1285109656}
-  - {fileID: 565078028}
   - {fileID: 1482966217}
+  - {fileID: 1285109656}
+  - {fileID: 2060574963}
+  - {fileID: 565078028}
   _readOnlyBindingModules:
-  - {fileID: 2060574963}
   - {fileID: 2108613273}
-  - {fileID: 1285109656}
-  - {fileID: 565078028}
   - {fileID: 1482966217}
+  - {fileID: 1285109656}
+  - {fileID: 2060574963}
+  - {fileID: 565078028}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Magic.MagicTowerData
   _attackDamage: 120
   _delayBetweenAttacks: 1.8
+  _projectileSpeed: 8
   _buildPrice: 45
   _refundAfterDestruction: 17
   _towerIconSprite: {fileID: 0}
+  _projectilePrefab: {fileID: 7890070669358030011, guid: 5890a78570971af46bfb5155c63d115d, type: 3}

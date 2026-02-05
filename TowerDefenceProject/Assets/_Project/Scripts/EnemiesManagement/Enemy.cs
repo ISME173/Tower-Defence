@@ -75,7 +75,7 @@ namespace _Project.Scripts.EnemiesManagement
 
             int finalDamage = Math.Clamp(damage, 0, _currentHealth);
 
-            Debug.Log($"Enemy {gameObject.name} damage taken: {finalDamage}");
+            //Debug.Log($"Enemy {gameObject.name} damage taken: {finalDamage}");
 
             _currentHealth -= finalDamage;
 
