@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3565995714025271547}
-  - {fileID: 7957690278766771582}
+  - {fileID: 3751070637087769369}
   m_Father: {fileID: 4683333381287341502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3256541786272788425
@@ -90,12 +90,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5992145657076455292}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0000000012935, y: 0.033, z: -0.0000000012935}
-  m_LocalScale: {x: 1.1414, y: 1.5570302, z: 1.1414}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.6839999, z: 0}
+  m_LocalScale: {x: 1.1413994, y: 1.5570297, z: 1.1413994}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 943694019162286817}
+  m_Father: {fileID: 3751070637087769369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3833409817571342115
 MeshFilter:
@@ -154,6 +154,38 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7166994427448063587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3751070637087769369}
+  m_Layer: 0
+  m_Name: CristalsForAnimatePivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3751070637087769369
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7166994427448063587}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.758, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7957690278766771582}
+  m_Father: {fileID: 943694019162286817}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7696708204773306618
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 7696708204773306618}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.18367, z: 6.4675e-10}
+  m_LocalPosition: {x: -0, y: 0.225, z: 6.4675e-10}
   m_LocalScale: {x: 1.19, y: 1.19, z: 1.19}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -357,6 +389,7 @@ MonoBehaviour:
   - _upgradeTowerView: {fileID: 5802087671367179706}
     _upgradeLevel: 3
     _towerData: {fileID: 11400000, guid: 494731f813db77447b9f12f059a131f1, type: 2}
+  _cristalsForAnimate: {fileID: 3751070637087769369}
 --- !u!1 &5802087671367179706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5369358704521968215, guid: 0730e6b45076f5049b98604e3fa1d533, type: 3}

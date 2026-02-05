@@ -1,6 +1,6 @@
-﻿using _Project.Scripts.Construction.TowerTypes.Cannon;
-using _Project.Scripts.EnemiesManagement;
+﻿using _Project.Scripts.EnemiesManagement;
 using LitMotion;
+using LitMotion.Extensions;
 using System;
 using UnityEngine;
 
@@ -8,7 +8,43 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
 {
     public class MagicTower : Tower
     {
+        [Header("Magic Tower References")]
+        [SerializeField] private Transform _cristalsForAnimate;
+
+        private MotionHandle _cristalsBobAnimateHandle;
+        private MotionHandle _cristalsRotateAnimateHandle;
         private MagicTowerData _magicTowerData;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            float maxYPosition = _cristalsForAnimate.transform.localPosition.y + _magicTowerData.AnimateCristalYOffset;
+            float minYPosition = _cristalsForAnimate.transform.localPosition.y - _magicTowerData.AnimateCristalYOffset;
+
+            Vector3 startPosition = new Vector3(_cristalsForAnimate.localPosition.x, minYPosition, _cristalsForAnimate.localPosition.z);
+            Vector3 endPosition = new Vector3(_cristalsForAnimate.localPosition.x, maxYPosition, _cristalsForAnimate.localPosition.z);
+
+            _cristalsBobAnimateHandle = LMotion.Create(startPosition, endPosition, _magicTowerData.AnimateCristalsBobSpeed)
+                .WithCancelOnError()
+                .WithLoops(-1, LoopType.Yoyo)
+                .WithEase(Ease.OutQuad)
+                .BindToLocalPosition(_cristalsForAnimate);
+
+            _cristalsRotateAnimateHandle = LMotion.Create(Vector3.zero, new Vector3(0, 360, 0), _magicTowerData.AnimateCristalsRotationSpeed)
+                .WithCancelOnError()
+                .WithLoops(-1, LoopType.Restart)
+                .WithEase(Ease.Linear)
+                .BindToEulerAngles(_cristalsForAnimate);
+        }
+
+        public override void Deinitialize()
+        {
+            base.Deinitialize();
+
+            _cristalsBobAnimateHandle.TryCancel();
+            _cristalsRotateAnimateHandle.TryCancel();
+        }
 
         protected override void AttackEnemy(Enemy enemy)
         {

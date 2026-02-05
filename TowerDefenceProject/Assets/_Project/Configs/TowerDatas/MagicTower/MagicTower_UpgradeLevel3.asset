@@ -19,3 +19,6 @@ MonoBehaviour:
   _refundAfterDestruction: 30
   _towerIconSprite: {fileID: 0}
   _projectilePrefab: {fileID: 7890070669358030011, guid: 5890a78570971af46bfb5155c63d115d, type: 3}
+  _animateCristalsRotationSpeed: 4
+  _animateCristalsBobSpeed: 4
+  _animateCristalsYOffset: 0.09
