@@ -24,9 +24,11 @@ namespace _Project.Scripts.EnemiesManagement
         [SerializeField, Min(0)] private float _rotationTime = 0.1f;
 
         [Header("References")]
+        [SerializeField] private ParticleSystem _diedEffect;
         [SerializeField] private Transform _center;
 
         private int _currentPointIndex;
+        private MotionHandle _diedEffectLifeHandle;
         private MotionHandle _movingHandle;
         private MotionHandle _rotationHandle;
         private Transform _transform;
@@ -114,6 +116,15 @@ namespace _Project.Scripts.EnemiesManagement
             _movingHandle.TryCancel();
             _rotationHandle.TryCancel();
 
+            _diedEffect.transform.SetParent(null);
+            _diedEffect.Play();
+
+            _diedEffectLifeHandle.TryCancel();
+
+            _diedEffectLifeHandle = LMotion.Create(0f, 1f, _diedEffect.main.duration)
+                .WithOnComplete(() => _diedEffect.transform.SetParent(transform))
+                .RunWithoutBinding();
+
             OnDied?.OnNext(this);
         }
 
@@ -125,7 +136,6 @@ namespace _Project.Scripts.EnemiesManagement
                 MoveToPoint(MovingPoints[_currentPointIndex]);
             else
                 OnMovedToLastPoint?.OnNext(this);
-
         }
     }
 }

@@ -7,6 +7,7 @@ namespace _Project.Scripts.Construction
     {
         [SerializeField] private GameObject _selectView;
         [SerializeField] private GameObject _mainView;
+        [SerializeField] private ParticleSystem _buildEffect;
 
         private Collider _collider;
         private Tower _currentTower;
@@ -48,6 +49,8 @@ namespace _Project.Scripts.Construction
                 return;
             }
 
+            _buildEffect.Play();
+
             _mainView.SetActive(false);
 
             _currentTower.Upgrade();
@@ -60,6 +63,8 @@ namespace _Project.Scripts.Construction
                 Debug.LogError($"You can't build a tower!");
                 return;
             }
+
+            _buildEffect.Play();
 
             _mainView.SetActive(false);
 
@@ -87,6 +92,8 @@ namespace _Project.Scripts.Construction
                 Debug.LogError($"You can't remove a tower!");
                 return;
             }
+
+            _buildEffect.Play();
 
             _currentTower.Deinitialize();
             GameObject.Destroy(_currentTower.gameObject);
