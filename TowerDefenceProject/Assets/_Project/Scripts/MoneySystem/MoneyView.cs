@@ -3,6 +3,7 @@ using Reflex.Attributes;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Project.Scripts.MoneySystem
 {
@@ -11,8 +12,13 @@ namespace _Project.Scripts.MoneySystem
         private readonly CompositeDisposable Disposables = new();
 
         [SerializeField] private TextMeshProUGUI _amountOfMoneyText;
+        [SerializeField] private Button _onAddMoneyByAdButton;
 
         private MoneyManagement _moneyManagement;
+
+        private readonly Subject<Unit> OnAddMoneyByAdButtonClicked = new();
+
+        public ISubject<Unit> ReadOnlyOnAddMoneyByAdButtonClicked => OnAddMoneyByAdButtonClicked;
 
         private void Awake()
         {
@@ -22,6 +28,7 @@ namespace _Project.Scripts.MoneySystem
         public void Dispose()
         {
             Disposables.Dispose();
+            OnAddMoneyByAdButtonClicked?.Dispose();
         }
 
         private void OnCurrentAmounfOfMoneyChanged(int amountOfMoney)
@@ -37,6 +44,8 @@ namespace _Project.Scripts.MoneySystem
             _moneyManagement.ReadOnlyCurrentAmountOfMoney
                 .Subscribe(OnCurrentAmounfOfMoneyChanged)
                 .AddTo(Disposables);
+
+            _onAddMoneyByAdButton.onClick.AddListener(() => OnAddMoneyByAdButtonClicked?.OnNext(Unit.Default));
         }
     }
 }
