@@ -27,11 +27,14 @@ namespace _Project.Scripts.EnemiesManagement
         [SerializeField] private Transform _center;
 
         private int _currentPointIndex;
-        private int _currentHealth;
         private MotionHandle _movingHandle;
         private MotionHandle _rotationHandle;
         private Transform _transform;
         private Collider _collider;
+
+        private readonly ReactiveProperty<int> CurrentHealth = new();
+
+        public ReadOnlyReactiveProperty<int> ReadOnlyCurrentHealth => CurrentHealth;
 
         public readonly Subject<Enemy> OnDied = new(), OnMovedToLastPoint = new();
 
@@ -42,7 +45,8 @@ namespace _Project.Scripts.EnemiesManagement
         public Transform Transform => _transform ?? transform;
         public Transform Center => _center ?? Transform;
         public int AttackDamage => _attackDamage;
-        public bool Alive => _currentHealth > 0;
+        public bool Alive => CurrentHealth.Value > 0;
+        public int MaxHealth => _maxHealth;
 
         public virtual void Initialize(Vector3[] movingPoints)
         {
@@ -50,7 +54,7 @@ namespace _Project.Scripts.EnemiesManagement
             _transform = transform;
 
             _collider.isTrigger = true;
-            _currentHealth = _maxHealth;
+            CurrentHealth.Value = _maxHealth;
 
             MovingPoints.Clear();
             MovingPoints.AddRange(movingPoints);
@@ -70,16 +74,16 @@ namespace _Project.Scripts.EnemiesManagement
 
         public virtual void TakeDamage(int damage)
         {
-            if (_currentHealth == 0)
+            if (CurrentHealth.Value == 0)
                 return;
 
-            int finalDamage = Math.Clamp(damage, 0, _currentHealth);
+            int finalDamage = Math.Clamp(damage, 0, CurrentHealth.Value);
 
             //Debug.Log($"Enemy {gameObject.name} damage taken: {finalDamage}");
 
-            _currentHealth -= finalDamage;
+            CurrentHealth.Value -= finalDamage;
 
-            if (_currentHealth == 0)
+            if (CurrentHealth.Value == 0)
                 Died();
         }
 
