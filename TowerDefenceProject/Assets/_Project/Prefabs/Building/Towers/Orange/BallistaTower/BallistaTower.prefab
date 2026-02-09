@@ -602,6 +602,7 @@ MonoBehaviour:
   _attackZone: {fileID: 4675016432059239619}
   _towerIconSprite: {fileID: 0}
   _projectilePointInWeapon: {fileID: 5651787826623985888}
+  _name: Ballista
   _upgradeLevelDatas:
   - _upgradeTowerView: {fileID: 1433416522549782890}
     _upgradeLevel: 1

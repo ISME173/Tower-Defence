@@ -18,6 +18,7 @@ namespace _Project.Scripts.Construction
         [SerializeField] private Transform _projectilePointInWeapon;
 
         [Header("Settings")]
+        [SerializeField] private string _name;
         [SerializeField] private List<UpgradeLevelDatas> _upgradeLevelDatas;
 
         private int _upgradeLevelIndex;
@@ -31,6 +32,7 @@ namespace _Project.Scripts.Construction
         protected Enemy TargetEnemy => _targetEnemy;
         protected TowerData TowerData => _currentTowerData;
 
+        public string Name => _name;
         public int BuildPrice => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.BuildPrice;
         public int RefundAfterDestruction => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.RefundAfterDestruction;
         public Sprite TowerIconSprite => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.TowerIconSprite;

@@ -1,8 +1,11 @@
-﻿using LitMotion;
+﻿using _Project.Scripts.Construction;
+using LitMotion;
 using LitMotion.Extensions;
+using NaughtyAttributes;
 using R3;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace _Project.Scripts.EnemiesManagement
@@ -26,6 +29,10 @@ namespace _Project.Scripts.EnemiesManagement
         [Header("References")]
         [SerializeField] private ParticleSystem _diedEffect;
         [SerializeField] private Transform _center;
+        [Space]
+        [InfoBox("Can be left blank")]
+        [SerializeField] private List<TowerAndDamageOffset> _vulnerabilityToTowerPrefabsList;
+        [SerializeField] private List<TowerAndDamageOffset> _resistanceToTowerPrefabsList;
 
         private int _currentPointIndex;
         private MotionHandle _diedEffectLifeHandle;
@@ -74,12 +81,36 @@ namespace _Project.Scripts.EnemiesManagement
             OnMovedEvent -= OnMoved;
         }
 
-        public virtual void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage, Tower attackTower)
         {
             if (CurrentHealth.Value == 0)
                 return;
 
-            int finalDamage = Math.Clamp(damage, 0, CurrentHealth.Value);
+            int modifiedDamage = damage;
+
+            // Проверка на уязвимость к типу башни
+            TowerAndDamageOffset vulnerability = _vulnerabilityToTowerPrefabsList
+                .FirstOrDefault(x => x.TowerPrefab.Name == attackTower.Name);
+            
+            if (vulnerability.TowerPrefab != null)
+            {
+                int additionalDamage = (damage * vulnerability.PercentageDamageOffset) / 100;
+                modifiedDamage += additionalDamage;
+                //Debug.Log($"Enemy {gameObject.name} is vulnerable to {attackTower.name}. Damage increased by {vulnerability.PercentageDamageOffset}%");
+            }
+
+            // Проверка на сопротивление к типу башни
+            TowerAndDamageOffset resistance = _resistanceToTowerPrefabsList
+                .FirstOrDefault(x => x.TowerPrefab.Name == attackTower.Name);
+            
+            if (resistance.TowerPrefab != null)
+            {
+                int reducedDamage = (damage * resistance.PercentageDamageOffset) / 100;
+                modifiedDamage += reducedDamage;
+                //Debug.Log($"Enemy {gameObject.name} has resistance to {attackTower.name}. Damage reduced by {resistance.PercentageDamageOffset}%");
+            }
+
+            int finalDamage = Math.Clamp(modifiedDamage, 0, CurrentHealth.Value);
 
             //Debug.Log($"Enemy {gameObject.name} damage taken: {finalDamage}");
 
@@ -136,6 +167,16 @@ namespace _Project.Scripts.EnemiesManagement
                 MoveToPoint(MovingPoints[_currentPointIndex]);
             else
                 OnMovedToLastPoint?.OnNext(this);
+        }
+
+        [Serializable]
+        private struct TowerAndDamageOffset
+        {
+            [SerializeField] private Tower _towerPrefab;
+            [SerializeField, Range(-100, 100)] private int _percentageDamageOffset;
+
+            public Tower TowerPrefab => _towerPrefab;
+            public int PercentageDamageOffset => _percentageDamageOffset;
         }
     }
 }

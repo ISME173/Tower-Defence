@@ -363,6 +363,7 @@ MonoBehaviour:
   _attackZone: {fileID: 3840686970733031629}
   _towerIconSprite: {fileID: 0}
   _projectilePointInWeapon: {fileID: 7096056484480718873}
+  _name: Cannon
   _upgradeLevelDatas:
   - _upgradeTowerView: {fileID: 7370323738916771172}
     _upgradeLevel: 1

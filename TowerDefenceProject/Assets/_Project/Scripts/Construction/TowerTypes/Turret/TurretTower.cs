@@ -13,7 +13,7 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
 
         protected override void AttackEnemy(Enemy enemy)
         {
-            enemy.TakeDamage(TowerData.AttackDamage);
+            enemy.TakeDamage(TowerData.AttackDamage, this);
         }
 
         protected override Type GetTowerDataType()

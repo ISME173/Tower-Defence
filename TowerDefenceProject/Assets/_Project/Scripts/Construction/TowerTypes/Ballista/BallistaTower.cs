@@ -31,7 +31,7 @@ namespace _Project.Scripts.Construction.TowerTypes.Ballista
             motionHandle = LMotion.Create(0f, 1f, projectileFlyingTime)
                 .WithOnComplete(() =>
                 {
-                    enemy.TakeDamage(TowerData.AttackDamage);
+                    enemy.TakeDamage(TowerData.AttackDamage, this);
 
                     ProjectilesPool.AddObject(projectile);
                 })

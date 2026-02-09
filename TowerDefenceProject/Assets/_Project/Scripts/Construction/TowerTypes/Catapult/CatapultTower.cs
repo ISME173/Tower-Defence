@@ -48,7 +48,7 @@ namespace _Project.Scripts.Construction.TowerTypes.Catapult
                 .WithOnComplete(() =>
                 {
                     if (enemy != null && enemy.Alive)
-                        enemy.TakeDamage(TowerData.AttackDamage);
+                        enemy.TakeDamage(TowerData.AttackDamage, this);
 
                     ProjectilesPool.AddObject(projectile);
                 })

@@ -393,6 +393,7 @@ MonoBehaviour:
   _attackZone: {fileID: 5532322807860910446}
   _towerIconSprite: {fileID: 0}
   _projectilePointInWeapon: {fileID: 8197575957641531444}
+  _name: Catapult
   _upgradeLevelDatas:
   - _upgradeTowerView: {fileID: 2288594279500053703}
     _upgradeLevel: 1

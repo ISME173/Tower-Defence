@@ -379,6 +379,7 @@ MonoBehaviour:
   _attackZone: {fileID: 6773239647743860996}
   _towerIconSprite: {fileID: 0}
   _projectilePointInWeapon: {fileID: 7791050169149675803}
+  _name: Magic
   _upgradeLevelDatas:
   - _upgradeTowerView: {fileID: 1079486796542067885}
     _upgradeLevel: 1
