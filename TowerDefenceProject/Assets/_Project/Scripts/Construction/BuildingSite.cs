@@ -95,7 +95,7 @@ namespace _Project.Scripts.Construction
 
             _buildEffect.Play();
 
-            _currentTower.Deinitialize();
+            _currentTower.Dispose();
             GameObject.Destroy(_currentTower.gameObject);
             _currentTower = null;
 

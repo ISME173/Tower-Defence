@@ -48,6 +48,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             _levelCompletionManagement.ReadOnlyLevelFailed
                 .Subscribe(_ => CancelSpawnProcess())
                 .AddTo(Disposables);
+
+            _levelCompletionManagement.ReadOnlyLevelCompleted
+                .Subscribe(_ => CancelSpawnProcess())
+                .AddTo(Disposables);
         }
 
         public void Dispose()
@@ -64,6 +68,8 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             _currentMovingPoints = levelObject.MovingPoints.ToList();
             _currentEnemiesInLevelSpawnSequence = levelObject.EnemysInLevelSpawnSeqence;
             _currentSpawnEnemiesPoint = levelObject.NpcSpawnPoint;
+
+            StartSpawnProcess();
         }
 
         private void UpdatePoolsByLevel(LevelObject levelObject)
@@ -80,7 +86,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             }
         }
 
-        public async void StartSpawnProcess()
+        private async void StartSpawnProcess()
         {
             if (Application.isPlaying == false)
             {
@@ -210,6 +216,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                 }
             }
 
+            _spawningProcessActive = false;
             EnemiesInLevel.Clear();
         }
     }

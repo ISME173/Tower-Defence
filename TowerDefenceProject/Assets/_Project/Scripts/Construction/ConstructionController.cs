@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.CameraControll;
+using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
 using R3;
 using System;
@@ -14,11 +15,13 @@ namespace _Project.Scripts.Construction
         private readonly ConstructionView ConstructionView;
         private readonly CameraMoving CameraMoving;
         private readonly CompositeDisposable Disposables = new();
+        private readonly HashSet<BuildingSite> UsingBuildingSitesInCurrentLevel = new HashSet<BuildingSite>();
 
         private ConstructionControllerParameters _constructionControllerParameters;
         private BuildingSite _selectedBuildingSite;
         private DeferredClickProcessor _deferredClickProcessor;
         private MoneyManagement _moneyManagement;
+        private LevelCompletionManagement _levelCompletionManagement;
 
         private InputAction _pointerPositionAction;
         private InputAction _pointerPressAction;
@@ -40,6 +43,8 @@ namespace _Project.Scripts.Construction
                 .Subscribe(_ => OnDestroyCurrentTowerButtonClicked())
                 .AddTo(Disposables);
 
+            
+
             _constructionControllerParameters = constructionControllerParameters;
 
             _pointerPositionAction = new InputAction(
@@ -60,15 +65,26 @@ namespace _Project.Scripts.Construction
             _deferredClickProcessor = CreateDeferredClickProcessor();
         }
 
-        public void Initialize(MoneyManagement moneyManagement)
+        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement)
         {
             _moneyManagement = moneyManagement;
+            _levelCompletionManagement = levelCompletionManagement;
+
+            _levelCompletionManagement.ReadOnlyLevelFailed
+                .Subscribe(_ => ClearUsingBuildingSites())
+                .AddTo(Disposables);
+
+            _levelCompletionManagement.ReadOnlyLevelCompleted
+                .Subscribe(_ => ClearUsingBuildingSites())
+                .AddTo(Disposables);
         }
 
         public void Dispose()
         {
             if (_deferredClickProcessor != null)
                 UnityEngine.Object.Destroy(_deferredClickProcessor.gameObject);
+
+            ClearUsingBuildingSites();
 
             ConstructionView.OnBuildTowerButtonClickedEvent -= OnBuildTowerButtonClicked;
 
@@ -81,6 +97,17 @@ namespace _Project.Scripts.Construction
             _pointerPressAction.Dispose();
 
             Disposables.Dispose();
+        }
+
+        private void ClearUsingBuildingSites()
+        {
+            foreach (var buildingSite in UsingBuildingSitesInCurrentLevel)
+            {
+                if (buildingSite.CurrentTower != null)
+                    buildingSite.RemoveCurrentTower();
+            }
+
+            UsingBuildingSitesInCurrentLevel.Clear();
         }
 
         private void OnPointerPressPerformed(InputAction.CallbackContext callbackContext)
@@ -178,8 +205,9 @@ namespace _Project.Scripts.Construction
             _moneyManagement.OnDestroyedTower(_selectedBuildingSite.CurrentTower);
             _selectedBuildingSite.RemoveCurrentTower();
 
-            _selectedBuildingSite.HideSelectView();
+            UsingBuildingSitesInCurrentLevel.Remove(_selectedBuildingSite);
 
+            _selectedBuildingSite.HideSelectView();
             ConstructionView.HideUpgradeView();
         }
 
@@ -192,6 +220,8 @@ namespace _Project.Scripts.Construction
             {
                 _selectedBuildingSite.BuildTower(towerPrefab);
                 _selectedBuildingSite.HideSelectView();
+
+                UsingBuildingSitesInCurrentLevel.Add(_selectedBuildingSite);
 
                 ConstructionView.HideBuildView();
                 CameraMoving.UnlockMoving();

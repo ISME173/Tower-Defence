@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Construction
 {
-    public abstract class Tower : MonoBehaviour
+    public abstract class Tower : MonoBehaviour, IDisposable
     {
         private readonly Dictionary<Enemy, IDisposable> EnemiesInAttackZone = new();
 
@@ -133,7 +133,7 @@ namespace _Project.Scripts.Construction
             UpdateWeaponProjectileView();
         }
 
-        public virtual void Deinitialize()
+        public virtual void Dispose()
         {
             _attackZone.OnTriggerEnterEvent -= OnTriggerEnterInAttackZone;
             _attackZone.OnTrggerExitEvent -= OnTriggerExitFromAttackZone;

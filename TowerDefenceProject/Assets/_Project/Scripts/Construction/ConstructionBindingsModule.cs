@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
+using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -30,9 +31,9 @@ namespace _Project.Scripts.Construction
         }
 
         [Inject]
-        private void Initialize(MoneyManagement moneyManagement)
+        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement)
         {
-            _constructionController.Initialize(moneyManagement);
+            _constructionController.Initialize(moneyManagement, levelCompletionManagement);
         }
     }
 }

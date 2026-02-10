@@ -38,9 +38,9 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
                 .BindToEulerAngles(_cristalsForAnimate);
         }
 
-        public override void Deinitialize()
+        public override void Dispose()
         {
-            base.Deinitialize();
+            base.Dispose();
 
             _cristalsBobAnimateHandle.TryCancel();
             _cristalsRotateAnimateHandle.TryCancel();

@@ -28,12 +28,6 @@ namespace _Project.Scripts.EnemiesManagement
             containerBuilder.RegisterValue(_enemiesSpawner);
         }
 
-        [Button]
-        private void StartSpawnProcess()
-        {
-            _enemiesSpawner?.StartSpawnProcess();
-        }
-
         [Inject]
         private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
         {
