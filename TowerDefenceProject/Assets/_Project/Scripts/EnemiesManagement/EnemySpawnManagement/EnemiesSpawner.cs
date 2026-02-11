@@ -155,6 +155,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                     }
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // Its normal
+            }
             catch (Exception ex)
             {
                 Debug.LogException(ex);

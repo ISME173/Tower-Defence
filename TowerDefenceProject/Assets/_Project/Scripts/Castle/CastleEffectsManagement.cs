@@ -14,8 +14,8 @@ namespace _Project.Scripts.Castle
         private readonly LMotionShakeSerializableSettings CastleTakeDamageMotionSettings;
         private readonly CastleHealthManagement CastleHealthManagement;
 
-        private CompositeDisposable _compositeDisposable = new();
         private LevelsCreator _levelsCreator;
+        private CompositeDisposable _compositeDisposable = new();
         private MotionHandle _takeDamageMotionHandle;
 
         public CastleEffectsManagement(LMotionShakeSerializableSettings castleTakeDamageMotionSettings, CastleHealthManagement castleHealthManagement)
@@ -28,6 +28,10 @@ namespace _Project.Scripts.Castle
         {
             _levelsCreator = levelsCreator;
 
+            _levelsCreator.LevelCreated
+                .Subscribe(_ => _takeDamageMotionHandle.TryCancel())
+                .AddTo(_compositeDisposable);
+
             CastleHealthManagement.ReadOnlyCastleDamageTaken
                 .Subscribe(OnCastleDamageTaken)
                 .AddTo(_compositeDisposable);
@@ -36,6 +40,7 @@ namespace _Project.Scripts.Castle
         public void Dispose()
         {
             _compositeDisposable.Dispose();
+            _takeDamageMotionHandle.TryCancel();
         }
 
         private void OnCastleDamageTaken(int currentHealth)
@@ -43,19 +48,13 @@ namespace _Project.Scripts.Castle
             Debug.Log($"Castle damage taken. Current health: {currentHealth}");
 
             Transform castleView = _levelsCreator.CurrentLevelObject.CastleView.transform;
-            Vector3 castlePosition = castleView.localPosition;
+            Vector3 castlePosition = castleView.position;
 
             _takeDamageMotionHandle.TryCancel();
-            MotionSequenceBuilder motionSequenceBuilder = LSequence.Create();
 
-            motionSequenceBuilder
-                .Append(LMotion.Create(castlePosition.z, castlePosition.z + CastleTakeDamageMotionSettings.Strenght, CastleTakeDamageMotionSettings.Duration)
-                       .BindToLocalPositionZ(castleView))
-                .Append(LMotion.Create(castlePosition.z, castlePosition.z - CastleTakeDamageMotionSettings.Strenght, CastleTakeDamageMotionSettings.Duration)
-                       .BindToLocalPositionZ(castleView));
-
-            _takeDamageMotionHandle = motionSequenceBuilder.Run();
-
+            _takeDamageMotionHandle = LMotion.Shake.Create(castlePosition.x, CastleTakeDamageMotionSettings.Strenght, CastleTakeDamageMotionSettings.Duration)
+                .WithCancelOnError()
+                .BindToPositionX(castleView);
         }
     }
 }

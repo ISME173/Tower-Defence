@@ -15,7 +15,7 @@ namespace _Project.Scripts.LevelsManagement
 
         public readonly ReplaySubject<LevelObject> LevelCreated = new();
 
-        public LevelObject CurrentLevelObject { get; private set; } = null;
+        public LevelObject CurrentLevelObject => _currentLevelObject;
 
         public LevelsCreator(ICollection<LevelObject> levelObjectPrefabs, Transform createLevelPoint)
         {
@@ -75,10 +75,9 @@ namespace _Project.Scripts.LevelsManagement
             LevelObject levelObject = AllLevelObjectPrefabs[levelIndex];
 
             LevelObject createdLevelObject = GameObject.Instantiate(levelObject);
-            createdLevelObject.transform.SetParent(CreateLevelPoint);
-            createdLevelObject.transform.localPosition = Vector3.zero;
+            createdLevelObject.transform.position = CreateLevelPoint.position;
 
-            CurrentLevelObject = levelObject;
+            _currentLevelObject = createdLevelObject;
 
             _currentLevelIndex = levelIndex;
             LevelCreated?.OnNext(createdLevelObject);

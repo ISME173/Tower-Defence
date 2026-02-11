@@ -4,7 +4,7 @@ using UnityEngine;
 namespace _Project.Scripts.Utilities
 {
     [Serializable]
-    public struct LMotionShakeSerializableSettings
+    public class LMotionShakeSerializableSettings
     {
         [SerializeField, Min(0)] private float _startValue;
         [SerializeField, Min(0)] private float _strenght;
