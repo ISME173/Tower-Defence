@@ -16,6 +16,10 @@ namespace _Project.Scripts.MoneySystem
         private EnemiesSpawner _enemiesSpawner;
         private LevelsCreator _levelCreator;
 
+
+        private readonly Subject<Unit> OnMoneysAdded = new Subject<Unit>();
+
+        public Observable<Unit> ReadOnlyOnMoneysAdded => OnMoneysAdded;
         public ReadOnlyReactiveProperty<int> ReadOnlyCurrentAmountOfMoney => CurrentAmountOfMoney;
 
         public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator)
@@ -42,6 +46,7 @@ namespace _Project.Scripts.MoneySystem
             int refundAfterDestruction = Math.Max(0, tower.RefundAfterDestruction);
 
             CurrentAmountOfMoney.Value += refundAfterDestruction;
+            OnMoneysAdded?.OnNext(Unit.Default);
         }
 
         public bool TryGetMoneyForBuildTower(Tower towerPrefab)
@@ -104,6 +109,7 @@ namespace _Project.Scripts.MoneySystem
             }
 
             CurrentAmountOfMoney.Value += moneyForMurderEnemy;
+            OnMoneysAdded?.OnNext(Unit.Default);
         }
     }
 }

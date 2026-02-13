@@ -986,7 +986,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -10.001068, y: 0}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &300982467
@@ -1040,7 +1040,7 @@ GameObject:
   - component: {fileID: 312926393}
   - component: {fileID: 312926392}
   m_Layer: 5
-  m_Name: GetHeartsButton
+  m_Name: GetMoneysButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2337,7 +2337,7 @@ GameObject:
   - component: {fileID: 609611976}
   - component: {fileID: 609611975}
   m_Layer: 5
-  m_Name: heartIcon
+  m_Name: MoneyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3517,6 +3517,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Castle.CastleHealthView
   _currentHealthText: {fileID: 1471796820}
   _addHealthByAdButton: {fileID: 705683879}
+  _heartIcon: {fileID: 300982466}
+  _shakeHeartSettings:
+    _strenght: 10
+    _duration: 0.2
 --- !u!1 &1023577265
 GameObject:
   m_ObjectHideFlags: 0
@@ -3945,6 +3949,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.MoneySystem.MoneyView
   _amountOfMoneyText: {fileID: 65368140}
   _onAddMoneyByAdButton: {fileID: 312926392}
+  _moneyIcon: {fileID: 609611974}
+  _moneyIconIncreasedLocalScale: {x: 1.25, y: 1.25, z: 1}
+  _moneyIncreaseDuration: 0.15
+  _moneyIncreaseEase: 5
+  _moneyIconReductionLocalScale: {x: 1, y: 1, z: 1}
+  _moneyReductionDuration: 0.15
+  _moneyReductionEase: 5
 --- !u!1 &1263585417
 GameObject:
   m_ObjectHideFlags: 0
@@ -4022,7 +4033,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Castle.CastleBindingsModule
   _castleHealthView: {fileID: 977379065}
   _shakeSerializableSettings:
-    _startValue: 0
     _strenght: 0.3
     _duration: 0.3
 --- !u!1 &1292800422

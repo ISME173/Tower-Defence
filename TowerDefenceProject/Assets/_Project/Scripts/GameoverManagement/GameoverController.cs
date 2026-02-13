@@ -4,7 +4,6 @@ using System;
 
 namespace _Project.Scripts.GameoverMagamenet
 {
-
     public class GameoverController : IDisposable
     {
         private readonly CompositeDisposable Disposables = new();
