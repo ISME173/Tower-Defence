@@ -22,12 +22,14 @@ namespace _Project.Scripts.Construction
 
         public void ShowSelectView()
         {
-            _selectView.SetActive(true);
+            if (_selectView != null)
+                _selectView.SetActive(true);
         }
 
         public void HideSelectView()
         {
-            _selectView.SetActive(false);
+            if (_selectView != null)
+                _selectView.SetActive(false);
         }
 
         public bool CanBuildTower()

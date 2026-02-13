@@ -128,8 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9868015}
+  - component: {fileID: 9868016}
   m_Layer: 5
-  m_Name: Defeat View
+  m_Name: Gameover View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,6 +156,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9868016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9868014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0503b5c58a7f3e843a5b99fe046c862d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.GameoverMagamenet.GameoverView
+  _mainPanel: {fileID: 845136317}
+  _restartButton: {fileID: 219852759}
+  _menuButton: {fileID: 568591199}
 --- !u!1 &59036909
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 109634304}
+  - component: {fileID: 109634305}
   m_Layer: 5
   m_Name: Victory VIew
   m_TagString: Untagged
@@ -524,6 +541,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &109634305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109634303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3b7f79c54cf364abc706cf0e8dd093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.VictoryManagement.VictoryView
+  _mainPanel: {fileID: 1364458347}
+  _continueButton: {fileID: 602883811}
+  _restartButton: {fileID: 442510974}
+  _menuButton: {fileID: 653988643}
 --- !u!1 &146631467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,6 +1192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a330c0bd91681e40a65f7fab9f0cf60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.VictoryManagement.VictoryManagementBindingsModule
+  _victoryView: {fileID: 109634305}
 --- !u!1 &322098971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9e379c60d25a849babbf55172570d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.GameoverMagamenet.GameoverManagementBindingsModule
+  _gameoverView: {fileID: 9868016}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,7 +2195,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 7.32
+  m_PixelsPerUnitMultiplier: 27.14
 --- !u!222 &596539874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3402,7 +3437,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 845136318}
-  - component: {fileID: 845136319}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -3432,18 +3466,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &845136319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845136317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8e6f0192ecd8ce46bc9b0bafc20cc2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VictoryVIew
 --- !u!1 &977379063
 GameObject:
   m_ObjectHideFlags: 0
@@ -4188,7 +4210,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1364458348}
-  - component: {fileID: 1364458349}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -4218,18 +4239,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1364458349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364458347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8e6f0192ecd8ce46bc9b0bafc20cc2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VictoryVIew
 --- !u!1 &1450020236
 GameObject:
   m_ObjectHideFlags: 0
@@ -5268,21 +5277,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 320640572}
-  - {fileID: 1482966217}
-  - {fileID: 2060574963}
-  - {fileID: 1285109656}
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
   - {fileID: 322098973}
+  - {fileID: 2060574963}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
+  - {fileID: 1285109656}
+  - {fileID: 1482966217}
+  - {fileID: 2108613273}
   _readOnlyBindingModules:
-  - {fileID: 320640572}
-  - {fileID: 1482966217}
-  - {fileID: 2060574963}
-  - {fileID: 1285109656}
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
   - {fileID: 322098973}
+  - {fileID: 2060574963}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
+  - {fileID: 1285109656}
+  - {fileID: 1482966217}
+  - {fileID: 2108613273}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5590,7 +5599,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 7.32
+  m_PixelsPerUnitMultiplier: 14.94
 --- !u!222 &2038351650
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ namespace _Project.Scripts.GameoverMagamenet
 {
     public class GameoverManagementBindingsModule : BindingModule
     {
+        [SerializeField] private GameoverView _gameoverView;
+
         private GameoverController _gameoverController;
 
         private void OnDestroy()
@@ -17,7 +19,7 @@ namespace _Project.Scripts.GameoverMagamenet
 
         public override void Bind(ContainerBuilder containerBuilder)
         {
-            _gameoverController = new GameoverController();
+            _gameoverController = new GameoverController(_gameoverView);
             containerBuilder.RegisterValue(_gameoverController);
         }
 

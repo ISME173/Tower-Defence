@@ -1,17 +1,32 @@
 ﻿using _Project.Scripts.LevelsManagement;
 using R3;
 using System;
-using UnityEngine;
 
 namespace _Project.Scripts.GameoverMagamenet
 {
 
     public class GameoverController : IDisposable
     {
-        private readonly CompositeDisposable Disposables = new(); 
+        private readonly CompositeDisposable Disposables = new();
+        private readonly GameoverView GameoverView;
 
         private LevelsCreator _levelsCreator;
         private LevelCompletionManagement _levelCompletionManagement;
+
+        public GameoverController(GameoverView gameoverView)
+        {
+            GameoverView = gameoverView;
+
+            GameoverView.ReadOnlyOnMenuButtonClicked
+                .Subscribe(OnMenuButtonClicked)
+                .AddTo(Disposables);
+
+            GameoverView.ReadOnlyOnRestartButtonClicked
+                .Subscribe(OnRestartButtonClicked)
+                .AddTo(Disposables);
+
+            GameoverView.Initialize();
+        }
 
         public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
         {
@@ -25,12 +40,24 @@ namespace _Project.Scripts.GameoverMagamenet
 
         public void Dispose()
         {
+            GameoverView?.Dispose();
             Disposables.Dispose();
+        }
+
+        private void OnRestartButtonClicked(Unit unit)
+        {
+            GameoverView.Hide();
+            _levelsCreator.RebuildCurrentLevel();
+        }
+
+        private void OnMenuButtonClicked(Unit unit)
+        {
+            
         }
 
         private void OnLevelFailed(Unit unit)
         {
-            _levelsCreator.RebuildCurrentLevel();
+            GameoverView.Show();
         }
     }
 }

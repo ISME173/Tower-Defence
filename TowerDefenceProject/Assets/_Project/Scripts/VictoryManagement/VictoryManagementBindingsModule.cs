@@ -9,6 +9,8 @@ namespace _Project.Scripts.VictoryManagement
 
     public class VictoryManagementBindingsModule : BindingModule
     {
+        [SerializeField] private VictoryView _victoryView;
+
         private VictoryController _victoryController;
 
         private void OnDestroy()
@@ -18,7 +20,7 @@ namespace _Project.Scripts.VictoryManagement
 
         public override void Bind(ContainerBuilder containerBuilder)
         {
-            _victoryController = new VictoryController();
+            _victoryController = new VictoryController(_victoryView);
             containerBuilder.RegisterValue(_victoryController);
         }
 
