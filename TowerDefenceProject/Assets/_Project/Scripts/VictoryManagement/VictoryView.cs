@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using AnimationsUI.CoreScripts;
+using R3;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ namespace _Project.Scripts.VictoryManagement
     public class VictoryView : MonoBehaviour, IDisposable
     {
         [SerializeField] private GameObject _mainPanel;
+        [SerializeField] private PopupAnimationPanelsSequence _panelAnimationSequence;
         [Space]
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _restartButton;
@@ -35,11 +37,13 @@ namespace _Project.Scripts.VictoryManagement
         public void Show()
         {
             _mainPanel.gameObject.SetActive(true);
+            _panelAnimationSequence.Show(null);
         }
 
         public void Hide()
         {
-            _mainPanel.gameObject.SetActive(false);
+            //_mainPanel.gameObject.SetActive(false);
+            _panelAnimationSequence.Hide(() => _mainPanel.gameObject.SetActive(false));
         }
     }
 }

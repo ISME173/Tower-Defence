@@ -615,7 +615,7 @@ Transform:
   m_GameObject: {fileID: 3976105515236213295}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00019527622, y: 0.585, z: 0.72447187}
+  m_LocalPosition: {x: -0.00019527622, y: 0.585, z: 0.048}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1513,6 +1513,8 @@ MonoBehaviour:
   _rotationTime: 0.1
   _diedEffect: {fileID: 3341092639582381331}
   _center: {fileID: 5020074000796414401}
+  _vulnerabilityToTowerPrefabsList: []
+  _resistanceToTowerPrefabsList: []
 --- !u!1 &9033545015223484084
 GameObject:
   m_ObjectHideFlags: 0
