@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using AnimationsUI.CoreScripts;
+using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace _Project.Scripts.GameoverMagamenet
     public class GameoverView : MonoBehaviour
     {
         [SerializeField] private GameObject _mainPanel;
+        [SerializeField] private PopupAnimationPanelsSequence _animationSeqence;
         [Space]
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _menuButton;
@@ -30,11 +32,12 @@ namespace _Project.Scripts.GameoverMagamenet
         public void Show()
         {
             _mainPanel.gameObject.SetActive(true);
+            _animationSeqence.Show(null);
         }
 
         public void Hide()
         {
-            _mainPanel.gameObject.SetActive(false);
+            _animationSeqence.Hide(() => _mainPanel.gameObject.SetActive(false));
         }
     }
 }

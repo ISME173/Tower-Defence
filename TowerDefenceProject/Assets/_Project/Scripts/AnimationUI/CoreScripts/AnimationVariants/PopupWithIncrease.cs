@@ -1,4 +1,4 @@
-using LitMotion;
+﻿using LitMotion;
 using LitMotion.Extensions;
 using System;
 using UnityEngine;
@@ -58,6 +58,7 @@ namespace AnimationsUI.CoreScripts.AnimationVariants
 
             if (_showAnimationsSettings.WithLoop == false)
             {
+                PanelForAnimate.localScale = _hidedLocalScale;
                 _showAnimationHandle = LMotion.Create(_hidedLocalScale, _showedLocalScale, _showAnimationsSettings.Time)
                     .WithEase(_showAnimationsSettings.Ease)
                     .WithCancelOnError()
