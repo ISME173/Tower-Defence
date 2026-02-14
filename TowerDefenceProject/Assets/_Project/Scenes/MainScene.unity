@@ -2128,6 +2128,7 @@ MonoBehaviour:
   _createLevelPoint: {fileID: 1263585418}
   _levelObjectPrefabs:
   - {fileID: 6215329666418542582, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
+  - {fileID: 6215329666418542582, guid: 5281ae546abf3544695f7d746609b3f9, type: 3}
 --- !u!1 &568591197
 GameObject:
   m_ObjectHideFlags: 0
@@ -6919,21 +6920,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 320640572}
-  - {fileID: 322098973}
-  - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 2060574963}
-  - {fileID: 2108613273}
   - {fileID: 565078028}
+  - {fileID: 322098973}
+  - {fileID: 320640572}
+  - {fileID: 1285109656}
+  - {fileID: 2108613273}
+  - {fileID: 2060574963}
+  - {fileID: 1482966217}
   _readOnlyBindingModules:
-  - {fileID: 320640572}
-  - {fileID: 322098973}
-  - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 2060574963}
-  - {fileID: 2108613273}
   - {fileID: 565078028}
+  - {fileID: 322098973}
+  - {fileID: 320640572}
+  - {fileID: 1285109656}
+  - {fileID: 2108613273}
+  - {fileID: 2060574963}
+  - {fileID: 1482966217}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
