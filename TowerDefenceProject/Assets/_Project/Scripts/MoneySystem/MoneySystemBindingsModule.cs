@@ -10,6 +10,7 @@ namespace _Project.Scripts.MoneySystem
     public class MoneySystemBindingsModule : BindingModule
     {
         [SerializeField] private MoneyView _moneyView;
+        [SerializeField, Min(0)] private int _getMoneyCountAfterWatchAdv;
 
         private MoneyManagement _moneyManagement;
 
@@ -21,7 +22,7 @@ namespace _Project.Scripts.MoneySystem
 
         public override void Bind(ContainerBuilder containerBuilder)
         {
-            _moneyManagement = new();
+            _moneyManagement = new(_moneyView);
 
             containerBuilder.RegisterValue(_moneyManagement);
             containerBuilder.RegisterValue(_moneyView);
@@ -30,7 +31,7 @@ namespace _Project.Scripts.MoneySystem
         [Inject]
         private void Initialize(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator)
         {
-            _moneyManagement.Initialze(enemiesSpawner, levelsCreator);
+            _moneyManagement.Initialze(enemiesSpawner, levelsCreator, _getMoneyCountAfterWatchAdv);
         }
     }
 }

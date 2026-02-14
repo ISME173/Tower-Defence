@@ -18,6 +18,11 @@ namespace _Project.Scripts.Castle
         [SerializeField] private TextMeshProUGUI _currentHealthText;
         [SerializeField] private Button _addHealthByAdButton;
         [SerializeField] private RectTransform _heartIcon;
+        [Space]
+        [SerializeField] private Button _getHeartsButton;
+        [SerializeField] private RectTransform _getHeartsAfterWatchAdvPanel;
+        [SerializeField] private Button _watchAdvButton;
+        [SerializeField] private Button _noWatchAdvButton;
 
         [Header("Settings")]
         [SerializeField] private LMotionShakeSerializableSettings _shakeHeartSettings; 
@@ -25,14 +30,28 @@ namespace _Project.Scripts.Castle
         private MotionHandle _heartIconShakeHandle;
         private CastleHealthManagement _castleHealthManagement;
 
-        private readonly Subject<Unit> OnAddHealthByAdButtonClicked = new();
+        private readonly Subject<Unit> OnWatchAdvButtonClicked = new(), OnNoWatchAdvButtonClicked = new(), OnGetHeartsButtonClicked = new();
 
-        public ISubject<Unit> ReadOnlyOnAddHealthByAdButtonClicked => OnAddHealthByAdButtonClicked;
+        public Observable<Unit> ReadOnlyOnWatchAdvButtonClicked => OnWatchAdvButtonClicked;
+        public Observable<Unit> ReadOnlyOnNoWatchAdvButtonClicked => OnNoWatchAdvButtonClicked;
+        public Observable<Unit> ReadOnlyOnGetHeartsButtonClicked => OnGetHeartsButtonClicked;
 
         public void Dispose()
         {
             Disposables.Dispose();
-            OnAddHealthByAdButtonClicked?.Dispose();
+            
+            OnWatchAdvButtonClicked.OnCompleted();
+            OnNoWatchAdvButtonClicked.OnCompleted();
+        }
+
+        public void ShowWatchAdvForGetHeartsPanel()
+        {
+            _getHeartsAfterWatchAdvPanel.gameObject.SetActive(true);
+        }
+
+        public void HideWatchAdvForGetHeartsPanel()
+        {
+            _getHeartsAfterWatchAdvPanel.gameObject.SetActive(false);
         }
 
         [Inject]
@@ -48,7 +67,9 @@ namespace _Project.Scripts.Castle
                 .Subscribe(OnCastleDamageTaken)
                 .AddTo(Disposables);
 
-            _addHealthByAdButton.onClick.AddListener(() => OnAddHealthByAdButtonClicked?.OnNext(Unit.Default));
+            _getHeartsButton.onClick.AddListener(() => OnGetHeartsButtonClicked?.OnNext(Unit.Default));
+            _watchAdvButton.onClick.AddListener(() => OnWatchAdvButtonClicked?.OnNext(Unit.Default));
+            _noWatchAdvButton.onClick.AddListener(() => OnNoWatchAdvButtonClicked?.OnNext(Unit.Default));
         }
 
         private void OnCastleDamageTaken(int currentHealth)

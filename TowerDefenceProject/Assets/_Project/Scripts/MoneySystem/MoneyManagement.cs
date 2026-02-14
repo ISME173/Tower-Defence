@@ -10,35 +10,54 @@ namespace _Project.Scripts.MoneySystem
 {
     public class MoneyManagement : IDisposable
     {
+        private readonly MoneyView MoneyView;
         private readonly CompositeDisposable Disposables = new();
         private readonly ReactiveProperty<int> CurrentAmountOfMoney = new();
 
+        private int _getMoneysCountAfterWatchAdv;
         private EnemiesSpawner _enemiesSpawner;
         private LevelsCreator _levelCreator;
-
 
         private readonly Subject<Unit> OnMoneysAdded = new Subject<Unit>();
 
         public Observable<Unit> ReadOnlyOnMoneysAdded => OnMoneysAdded;
         public ReadOnlyReactiveProperty<int> ReadOnlyCurrentAmountOfMoney => CurrentAmountOfMoney;
 
-        public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator)
+        public MoneyManagement(MoneyView moneyView)
+        {
+            MoneyView = moneyView;
+
+            MoneyView.ReadOnlyOnGetMoneyButtonClicked
+                .Subscribe(OnGetMoneyButtonClicked)
+                .AddTo(Disposables);
+
+            MoneyView.ReadOnlyOnNoWatchAdvButtonClicked
+                .Subscribe(OnNoWatchAdvForGetMoneyButtonClicked)
+                .AddTo(Disposables);
+
+            MoneyView.ReadOnlyOnWatchAdvButtonClicked
+                .Subscribe(OnWatchAdvForGetMoneyButtonClicked)
+                .AddTo(Disposables);
+        }
+
+        public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, int getMoneysCountAfterWatchAdv)
         {
             _enemiesSpawner = enemiesSpawner;
             _levelCreator = levelsCreator;
+            _getMoneysCountAfterWatchAdv = getMoneysCountAfterWatchAdv;
 
             _enemiesSpawner.ReadOnlyEnemyDied
                 .Subscribe(OnEnemyDied)
                 .AddTo(Disposables);
 
-            _levelCreator.LevelCreated
+            _levelCreator.ReadOnlyLevelCreated
                 .Subscribe(OnLevelCreated)
                 .AddTo(Disposables);
         }
 
         public void Dispose()
         {
-            Disposables?.Dispose();
+            Disposables.Dispose();
         }
 
         public void OnDestroyedTower(Tower tower)
@@ -91,6 +110,22 @@ namespace _Project.Scripts.MoneySystem
             }
 
             return false;
+        }
+
+        private void OnGetMoneyButtonClicked(Unit unit)
+        {
+            MoneyView.ShowWatchAdvForGetMoneyPanel();
+        }
+
+        private void OnWatchAdvForGetMoneyButtonClicked(Unit unit)
+        {
+            CurrentAmountOfMoney.Value += _getMoneysCountAfterWatchAdv;
+            MoneyView.HideWatchAdvForGetMoneyPanel();
+        }
+
+        private void OnNoWatchAdvForGetMoneyButtonClicked(Unit unit)
+        {
+            MoneyView.HideWatchAdvForGetMoneyPanel();
         }
 
         private void OnLevelCreated(LevelObject levelObject)

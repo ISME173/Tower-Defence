@@ -13,8 +13,9 @@ namespace _Project.Scripts.LevelsManagement
         private LevelObject _currentLevelObject;
         private int _currentLevelIndex;
 
-        public readonly ReplaySubject<LevelObject> LevelCreated = new();
+        private readonly ReplaySubject<LevelObject> LevelCreated = new();
 
+        public Observable<LevelObject> ReadOnlyLevelCreated => LevelCreated;
         public LevelObject CurrentLevelObject => _currentLevelObject;
 
         public LevelsCreator(ICollection<LevelObject> levelObjectPrefabs, Transform createLevelPoint)
@@ -29,7 +30,7 @@ namespace _Project.Scripts.LevelsManagement
 
         public void Dispose()
         {
-            LevelCreated?.OnCompleted();
+           LevelCreated?.OnCompleted();
         }
 
         public void CreateNextLevel()

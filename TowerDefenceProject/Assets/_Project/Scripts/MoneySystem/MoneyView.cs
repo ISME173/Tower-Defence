@@ -17,6 +17,11 @@ namespace _Project.Scripts.MoneySystem
         [SerializeField] private TextMeshProUGUI _amountOfMoneyText;
         [SerializeField] private Button _onAddMoneyByAdButton;
         [SerializeField] private RectTransform _moneyIcon;
+        [Space]
+        [SerializeField] private Button _getMoneyButton;
+        [SerializeField] private RectTransform _getMoneyAfterWatchAdvPanel;
+        [SerializeField] private Button _watchAdvButton;
+        [SerializeField] private Button _noWatchAdvButton;
 
         [Header("Settings")]
         [SerializeField] private Vector3 _moneyIconIncreasedLocalScale;
@@ -30,15 +35,30 @@ namespace _Project.Scripts.MoneySystem
         private MotionHandle _moneyIconIncreaseHandle;
         private MoneyManagement _moneyManagement;
 
-        private readonly Subject<Unit> OnAddMoneyByAdButtonClicked = new();
+        private readonly Subject<Unit> OnWatchAdvButtonClicked = new(), OnNoWatchAdvButtonClicked = new(), OnGetMoneyButtonClicked = new();
 
-        public ISubject<Unit> ReadOnlyOnAddMoneyByAdButtonClicked => OnAddMoneyByAdButtonClicked;
+        public Observable<Unit> ReadOnlyOnWatchAdvButtonClicked => OnWatchAdvButtonClicked;
+        public Observable<Unit> ReadOnlyOnNoWatchAdvButtonClicked => OnNoWatchAdvButtonClicked;
+        public Observable<Unit> ReadOnlyOnGetMoneyButtonClicked => OnGetMoneyButtonClicked;
 
         public void Dispose()
         {
             Disposables.Dispose();
-            OnAddMoneyByAdButtonClicked?.Dispose();
+
+            OnWatchAdvButtonClicked.OnCompleted();
+            OnNoWatchAdvButtonClicked.OnCompleted();
         }
+
+        public void ShowWatchAdvForGetMoneyPanel()
+        {
+            _getMoneyAfterWatchAdvPanel.gameObject.SetActive(true);
+        }
+
+        public void HideWatchAdvForGetMoneyPanel()
+        {
+            _getMoneyAfterWatchAdvPanel.gameObject.SetActive(false);
+        }
+
 
         private void OnCurrentAmounfOfMoneyChanged(int amountOfMoney)
         {
@@ -58,7 +78,9 @@ namespace _Project.Scripts.MoneySystem
                 .Subscribe(OnMoneysAdded)
                 .AddTo(Disposables);
 
-            _onAddMoneyByAdButton.onClick.AddListener(() => OnAddMoneyByAdButtonClicked?.OnNext(Unit.Default));
+            _getMoneyButton.onClick.AddListener(() => OnGetMoneyButtonClicked?.OnNext(Unit.Default));
+            _watchAdvButton.onClick.AddListener(() => OnWatchAdvButtonClicked?.OnNext(Unit.Default));
+            _noWatchAdvButton.onClick.AddListener(() => OnNoWatchAdvButtonClicked?.OnNext(Unit.Default));
         }
 
         private void OnMoneysAdded(Unit unit)

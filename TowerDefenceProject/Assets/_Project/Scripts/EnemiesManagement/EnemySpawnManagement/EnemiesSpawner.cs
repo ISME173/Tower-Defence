@@ -41,7 +41,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
 
-            _levelsCreator.LevelCreated
+            _levelsCreator.ReadOnlyLevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
                 .AddTo(Disposables);
 

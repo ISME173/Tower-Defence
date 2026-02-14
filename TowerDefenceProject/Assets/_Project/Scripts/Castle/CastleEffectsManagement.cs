@@ -28,7 +28,7 @@ namespace _Project.Scripts.Castle
         {
             _levelsCreator = levelsCreator;
 
-            _levelsCreator.LevelCreated
+            _levelsCreator.ReadOnlyLevelCreated
                 .Subscribe(_ => _takeDamageMotionHandle.TryCancel())
                 .AddTo(_compositeDisposable);
 

@@ -8,11 +8,13 @@ namespace _Project.Scripts.Castle
 {
     public class CastleHealthManagement
     {
+        private readonly CastleHealthView CastleHealthView;
         private readonly CompositeDisposable Disposables = new();
 
         private EnemiesSpawner _enemysSpawner;
         private LevelsCreator _levelsCreator;
         private int _maxHealth;
+        private int _addHeartsCountAfterWatchAdv;
 
         private readonly Subject<Unit> CastleDestroyed = new();
         private readonly Subject<int> CastleDamageTaken = new();
@@ -21,14 +23,32 @@ namespace _Project.Scripts.Castle
         public Observable<Unit> ReadOnlyCastleDestroyed => CastleDestroyed;
         public Observable<int> ReadOnlyCastleDamageTaken => CastleDamageTaken;
         public ReadOnlyReactiveProperty<int> ReadOnlyCurrentHealth => CurrentHealth;
-        public int MaxHealth => _maxHealth;
+
+        public CastleHealthManagement(CastleHealthView castleHealthView, int addHeartsCountAfterWatchAdv)
+        {
+            CastleHealthView = castleHealthView;
+
+            CastleHealthView.ReadOnlyOnGetHeartsButtonClicked
+                .Subscribe(OnGetHeartsButtonClicked)
+                .AddTo(Disposables);
+
+            CastleHealthView.ReadOnlyOnWatchAdvButtonClicked
+                .Subscribe(OnWatchAdvForGetHeartsButtonClicked)
+                .AddTo(Disposables);
+
+            CastleHealthView.ReadOnlyOnNoWatchAdvButtonClicked
+                .Subscribe(OnNoWatchAdvForGetHeartsButtonClicked)
+                .AddTo(Disposables);
+
+            _addHeartsCountAfterWatchAdv = addHeartsCountAfterWatchAdv;
+        }
 
         public void Initialize(EnemiesSpawner enemysSpawner, LevelsCreator levelsCreator)
         {
             _enemysSpawner = enemysSpawner;
             _levelsCreator = levelsCreator;
 
-            Disposables.Add(_levelsCreator.LevelCreated.Subscribe(OnLevelCreated));
+            Disposables.Add(_levelsCreator.ReadOnlyLevelCreated.Subscribe(OnLevelCreated));
             Disposables.Add(_enemysSpawner.ReadOnlyEnemyMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
         }
 
@@ -36,6 +56,22 @@ namespace _Project.Scripts.Castle
         {
             Disposables?.Dispose();
             CastleDestroyed?.Dispose();
+        }
+
+        private void OnGetHeartsButtonClicked(Unit unit)
+        {
+            CastleHealthView.ShowWatchAdvForGetHeartsPanel();
+        }
+
+        private void OnNoWatchAdvForGetHeartsButtonClicked(Unit unit)
+        {
+            CastleHealthView.HideWatchAdvForGetHeartsPanel();
+        }
+
+        private void OnWatchAdvForGetHeartsButtonClicked(Unit unit)
+        {
+            CurrentHealth.Value += _addHeartsCountAfterWatchAdv;
+            CastleHealthView.HideWatchAdvForGetHeartsPanel();
         }
 
         private void OnLevelCreated(LevelObject levelObject)

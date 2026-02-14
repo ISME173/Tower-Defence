@@ -121,7 +121,7 @@ namespace _Project.Scripts.CameraControll
             _yawStopElapsed = 0f;
             _yawStopVelocity = 0f;
 
-            LevelsCreator.LevelCreated
+            LevelsCreator.ReadOnlyLevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
                 .AddTo(_compositeDisposables);
         }
