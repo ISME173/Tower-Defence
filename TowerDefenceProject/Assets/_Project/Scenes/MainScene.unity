@@ -1688,13 +1688,13 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1750,13 +1750,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4142001, y: 0.17999125, z: -0.08393129, w: -0.88825506}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.16938, y: 3, z: -1.11192}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1772137881}
-  m_LocalEulerAnglesHint: {x: 50, y: 337.09, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6957,19 +6957,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 320640572}
   - {fileID: 565078028}
+  - {fileID: 320640572}
   - {fileID: 1285109656}
-  - {fileID: 2060574963}
   - {fileID: 2108613273}
+  - {fileID: 2060574963}
   - {fileID: 1482966217}
   - {fileID: 322098973}
   _readOnlyBindingModules:
-  - {fileID: 320640572}
   - {fileID: 565078028}
+  - {fileID: 320640572}
   - {fileID: 1285109656}
-  - {fileID: 2060574963}
   - {fileID: 2108613273}
+  - {fileID: 2060574963}
   - {fileID: 1482966217}
   - {fileID: 322098973}
 --- !u!114 &1804363960
