@@ -83,7 +83,7 @@ namespace _Project.Scripts.Construction
             if (towerForUpgrade.CanUpgrade())
             {
                 _upgradeTowerSlot.gameObject.SetActive(true);
-                _upgradeTowerSlot.UpdateView(towerForUpgrade.GetTowerIconForNextLevel(), towerForUpgrade.GetBuildPriceForNextLevel());
+                _upgradeTowerSlot.UpdateView(_upgradeTowerSlot.Icon.sprite, towerForUpgrade.GetBuildPriceForNextLevel());
             }
             else
                 _upgradeTowerSlot.gameObject.SetActive(false);

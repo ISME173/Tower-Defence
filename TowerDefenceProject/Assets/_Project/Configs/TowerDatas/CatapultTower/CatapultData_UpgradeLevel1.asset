@@ -17,7 +17,7 @@ MonoBehaviour:
   _projectileSpeed: 2
   _buildPrice: 25
   _refundAfterDestruction: 12
-  _towerIconSprite: {fileID: 0}
+  _towerIconSprite: {fileID: 21300000, guid: 048c11ad525f66e438726fe4c58dd6ea, type: 3}
   _projectilePrefab: {fileID: 96794479901081327, guid: be59df2effabbc94abedff28fdb9c492, type: 3}
   _trajectoryHeight: 1
   _weaponVerticalRotationInIdle: {x: 0, y: 0, z: 0}

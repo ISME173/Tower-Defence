@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Magic.MagicTower
   _attackZone: {fileID: 6773239647743860996}
-  _towerIconSprite: {fileID: 0}
+  _towerIconSprite: {fileID: 21300000, guid: 6d370ba2dd2daf646a76dce3284d60b9, type: 3}
   _projectilePointInWeapon: {fileID: 7791050169149675803}
   _name: Magic
   _upgradeLevelDatas:

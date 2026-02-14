@@ -600,7 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Ballista.BallistaTower
   _attackZone: {fileID: 4675016432059239619}
-  _towerIconSprite: {fileID: 0}
+  _towerIconSprite: {fileID: 21300000, guid: a70e3e186a2b59342927e8d929084ca4, type: 3}
   _projectilePointInWeapon: {fileID: 5651787826623985888}
   _name: Ballista
   _upgradeLevelDatas:

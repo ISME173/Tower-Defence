@@ -14,7 +14,6 @@ namespace _Project.Scripts.Construction
 
         [Header("References")]
         [SerializeField] private Trigger _attackZone;
-        [SerializeField] private Sprite _towerIconSprite;
         [SerializeField] private Transform _projectilePointInWeapon;
 
         [Header("Settings")]

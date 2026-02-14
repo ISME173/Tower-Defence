@@ -17,5 +17,5 @@ MonoBehaviour:
   _projectileSpeed: 10
   _buildPrice: 20
   _refundAfterDestruction: 10
-  _towerIconSprite: {fileID: 0}
+  _towerIconSprite: {fileID: 21300000, guid: ac0c43117add9d44bbf223751a3f4698, type: 3}
   _projectilePrefab: {fileID: 2826483462132512936, guid: a48bd30f64a15734caa33fbf1b985be2, type: 3}

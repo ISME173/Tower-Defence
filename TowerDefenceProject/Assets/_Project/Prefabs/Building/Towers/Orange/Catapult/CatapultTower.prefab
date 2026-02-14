@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Catapult.CatapultTower
   _attackZone: {fileID: 5532322807860910446}
-  _towerIconSprite: {fileID: 0}
+  _towerIconSprite: {fileID: 21300000, guid: 048c11ad525f66e438726fe4c58dd6ea, type: 3}
   _projectilePointInWeapon: {fileID: 8197575957641531444}
   _name: Catapult
   _upgradeLevelDatas:

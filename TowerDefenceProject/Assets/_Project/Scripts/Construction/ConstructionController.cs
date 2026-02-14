@@ -137,6 +137,9 @@ namespace _Project.Scripts.Construction
 
                     if (buildingSite != null)
                     {
+                        ConstructionView.HideUpgradeView();
+                        ConstructionView.HideBuildView();
+
                         _selectedBuildingSite?.HideSelectView();
                         _selectedBuildingSite = buildingSite;
 

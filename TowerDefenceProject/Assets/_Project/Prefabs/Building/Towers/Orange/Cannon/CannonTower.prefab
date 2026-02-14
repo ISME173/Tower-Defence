@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Cannon.CannonTower
   _attackZone: {fileID: 3840686970733031629}
-  _towerIconSprite: {fileID: 0}
+  _towerIconSprite: {fileID: 21300000, guid: ac0c43117add9d44bbf223751a3f4698, type: 3}
   _projectilePointInWeapon: {fileID: 7096056484480718873}
   _name: Cannon
   _upgradeLevelDatas:

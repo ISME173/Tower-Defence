@@ -11,6 +11,7 @@ namespace _Project.Scripts.Construction
         [SerializeField] private Button _buildTowerButton;
 
         public Button BuildTowerButton => _buildTowerButton;
+        public Image Icon => _towerIcon;
 
         public void UpdateView(Sprite towerIcon, int towerBuildPrice)
         {
