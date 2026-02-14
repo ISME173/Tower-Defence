@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b43e0258995a9b47bf70c728a85f1ac, type: 3}
-  m_Name: Level1
+  m_Name: Level_2
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.EnemySpawnManagement.EnemysInLevelSpawnSeqence
   _enemyGroupsSpawnSettings:
   - _secondsDelayForSpawnAfterPreviousSpawn: 4
