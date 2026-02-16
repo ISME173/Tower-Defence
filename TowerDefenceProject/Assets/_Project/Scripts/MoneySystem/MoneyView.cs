@@ -1,4 +1,5 @@
-﻿using LitMotion;
+﻿using AnimationsUI.CoreScripts;
+using LitMotion;
 using LitMotion.Extensions;
 using R3;
 using Reflex.Attributes;
@@ -22,6 +23,8 @@ namespace _Project.Scripts.MoneySystem
         [SerializeField] private RectTransform _getMoneyAfterWatchAdvPanel;
         [SerializeField] private Button _watchAdvButton;
         [SerializeField] private Button _noWatchAdvButton;
+        [Space]
+        [SerializeField] private PopupAnimationPanelsSequence _getMoneyPanelAnimation;
 
         [Header("Settings")]
         [SerializeField] private Vector3 _moneyIconIncreasedLocalScale;
@@ -52,11 +55,12 @@ namespace _Project.Scripts.MoneySystem
         public void ShowWatchAdvForGetMoneyPanel()
         {
             _getMoneyAfterWatchAdvPanel.gameObject.SetActive(true);
+            _getMoneyPanelAnimation.Show(null);
         }
 
         public void HideWatchAdvForGetMoneyPanel()
         {
-            _getMoneyAfterWatchAdvPanel.gameObject.SetActive(false);
+            _getMoneyPanelAnimation.Hide(() => _getMoneyAfterWatchAdvPanel.gameObject.SetActive(false));
         }
 
 

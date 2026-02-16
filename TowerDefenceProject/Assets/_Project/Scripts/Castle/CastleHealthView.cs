@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Utilities;
+using AnimationsUI.CoreScripts;
 using LitMotion;
 using LitMotion.Extensions;
 using R3;
@@ -23,6 +24,8 @@ namespace _Project.Scripts.Castle
         [SerializeField] private RectTransform _getHeartsAfterWatchAdvPanel;
         [SerializeField] private Button _watchAdvButton;
         [SerializeField] private Button _noWatchAdvButton;
+        [Space]
+        [SerializeField] private PopupAnimationPanelsSequence _getHeartsPanelAnimation;
 
         [Header("Settings")]
         [SerializeField] private LMotionShakeSerializableSettings _shakeHeartSettings; 
@@ -47,11 +50,12 @@ namespace _Project.Scripts.Castle
         public void ShowWatchAdvForGetHeartsPanel()
         {
             _getHeartsAfterWatchAdvPanel.gameObject.SetActive(true);
+            _getHeartsPanelAnimation.Show(null);
         }
 
         public void HideWatchAdvForGetHeartsPanel()
         {
-            _getHeartsAfterWatchAdvPanel.gameObject.SetActive(false);
+            _getHeartsPanelAnimation.Hide(() => _getHeartsAfterWatchAdvPanel.gameObject.SetActive(false));
         }
 
         [Inject]

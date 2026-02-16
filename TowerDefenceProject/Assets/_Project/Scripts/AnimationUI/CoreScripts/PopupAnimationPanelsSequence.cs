@@ -1,4 +1,4 @@
-using LitMotion;
+п»їusing LitMotion;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +7,10 @@ namespace AnimationsUI.CoreScripts
 {
     public class PopupAnimationPanelsSequence : MonoBehaviour
     {
-        [Tooltip("Панели для анимации показа.\n'Append' - присоеденить анимацию панели после окончания предыдущей.\n'Join' - начать анимацию панели вместе с предыдущей.\nДля первой панели выбранный вариант не имеет значения.")]
+        [Tooltip("РџР°РЅРµР»Рё РґР»СЏ Р°РЅРёРјР°С†РёРё РїРѕРєР°Р·Р°.\n'Append' - РїСЂРёСЃРѕРµРґРµРЅРёС‚СЊ Р°РЅРёРјР°С†РёСЋ РїР°РЅРµР»Рё РїРѕСЃР»Рµ РѕРєРѕРЅС‡Р°РЅРёСЏ РїСЂРµРґС‹РґСѓС‰РµР№.\n'Join' - РЅР°С‡Р°С‚СЊ Р°РЅРёРјР°С†РёСЋ РїР°РЅРµР»Рё РІРјРµСЃС‚Рµ СЃ РїСЂРµРґС‹РґСѓС‰РµР№.\nР”Р»СЏ РїРµСЂРІРѕР№ РїР°РЅРµР»Рё РІС‹Р±СЂР°РЅРЅС‹Р№ РІР°СЂРёР°РЅС‚ РЅРµ РёРјРµРµС‚ Р·РЅР°С‡РµРЅРёСЏ.")]
         [SerializeField] private List<PopupElement> _showPopupElements = new List<PopupElement>();
         [Space]
-        [Tooltip("Панели для анимации сокрытия.\n'Append' - присоеденить анимацию панели после окончания предыдущей.\n'Join' - начать анимацию панели вместе с предыдущей.\nДля первой панели выбранный вариант не имеет значения.")]
+        [Tooltip("РџР°РЅРµР»Рё РґР»СЏ Р°РЅРёРјР°С†РёРё СЃРѕРєСЂС‹С‚РёСЏ.\n'Append' - РїСЂРёСЃРѕРµРґРµРЅРёС‚СЊ Р°РЅРёРјР°С†РёСЋ РїР°РЅРµР»Рё РїРѕСЃР»Рµ РѕРєРѕРЅС‡Р°РЅРёСЏ РїСЂРµРґС‹РґСѓС‰РµР№.\n'Join' - РЅР°С‡Р°С‚СЊ Р°РЅРёРјР°С†РёСЋ РїР°РЅРµР»Рё РІРјРµСЃС‚Рµ СЃ РїСЂРµРґС‹РґСѓС‰РµР№.\nР”Р»СЏ РїРµСЂРІРѕР№ РїР°РЅРµР»Рё РІС‹Р±СЂР°РЅРЅС‹Р№ РІР°СЂРёР°РЅС‚ РЅРµ РёРјРµРµС‚ Р·РЅР°С‡РµРЅРёСЏ.")]
         [SerializeField] private List<PopupElement> _hidePopupElements = new List<PopupElement>();
 
         private MotionHandle _showMotionHandle;
@@ -21,7 +21,7 @@ namespace AnimationsUI.CoreScripts
         {
             if (Application.isPlaying == false)
             {
-                Debug.LogWarning("Нельзя включать анимацию пока не запущена сцена!");
+                Debug.LogWarning("РќРµР»СЊР·СЏ РІРєР»СЋС‡Р°С‚СЊ Р°РЅРёРјР°С†РёСЋ РїРѕРєР° РЅРµ Р·Р°РїСѓС‰РµРЅР° СЃС†РµРЅР°!");
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace AnimationsUI.CoreScripts
         {
             if (Application.isPlaying == false)
             {
-                Debug.LogWarning("Нельзя включать анимацию пока не запущена сцена!");
+                Debug.LogWarning("РќРµР»СЊР·СЏ РІРєР»СЋС‡Р°С‚СЊ Р°РЅРёРјР°С†РёСЋ РїРѕРєР° РЅРµ Р·Р°РїСѓС‰РµРЅР° СЃС†РµРЅР°!");
                 return;
             }
 

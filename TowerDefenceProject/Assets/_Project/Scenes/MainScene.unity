@@ -1137,6 +1137,7 @@ GameObject:
   - component: {fileID: 257114127}
   - component: {fileID: 257114126}
   - component: {fileID: 257114125}
+  - component: {fileID: 257114128}
   m_Layer: 5
   m_Name: Continue Button
   m_TagString: Untagged
@@ -1247,6 +1248,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257114123}
   m_CullTransparentMesh: 1
+--- !u!114 &257114128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257114123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0d2f3d1b6270743b17a40e1686bb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.AnimationVariants.PopupWithIncrease
+  _panelForAnimate: {fileID: 257114124}
+  _playOnAwake: 0
+  _showAnimationsSettings:
+    _time: 0.2
+    _ease: 29
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _showedLocalScale: {x: 1, y: 1, z: 1}
+  _hideAnimationSettings:
+    _time: 0.2
+    _ease: 5
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _hidedLocalScale: {x: 0, y: 0, z: 0}
 --- !u!1 &300982465
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,6 +3451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 770873740}
+  - component: {fileID: 770873741}
   m_Layer: 5
   m_Name: WatchAdvForGetMoney
   m_TagString: Untagged
@@ -3450,6 +3480,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &770873741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770873739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8bdbf48471079409cb5ac080d40d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.PopupAnimationPanelsSequence
+  _showPopupElements:
+  - _popupPanel: {fileID: 1187844317}
+    _transitionType: 0
+  - _popupPanel: {fileID: 257114128}
+    _transitionType: 0
+  - _popupPanel: {fileID: 1314130134}
+    _transitionType: 0
+  _hidePopupElements:
+  - _popupPanel: {fileID: 1187844317}
+    _transitionType: 0
 --- !u!1 &792243207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3462,6 +3514,7 @@ GameObject:
   - component: {fileID: 792243211}
   - component: {fileID: 792243210}
   - component: {fileID: 792243209}
+  - component: {fileID: 792243212}
   m_Layer: 5
   m_Name: Continue Button
   m_TagString: Untagged
@@ -3572,6 +3625,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792243207}
   m_CullTransparentMesh: 1
+--- !u!114 &792243212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792243207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0d2f3d1b6270743b17a40e1686bb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.AnimationVariants.PopupWithIncrease
+  _panelForAnimate: {fileID: 792243208}
+  _playOnAwake: 0
+  _showAnimationsSettings:
+    _time: 0.2
+    _ease: 29
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _showedLocalScale: {x: 1, y: 1, z: 1}
+  _hideAnimationSettings:
+    _time: 0.2
+    _ease: 5
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _hidedLocalScale: {x: 0, y: 0, z: 0}
 --- !u!1 &814268911
 GameObject:
   m_ObjectHideFlags: 0
@@ -4343,6 +4424,7 @@ MonoBehaviour:
   _getHeartsAfterWatchAdvPanel: {fileID: 1208171569}
   _watchAdvButton: {fileID: 792243209}
   _noWatchAdvButton: {fileID: 2092354679}
+  _getHeartsPanelAnimation: {fileID: 1208171570}
   _shakeHeartSettings:
     _strenght: 10
     _duration: 0.2
@@ -4987,6 +5069,7 @@ GameObject:
   - component: {fileID: 1187844314}
   - component: {fileID: 1187844316}
   - component: {fileID: 1187844315}
+  - component: {fileID: 1187844317}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -5054,6 +5137,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187844313}
   m_CullTransparentMesh: 1
+--- !u!114 &1187844317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187844313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0d2f3d1b6270743b17a40e1686bb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.AnimationVariants.PopupWithIncrease
+  _panelForAnimate: {fileID: 1187844314}
+  _playOnAwake: 0
+  _showAnimationsSettings:
+    _time: 0.2
+    _ease: 29
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _showedLocalScale: {x: 1, y: 1, z: 1}
+  _hideAnimationSettings:
+    _time: 0.2
+    _ease: 5
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _hidedLocalScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1192233290
 GameObject:
   m_ObjectHideFlags: 0
@@ -5213,6 +5324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1208171569}
+  - component: {fileID: 1208171570}
   m_Layer: 5
   m_Name: WatchAdvForGetHearts
   m_TagString: Untagged
@@ -5241,6 +5353,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1208171570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208171568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8bdbf48471079409cb5ac080d40d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.PopupAnimationPanelsSequence
+  _showPopupElements:
+  - _popupPanel: {fileID: 1994685038}
+    _transitionType: 0
+  - _popupPanel: {fileID: 792243212}
+    _transitionType: 0
+  - _popupPanel: {fileID: 2092354682}
+    _transitionType: 0
+  _hidePopupElements:
+  - _popupPanel: {fileID: 1994685038}
+    _transitionType: 0
 --- !u!1 &1255363014
 GameObject:
   m_ObjectHideFlags: 0
@@ -5297,6 +5431,7 @@ MonoBehaviour:
   _getMoneyAfterWatchAdvPanel: {fileID: 770873740}
   _watchAdvButton: {fileID: 257114125}
   _noWatchAdvButton: {fileID: 1314130131}
+  _getMoneyPanelAnimation: {fileID: 770873741}
   _moneyIconIncreasedLocalScale: {x: 1.25, y: 1.25, z: 1}
   _moneyIncreaseDuration: 0.15
   _moneyIncreaseEase: 5
@@ -5607,6 +5742,7 @@ GameObject:
   - component: {fileID: 1314130133}
   - component: {fileID: 1314130132}
   - component: {fileID: 1314130131}
+  - component: {fileID: 1314130134}
   m_Layer: 5
   m_Name: Return Button
   m_TagString: Untagged
@@ -5716,6 +5852,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314130129}
   m_CullTransparentMesh: 1
+--- !u!114 &1314130134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314130129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0d2f3d1b6270743b17a40e1686bb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.AnimationVariants.PopupWithIncrease
+  _panelForAnimate: {fileID: 1314130130}
+  _playOnAwake: 0
+  _showAnimationsSettings:
+    _time: 0.2
+    _ease: 29
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _showedLocalScale: {x: 1, y: 1, z: 1}
+  _hideAnimationSettings:
+    _time: 0.2
+    _ease: 5
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _hidedLocalScale: {x: 0, y: 0, z: 0}
 --- !u!1 &1323981250
 GameObject:
   m_ObjectHideFlags: 0
@@ -7211,7 +7375,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0421\u043E\u0433\u043B\u0430\u0441\u0438\u0442\u044C\u0441\u044F"
+  m_text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ef63cbca0f0980f47911f4dae1f3f33c, type: 2}
   m_sharedMaterial: {fileID: -5660775149628104760, guid: ef63cbca0f0980f47911f4dae1f3f33c, type: 2}
@@ -7238,7 +7402,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.5
+  m_fontSize: 36.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7412,20 +7576,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2060574963}
-  - {fileID: 322098973}
-  - {fileID: 320640572}
   - {fileID: 1285109656}
+  - {fileID: 322098973}
   - {fileID: 2108613273}
+  - {fileID: 2060574963}
   - {fileID: 1482966217}
+  - {fileID: 320640572}
   - {fileID: 565078028}
   _readOnlyBindingModules:
-  - {fileID: 2060574963}
-  - {fileID: 322098973}
-  - {fileID: 320640572}
   - {fileID: 1285109656}
+  - {fileID: 322098973}
   - {fileID: 2108613273}
+  - {fileID: 2060574963}
   - {fileID: 1482966217}
+  - {fileID: 320640572}
   - {fileID: 565078028}
 --- !u!114 &1804363960
 MonoBehaviour:
@@ -7647,6 +7811,7 @@ GameObject:
   - component: {fileID: 1994685035}
   - component: {fileID: 1994685037}
   - component: {fileID: 1994685036}
+  - component: {fileID: 1994685038}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -7714,6 +7879,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994685034}
   m_CullTransparentMesh: 1
+--- !u!114 &1994685038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994685034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0d2f3d1b6270743b17a40e1686bb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.AnimationVariants.PopupWithIncrease
+  _panelForAnimate: {fileID: 1994685035}
+  _playOnAwake: 0
+  _showAnimationsSettings:
+    _time: 0.2
+    _ease: 29
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _showedLocalScale: {x: 1, y: 1, z: 1}
+  _hideAnimationSettings:
+    _time: 0.2
+    _ease: 5
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _hidedLocalScale: {x: 0, y: 0, z: 0}
 --- !u!1 &2002900809
 GameObject:
   m_ObjectHideFlags: 0
@@ -7897,6 +8090,7 @@ GameObject:
   - component: {fileID: 2092354681}
   - component: {fileID: 2092354680}
   - component: {fileID: 2092354679}
+  - component: {fileID: 2092354682}
   m_Layer: 5
   m_Name: Return Button
   m_TagString: Untagged
@@ -8006,6 +8200,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092354677}
   m_CullTransparentMesh: 1
+--- !u!114 &2092354682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092354677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0d2f3d1b6270743b17a40e1686bb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationsUI.CoreScripts.AnimationVariants.PopupWithIncrease
+  _panelForAnimate: {fileID: 2092354678}
+  _playOnAwake: 0
+  _showAnimationsSettings:
+    _time: 0.2
+    _ease: 29
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _showedLocalScale: {x: 1, y: 1, z: 1}
+  _hideAnimationSettings:
+    _time: 0.2
+    _ease: 5
+    _withLoop: 0
+    _loopCount: 0
+    _loopType: 0
+  _hidedLocalScale: {x: 0, y: 0, z: 0}
 --- !u!1 &2108613271
 GameObject:
   m_ObjectHideFlags: 0
