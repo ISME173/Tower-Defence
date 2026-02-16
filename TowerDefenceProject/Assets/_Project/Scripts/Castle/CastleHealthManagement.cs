@@ -13,6 +13,7 @@ namespace _Project.Scripts.Castle
 
         private EnemiesSpawner _enemysSpawner;
         private LevelsCreator _levelsCreator;
+        private LevelCompletionManagement _levelCompletionManagement;
         private int _maxHealth;
         private int _addHeartsCountAfterWatchAdv;
 
@@ -43,10 +44,19 @@ namespace _Project.Scripts.Castle
             _addHeartsCountAfterWatchAdv = addHeartsCountAfterWatchAdv;
         }
 
-        public void Initialize(EnemiesSpawner enemysSpawner, LevelsCreator levelsCreator)
+        public void Initialize(EnemiesSpawner enemysSpawner, LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
         {
             _enemysSpawner = enemysSpawner;
             _levelsCreator = levelsCreator;
+            _levelCompletionManagement = levelCompletionManagement;
+
+            _levelCompletionManagement.ReadOnlyLevelFailed
+                .Subscribe(_ => CastleHealthView.HideWatchAdvForGetHeartsPanel())
+                .AddTo(Disposables);
+
+            _levelCompletionManagement.ReadOnlyLevelCompleted
+                .Subscribe(_ => CastleHealthView.HideWatchAdvForGetHeartsPanel())
+                .AddTo(Disposables);
 
             Disposables.Add(_levelsCreator.ReadOnlyLevelCreated.Subscribe(OnLevelCreated));
             Disposables.Add(_enemysSpawner.ReadOnlyEnemyMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));

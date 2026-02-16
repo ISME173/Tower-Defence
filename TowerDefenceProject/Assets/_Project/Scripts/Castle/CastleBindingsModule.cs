@@ -37,9 +37,9 @@ namespace _Project.Scripts.Castle
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, EnemiesSpawner enemiesSpawner)
+        private void Initialize(LevelsCreator levelsCreator, EnemiesSpawner enemiesSpawner, LevelCompletionManagement levelCompletionManagement)
         {
-            _castleHealthManagement.Initialize(enemiesSpawner, levelsCreator);
+            _castleHealthManagement.Initialize(enemiesSpawner, levelsCreator, levelCompletionManagement);
             _castleEffectsManagement.Initialize(levelsCreator);
         }
     }

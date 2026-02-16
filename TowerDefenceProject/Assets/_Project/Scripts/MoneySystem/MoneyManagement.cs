@@ -15,6 +15,7 @@ namespace _Project.Scripts.MoneySystem
         private readonly ReactiveProperty<int> CurrentAmountOfMoney = new();
 
         private int _getMoneysCountAfterWatchAdv;
+        private LevelCompletionManagement _levelCompletionManagement;
         private EnemiesSpawner _enemiesSpawner;
         private LevelsCreator _levelCreator;
 
@@ -40,11 +41,12 @@ namespace _Project.Scripts.MoneySystem
                 .AddTo(Disposables);
         }
 
-        public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, int getMoneysCountAfterWatchAdv)
+        public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, int getMoneysCountAfterWatchAdv)
         {
             _enemiesSpawner = enemiesSpawner;
             _levelCreator = levelsCreator;
             _getMoneysCountAfterWatchAdv = getMoneysCountAfterWatchAdv;
+            _levelCompletionManagement = levelCompletionManagement;
 
             _enemiesSpawner.ReadOnlyEnemyDied
                 .Subscribe(OnEnemyDied)
@@ -52,6 +54,14 @@ namespace _Project.Scripts.MoneySystem
 
             _levelCreator.ReadOnlyLevelCreated
                 .Subscribe(OnLevelCreated)
+                .AddTo(Disposables);
+
+            _levelCompletionManagement.ReadOnlyLevelFailed
+                .Subscribe(_ => MoneyView.HideWatchAdvForGetMoneyPanel())
+                .AddTo(Disposables);
+
+            _levelCompletionManagement.ReadOnlyLevelCompleted
+                .Subscribe(_ => MoneyView.HideWatchAdvForGetMoneyPanel())
                 .AddTo(Disposables);
         }
 

@@ -4835,7 +4835,7 @@ MonoBehaviour:
   _panelForAnimate: {fileID: 1108221623}
   _playOnAwake: 0
   _showAnimationsSettings:
-    _time: 0.5
+    _time: 0.2
     _ease: 5
     _withLoop: 0
     _loopCount: 0

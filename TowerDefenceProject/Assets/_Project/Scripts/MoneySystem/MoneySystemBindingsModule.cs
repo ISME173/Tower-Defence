@@ -29,9 +29,9 @@ namespace _Project.Scripts.MoneySystem
         }
 
         [Inject]
-        private void Initialize(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator)
+        private void Initialize(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
         {
-            _moneyManagement.Initialze(enemiesSpawner, levelsCreator, _getMoneyCountAfterWatchAdv);
+            _moneyManagement.Initialze(enemiesSpawner, levelsCreator, levelCompletionManagement, _getMoneyCountAfterWatchAdv);
         }
     }
 }
