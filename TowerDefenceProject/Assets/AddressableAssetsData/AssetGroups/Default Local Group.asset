@@ -15,8 +15,48 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: dbdc4c2254d4e1c4fa81e089ffa218cd
   m_SerializeEntries:
-  - m_GUID: 4d4cdb133a7c6294da978470b5f67de6
-    m_Address: Assets/_Project/Art
+  - m_GUID: 0233821f0c75b31439f2c1c34113cd4f
+    m_Address: Level_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c45613734ac83d48bf1e4d7d54db5ad
+    m_Address: Level_8
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5281ae546abf3544695f7d746609b3f9
+    m_Address: Level_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 542ab06dfde4ea344979aabdf87ed4ad
+    m_Address: Level_9
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6548a4168024b9343ac1c8764d3619d5
+    m_Address: Level_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8b559ca6c160434387635a2f58632d9
+    m_Address: Level_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1a9868a00d4145439da5d2388c4aa03
+    m_Address: Level_10
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6159a87b952a3f4fa0c446600267dd9
+    m_Address: Level_7
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fed1c6c834d530a4a819d5c1871e3fe9
+    m_Address: Level_6
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

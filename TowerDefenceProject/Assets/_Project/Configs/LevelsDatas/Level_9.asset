@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b43e0258995a9b47bf70c728a85f1ac, type: 3}
+  m_Name: Level_9
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.EnemySpawnManagement.EnemysInLevelSpawnSeqence
+  _enemyGroupsSpawnSettings:
+  - _secondsDelayForSpawnAfterPreviousSpawn: 4
+    _enemySpawnSettings:
+    - _enemyPrefab: {fileID: 332400333826459216, guid: aeb643d9c6cd2084899af739dda6662b, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 1
+      _secondsDelayBetweenSpawn: 1
+  - _secondsDelayForSpawnAfterPreviousSpawn: 4
+    _enemySpawnSettings:
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
+      _spawnCount: 5
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 3
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 6685861547183913588, guid: 59dd9507b757b844aaa662d60ffd0320, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+  - _secondsDelayForSpawnAfterPreviousSpawn: 4
+    _enemySpawnSettings:
+    - _enemyPrefab: {fileID: 3179054846380821169, guid: e131ca965d0b42f47a85e5ac8b70d0a9, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 4
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 7724982707940241701, guid: 7c26a219a4289c34fb4ba922ce1f0849, type: 3}
+      _spawnCount: 1
+      _secondsDelayBetweenSpawn: 1
+  - _secondsDelayForSpawnAfterPreviousSpawn: 4
+    _enemySpawnSettings:
+    - _enemyPrefab: {fileID: 332400333826459216, guid: aeb643d9c6cd2084899af739dda6662b, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 6685861547183913588, guid: 59dd9507b757b844aaa662d60ffd0320, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 7724982707940241701, guid: 7c26a219a4289c34fb4ba922ce1f0849, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 3179054846380821169, guid: e131ca965d0b42f47a85e5ac8b70d0a9, type: 3}
+      _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1

@@ -2359,7 +2359,16 @@ MonoBehaviour:
   _createLevelPoint: {fileID: 1263585418}
   _levelObjectPrefabs:
   - {fileID: 6215329666418542582, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
-  - {fileID: 6215329666418542582, guid: 5281ae546abf3544695f7d746609b3f9, type: 3}
+  _levelAddressKeysStartingFromLevel2:
+  - Level_2
+  - Level_3
+  - Level_4
+  - Level_5
+  - Level_6
+  - Level_7
+  - Level_8
+  - Level_9
+  - Level_10
 --- !u!1 &568591197
 GameObject:
   m_ObjectHideFlags: 0
