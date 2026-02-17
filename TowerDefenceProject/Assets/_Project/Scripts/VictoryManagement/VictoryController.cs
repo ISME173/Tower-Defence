@@ -12,6 +12,8 @@ namespace _Project.Scripts.VictoryManagement
         private LevelsCreator _levelsCreator;
         private LevelCompletionManagement _levelsCompletionManagement;
 
+        public Observable<Unit> ReadOnlyOnMenuButtonClicked => VictoryView.ReadOnlyOnMenuButtonClicked;
+
         public VictoryController(VictoryView victoryView)
         {
             VictoryView = victoryView;
@@ -23,10 +25,6 @@ namespace _Project.Scripts.VictoryManagement
             VictoryView.ReadOnlyOnRestartButtonClicked
                 .Subscribe(OnRestartButtonDown)
                 .AddTo(Disposables);
-
-            VictoryView.ReadOnlyOnMenuButtonClicked
-               .Subscribe(OnMenuButtonDown)
-               .AddTo(Disposables);
 
             VictoryView.Initialize();
         }
@@ -62,11 +60,6 @@ namespace _Project.Scripts.VictoryManagement
         {
             VictoryView.Hide();
             _levelsCreator.RebuildCurrentLevel();
-        }
-
-        private void OnMenuButtonDown(Unit unit)
-        {
-
         }
     }
 }

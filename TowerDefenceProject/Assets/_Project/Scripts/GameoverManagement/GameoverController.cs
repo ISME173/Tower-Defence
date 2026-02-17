@@ -12,13 +12,11 @@ namespace _Project.Scripts.GameoverMagamenet
         private LevelsCreator _levelsCreator;
         private LevelCompletionManagement _levelCompletionManagement;
 
+        public Observable<Unit> ReadOnlyOnMenuButtonClicked => GameoverView.ReadOnlyOnMenuButtonClicked;
+
         public GameoverController(GameoverView gameoverView)
         {
             GameoverView = gameoverView;
-
-            GameoverView.ReadOnlyOnMenuButtonClicked
-                .Subscribe(OnMenuButtonClicked)
-                .AddTo(Disposables);
 
             GameoverView.ReadOnlyOnRestartButtonClicked
                 .Subscribe(OnRestartButtonClicked)
@@ -47,11 +45,6 @@ namespace _Project.Scripts.GameoverMagamenet
         {
             GameoverView.Hide();
             _levelsCreator.RebuildCurrentLevel();
-        }
-
-        private void OnMenuButtonClicked(Unit unit)
-        {
-            
         }
 
         private void OnLevelFailed(Unit unit)

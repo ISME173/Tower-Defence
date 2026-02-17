@@ -42,11 +42,6 @@ namespace _Project.Scripts.LevelsManagement
 
         public void CreateNextLevel()
         {
-            CreateNextLevelAsync().Forget();
-        }
-
-        public async UniTask CreateNextLevelAsync()
-        {
             int nextLevelIndex = _currentLevelIndex + 1;
 
             if (nextLevelIndex >= AllLevelObjectPrefabs.Count)
@@ -55,20 +50,61 @@ namespace _Project.Scripts.LevelsManagement
                 return;
             }
 
-            await CreateLevelByIndexAsync(nextLevelIndex);
+            CreateLevelByIndex(nextLevelIndex);
         }
 
         public void RebuildCurrentLevel()
         {
-            RebuildCurrentLevelAsync().Forget();
-        }
-
-        public async UniTask RebuildCurrentLevelAsync()
-        {
             if (_currentLevelObject != null)
                 RemoveCurrentLevel();
 
-            await CreateLevelByIndexAsync(_currentLevelIndex);
+            // Пересоздание текущего уровня должно происходить сразу
+            CreateLevelByIndex(_currentLevelIndex);
+        }
+
+        public void CreateLevelByIndex(int levelIndex)
+        {
+            if (levelIndex < 0 || levelIndex >= AllLevelObjectPrefabs.Count)
+            {
+                Debug.LogError($"Invalid level index: {levelIndex}");
+                return;
+            }
+
+            // levelIndex == 0 => уровень #1 (не Addressables), создаём синхронно
+            if (levelIndex == 0)
+            {
+                CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
+                return;
+            }
+
+            if (_addressablesLevelsLoader == null)
+            {
+                Debug.LogError("AddressablesLevelsLoader is not bound, but levelIndex > 0 requested.");
+                return;
+            }
+
+            // Если уже загружен — создаём сразу.
+            if (_addressablesLevelsLoader.TryGetLoadedPrefab(levelIndex, out var loadedPrefab) && loadedPrefab != null)
+            {
+                CreateLevelByIndexSync(levelIndex, loadedPrefab);
+                return;
+            }
+
+            // Иначе — ждём загрузку и создаём после ожидания.
+            CreateLevelByIndexAsync(levelIndex).Forget();
+        }
+
+        private void CreateLevelByIndexSync(int levelIndex, LevelObject prefabToInstantiate)
+        {
+            RemoveCurrentLevel();
+
+            LevelObject createdLevelObject = GameObject.Instantiate(prefabToInstantiate);
+            createdLevelObject.transform.position = CreateLevelPoint.position;
+
+            _currentLevelObject = createdLevelObject;
+            _currentLevelIndex = levelIndex;
+
+            LevelCreated?.OnNext(createdLevelObject);
         }
 
         private void RemoveCurrentLevel()
@@ -79,70 +115,28 @@ namespace _Project.Scripts.LevelsManagement
             GameObject.Destroy(_currentLevelObject.gameObject);
         }
 
-        private void CreateLevelByIndex(int levelIndex)
-        {
-            if (levelIndex < 0 || levelIndex >= AllLevelObjectPrefabs.Count)
-            {
-                Debug.LogError($"Invalid level index: {levelIndex}");
-                return;
-            }
-
-            RemoveCurrentLevel();
-
-            LevelObject levelObject = AllLevelObjectPrefabs[levelIndex];
-
-            LevelObject createdLevelObject = GameObject.Instantiate(levelObject);
-            createdLevelObject.transform.position = CreateLevelPoint.position;
-
-            _currentLevelObject = createdLevelObject;
-            _currentLevelIndex = levelIndex;
-
-            LevelCreated?.OnNext(createdLevelObject);
-        }
-
         private async UniTask CreateLevelByIndexAsync(int levelIndex)
         {
-            if (levelIndex < 0 || levelIndex >= AllLevelObjectPrefabs.Count)
+            // Повторная быстрая проверка на случай, если пока ждали — он уже загрузился
+            if (_addressablesLevelsLoader.TryGetLoadedPrefab(levelIndex, out var loadedPrefab) && loadedPrefab != null)
             {
-                Debug.LogError($"Invalid level index: {levelIndex}");
+                CreateLevelByIndexSync(levelIndex, loadedPrefab);
                 return;
             }
-
-            RemoveCurrentLevel();
 
             LevelObject prefabToInstantiate;
 
-            // levelIndex == 0 => уровень #1 (не Addressables)
-            if (levelIndex == 0)
+            try
             {
-                prefabToInstantiate = AllLevelObjectPrefabs[levelIndex];
+                prefabToInstantiate = await _addressablesLevelsLoader.GetPrefabAsync(levelIndex);
             }
-            else
+            catch (Exception e)
             {
-                if (_addressablesLevelsLoader == null)
-                {
-                    Debug.LogError("AddressablesLevelsLoader is not bound, but levelIndex > 0 requested.");
-                    return;
-                }
-
-                try
-                {
-                    prefabToInstantiate = await _addressablesLevelsLoader.GetPrefabAsync(levelIndex);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Failed to load level {levelIndex + 1} from Addressables. {e.Message}");
-                    return;
-                }
+                Debug.LogError($"Failed to load level {levelIndex + 1} from Addressables. {e.Message}");
+                return;
             }
 
-            LevelObject createdLevelObject = GameObject.Instantiate(prefabToInstantiate);
-            createdLevelObject.transform.position = CreateLevelPoint.position;
-
-            _currentLevelObject = createdLevelObject;
-            _currentLevelIndex = levelIndex;
-
-            LevelCreated?.OnNext(createdLevelObject);
+            CreateLevelByIndexSync(levelIndex, prefabToInstantiate);
         }
     }
 }

@@ -31,7 +31,13 @@ namespace _Project.Scripts.VictoryManagement
 
         public void Dispose()
         {
+            _continueButton.onClick.RemoveAllListeners();
+            _restartButton.onClick.RemoveAllListeners();
+            _menuButton.onClick.RemoveAllListeners();
 
+            OnContinueButtonClicked.Dispose();
+            OnRestartButtonClicked.Dispose();
+            OnMenuButtonClicked.Dispose();
         }
 
         public void Show()

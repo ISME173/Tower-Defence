@@ -1,6 +1,8 @@
 ﻿using _Project.Scripts.Castle;
 using _Project.Scripts.DI;
 using _Project.Scripts.EnemiesManagement.Spawn;
+using _Project.Scripts.GameoverMagamenet;
+using _Project.Scripts.VictoryManagement;
 using Reflex.Attributes;
 using Reflex.Core;
 using System.Collections.Generic;
@@ -10,12 +12,14 @@ namespace _Project.Scripts.LevelsManagement
 {
     public class LevelsManagementBindingsModule : BindingModule
     {
+        [SerializeField] private LevelsListView _levelsListView;
         [SerializeField] private Transform _createLevelPoint;
         [SerializeField] private LevelObject[] _levelObjectPrefabs;
 
         [Header("Addressables (levels starting from level 2)")]
         [SerializeField] private List<string> _levelAddressKeysStartingFromLevel2 = new();
 
+        private LevelsListController _levelsListController;
         private LevelsCreator _levelsCreator;
         private LevelCompletionManagement _levelsCompletionManagement;
         private AddressablesLevelsLoader _addressablesLevelsLoader;
@@ -25,6 +29,7 @@ namespace _Project.Scripts.LevelsManagement
             _levelsCreator?.Dispose();
             _levelsCompletionManagement?.Dispose();
             _addressablesLevelsLoader?.Dispose();
+            _levelsListController?.Dispose();
         }
 
         public override void Bind(ContainerBuilder containerBuilder)
@@ -34,16 +39,19 @@ namespace _Project.Scripts.LevelsManagement
 
             _levelsCreator = new LevelsCreator(_levelObjectPrefabs, _createLevelPoint, _addressablesLevelsLoader);
             _levelsCompletionManagement = new LevelCompletionManagement();
+            _levelsListController = new LevelsListController(_levelsListView, _addressablesLevelsLoader, _levelsCreator);
 
             containerBuilder.RegisterValue(_levelsCompletionManagement);
             containerBuilder.RegisterValue(_addressablesLevelsLoader);
             containerBuilder.RegisterValue(_levelsCreator);
+            containerBuilder.RegisterValue(_levelsListController);
         }
 
         [Inject]
-        private void Initialize(CastleHealthManagement castleHealthManagement, EnemiesSpawner enemysSpawner)
+        private void Initialize(CastleHealthManagement castleHealthManagement, EnemiesSpawner enemysSpawner, GameoverController gameoverController, VictoryController victoryController)
         {
             _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner);
+            _levelsListController.Initialize(victoryController, gameoverController);
         }
     }
 }

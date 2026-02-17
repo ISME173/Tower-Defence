@@ -16,6 +16,8 @@ namespace _Project.Scripts.LevelsManagement
         private readonly ReactiveProperty<LevelLoadingState> _levelLoadingState = new(new LevelLoadingState(0, LevelLoadingStatus.Idle));
         public ReadOnlyReactiveProperty<LevelLoadingState> ReadOnlyLevelLoadingState => _levelLoadingState;
 
+        public int TotalLevelsCount => _levelIndexToKey.Count + 1; // +1 because level #1 is not loaded via Addressables
+
         public AddressablesLevelsLoader(IReadOnlyList<string> levelAddressKeysStartingFromLevel2)
         {
             if (levelAddressKeysStartingFromLevel2 == null)

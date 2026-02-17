@@ -26,7 +26,11 @@ namespace _Project.Scripts.GameoverMagamenet
 
         public void Dispose()
         {
+            _restartButton.onClick.RemoveAllListeners();    
+            _menuButton.onClick.RemoveAllListeners();
 
+            OnRestartButtonClicked.Dispose();
+            OnMenuButtonClicked.Dispose();
         }
 
         public void Show()
