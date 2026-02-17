@@ -17,16 +17,6 @@ namespace _Project.Scripts.VictoryManagement
         public VictoryController(VictoryView victoryView)
         {
             VictoryView = victoryView;
-
-            VictoryView.ReadOnlyOnContinueButtonClicked
-                .Subscribe(OnContinueButtonDown)
-                .AddTo(Disposables);
-
-            VictoryView.ReadOnlyOnRestartButtonClicked
-                .Subscribe(OnRestartButtonDown)
-                .AddTo(Disposables);
-
-            VictoryView.Initialize();
         }
 
         public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelsCompletionManagement)
@@ -36,6 +26,20 @@ namespace _Project.Scripts.VictoryManagement
 
             _levelsCompletionManagement.ReadOnlyLevelCompleted
                 .Subscribe(OnLevelCompleted)
+                .AddTo(Disposables);
+
+            VictoryView.Initialize();
+
+            VictoryView.ReadOnlyOnContinueButtonClicked
+                .Subscribe(OnContinueButtonDown)
+                .AddTo(Disposables);
+
+            VictoryView.ReadOnlyOnRestartButtonClicked
+                .Subscribe(OnRestartButtonDown)
+                .AddTo(Disposables);
+
+            VictoryView.ReadOnlyOnMenuButtonClicked
+                .Subscribe(_ => VictoryView.Hide())
                 .AddTo(Disposables);
         }
 

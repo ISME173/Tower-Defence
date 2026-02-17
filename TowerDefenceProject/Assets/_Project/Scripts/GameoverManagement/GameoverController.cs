@@ -17,12 +17,6 @@ namespace _Project.Scripts.GameoverMagamenet
         public GameoverController(GameoverView gameoverView)
         {
             GameoverView = gameoverView;
-
-            GameoverView.ReadOnlyOnRestartButtonClicked
-                .Subscribe(OnRestartButtonClicked)
-                .AddTo(Disposables);
-
-            GameoverView.Initialize();
         }
 
         public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
@@ -30,8 +24,18 @@ namespace _Project.Scripts.GameoverMagamenet
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
 
+            GameoverView.Initialize();
+
             _levelCompletionManagement.ReadOnlyLevelFailed
                 .Subscribe(OnLevelFailed)
+                .AddTo(Disposables);
+
+            GameoverView.ReadOnlyOnRestartButtonClicked
+                .Subscribe(OnRestartButtonClicked)
+                .AddTo(Disposables);
+
+            GameoverView.ReadOnlyOnMenuButtonClicked
+                .Subscribe(_ => GameoverView.Hide())
                 .AddTo(Disposables);
         }
 

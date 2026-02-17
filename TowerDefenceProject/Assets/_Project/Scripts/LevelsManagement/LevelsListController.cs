@@ -2,6 +2,9 @@ using _Project.Scripts.GameoverMagamenet;
 using _Project.Scripts.VictoryManagement;
 using R3;
 using System;
+using System.Diagnostics;
+
+using Debug = UnityEngine.Debug;   
 
 namespace _Project.Scripts.LevelsManagement
 {
@@ -9,7 +12,7 @@ namespace _Project.Scripts.LevelsManagement
     public class LevelsListController : IDisposable
     {
         private readonly CompositeDisposable Disposables = new();
-        private readonly LevelsListView LevelsListView = new();
+        private readonly LevelsListView LevelsListView;
         private readonly AddressablesLevelsLoader AddressablesLevelsLoader;
         private readonly LevelsCreator LevelsCreator;
 
@@ -30,15 +33,11 @@ namespace _Project.Scripts.LevelsManagement
 
             LevelsListView.Initialize(AddressablesLevelsLoader.TotalLevelsCount);
 
-            LevelsListView.ReadOnlyOnHideLevelsListViewButtonClicked
-                .Subscribe(OnHideLevelsListViewButtonClicked)
-                .AddTo(Disposables);
-
             LevelsListView.ReadOnlyOnNextLevelsPanelButtonClicked
                 .Subscribe(OnNextLevelsPanelButtonClicked)
                 .AddTo(Disposables);
 
-            LevelsListView.ReadOnlyOnNextLevelsPanelButtonClicked
+            LevelsListView.ReadOnlyOnPreviousLevelsPanelButtonClicked
                 .Subscribe(OnPreviousLevelsPanelButtonClicked)
                 .AddTo(Disposables);
 
@@ -46,7 +45,10 @@ namespace _Project.Scripts.LevelsManagement
                 .Subscribe(OnLevelButtonClicked)
                 .AddTo(Disposables);
 
-            LevelsListView.HideOpenPreviousLevelsPanelButton();
+            if (LevelsListView.CurrentLevelsPanelIndex + 1 == LevelsListView.LevelsPanelsCount)
+                LevelsListView.HideOpenNextLevelsPanelButton();
+            if (LevelsListView.CurrentLevelsPanelIndex - 1 < 0)
+                LevelsListView.HideOpenPreviousLevelsPanelButton();
 
             _victoryController.ReadOnlyOnMenuButtonClicked
                 .Subscribe(OnMenuButtonClicked)
@@ -68,13 +70,11 @@ namespace _Project.Scripts.LevelsManagement
             LevelsListView.ShowView();
         }
 
-        private void OnHideLevelsListViewButtonClicked(Unit unit)
-        {
-            LevelsListView.HideView();
-        }
-
         private void OnNextLevelsPanelButtonClicked(Unit unit)
         {
+            if (LevelsListView.CurrentLevelsPanelIndex + 1 >= LevelsListView.LevelsPanelsCount)
+                return;
+
             LevelsListView.OpenNextLevelsPanel();
 
             if (LevelsListView.CurrentLevelsPanelIndex + 1 == LevelsListView.LevelsPanelsCount)
@@ -85,6 +85,9 @@ namespace _Project.Scripts.LevelsManagement
 
         private void OnPreviousLevelsPanelButtonClicked(Unit unit)
         {
+            if (LevelsListView.CurrentLevelsPanelIndex - 1 < 0)
+                return;
+
             LevelsListView.OpenPreviousLevelsPanel();
 
             if (LevelsListView.CurrentLevelsPanelIndex - 1 < 0)

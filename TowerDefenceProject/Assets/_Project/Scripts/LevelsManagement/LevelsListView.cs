@@ -13,7 +13,6 @@ namespace _Project.Scripts.LevelsManagement
         private readonly CompositeDisposable Disposables = new();
 
         [Header("References")]
-        [SerializeField] private Button _hideLevelsListViewButton;
         [SerializeField] private Button _openNextLevelsPanelButton;
         [SerializeField] private Button _openPreviousLevelsPanelButton;
         [Space]
@@ -21,18 +20,18 @@ namespace _Project.Scripts.LevelsManagement
         [SerializeField] private Transform _pointForNextLevelsPanel;
         [SerializeField] private Transform _pointForPreviousLevelsPanel;
         [Space]
+        [SerializeField] private RectTransform _viewForHideAndShow;
+        [Space]
         [SerializeField] private LevelsPanel _levelsPanelPrefab;
 
         private int _currentLevelsPanelIndex = 0;
         private LevelsPanel _currentLevelsPanel;
 
         private readonly Subject<int> OnLevelButtonClicked = new();
-        private readonly Subject<Unit> OnNextLevelsPanelButtonClicked = new(), OnPreviousLevelsPanelButtonClicked = new()
-            , OnHideLevelsListViewButtonClicked;
+        private readonly Subject<Unit> OnNextLevelsPanelButtonClicked = new(), OnPreviousLevelsPanelButtonClicked = new();
 
         public Observable<Unit> ReadOnlyOnNextLevelsPanelButtonClicked => OnNextLevelsPanelButtonClicked;
         public Observable<Unit> ReadOnlyOnPreviousLevelsPanelButtonClicked => OnPreviousLevelsPanelButtonClicked;
-        public Observable<Unit> ReadOnlyOnHideLevelsListViewButtonClicked => OnHideLevelsListViewButtonClicked;
         public Observable<int> ReadOnlyOnLevelButtonClicked => OnLevelButtonClicked;
 
         public int CurrentLevelsPanelIndex => _currentLevelsPanelIndex;
@@ -42,23 +41,28 @@ namespace _Project.Scripts.LevelsManagement
         {
             ClearLevelsPanels();
 
+            _currentLevelsPanelIndex = 0;
+            _currentLevelsPanel = null;
+
             _openNextLevelsPanelButton.onClick.RemoveAllListeners();
             _openPreviousLevelsPanelButton.onClick.RemoveAllListeners();
-            _hideLevelsListViewButton.onClick.RemoveAllListeners();
 
             _openNextLevelsPanelButton.onClick.AddListener(() => OnNextLevelsPanelButtonClicked?.OnNext(Unit.Default));
             _openPreviousLevelsPanelButton.onClick.AddListener(() => OnPreviousLevelsPanelButtonClicked?.OnNext(Unit.Default));
-            _hideLevelsListViewButton.onClick.AddListener(() => OnHideLevelsListViewButtonClicked?.OnNext(Unit.Default));
 
-            for (int i = 0; i < levelsCount; i++)
+            if (levelsCount <= 0)
+                return;
+
+            int maxButtonsInPanel = _levelsPanelPrefab.MaxLevelButtonsInPanel;
+            int panelsCount = (levelsCount + maxButtonsInPanel - 1) / maxButtonsInPanel; // ceil
+
+            for (int panelNumber = 1; panelNumber <= panelsCount; panelNumber++)
             {
-                int levelIndex = i;
-
                 LevelsPanel newLevelsPanel = Instantiate(_levelsPanelPrefab, _parentForLevelsPanels);
 
-                int panelNumber = LevelsPanels.Count + 1;
+                newLevelsPanel.Initialize(
+                    CalculateLevelIndexesInPanel(panelNumber, levelsCount, newLevelsPanel.MaxLevelButtonsInPanel));
 
-                newLevelsPanel.Initialize(CalculateLevelIndexesInPanel(panelNumber, levelsCount, newLevelsPanel.MaxLevelButtonsInPanel));
                 newLevelsPanel.ReadOnlyOnLevelButtonClicked
                     .Subscribe(clickedLevelIndex => OnLevelButtonClicked?.OnNext(clickedLevelIndex))
                     .AddTo(Disposables);
@@ -70,7 +74,6 @@ namespace _Project.Scripts.LevelsManagement
             if (LevelsPanels.Count > 0)
             {
                 _currentLevelsPanel = LevelsPanels[_currentLevelsPanelIndex];
-
                 _currentLevelsPanel.gameObject.SetActive(true);
                 _currentLevelsPanel.transform.localPosition = Vector3.zero;
             }
@@ -84,12 +87,12 @@ namespace _Project.Scripts.LevelsManagement
 
         public void ShowView()
         {
-            _parentForLevelsPanels.gameObject.SetActive(true);
+            _viewForHideAndShow.gameObject.SetActive(true);
         }
 
         public void HideView()
         {
-            _parentForLevelsPanels.gameObject.SetActive(false);
+            _viewForHideAndShow.gameObject.SetActive(false);
         }
 
         public void OpenNextLevelsPanel()
@@ -99,9 +102,13 @@ namespace _Project.Scripts.LevelsManagement
 
             _currentLevelsPanelIndex++;
 
+            _currentLevelsPanel.transform.SetParent(_pointForNextLevelsPanel, false);
+            _currentLevelsPanel.transform.localPosition = Vector3.zero; 
             _currentLevelsPanel?.gameObject.SetActive(false);
+
             _currentLevelsPanel = LevelsPanels[_currentLevelsPanelIndex];
 
+            _currentLevelsPanel.transform.SetParent(_parentForLevelsPanels, false);
             _currentLevelsPanel.transform.localPosition = Vector3.zero;
             _currentLevelsPanel.gameObject.SetActive(true);
         }
@@ -113,9 +120,13 @@ namespace _Project.Scripts.LevelsManagement
 
             _currentLevelsPanelIndex--;
 
+            _currentLevelsPanel.transform.SetParent(_pointForPreviousLevelsPanel, false);
+            _currentLevelsPanel.transform.localPosition = Vector3.zero;
             _currentLevelsPanel?.gameObject.SetActive(false);
+
             _currentLevelsPanel = LevelsPanels[_currentLevelsPanelIndex];
 
+            _currentLevelsPanel.transform.SetParent(_parentForLevelsPanels, false);
             _currentLevelsPanel.transform.localPosition = Vector3.zero;
             _currentLevelsPanel.gameObject.SetActive(true);
         }

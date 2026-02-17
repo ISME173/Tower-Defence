@@ -12,6 +12,8 @@ namespace _Project.Scripts.LevelsManagement
         private readonly Transform CreateLevelPoint;
         private readonly AddressablesLevelsLoader _addressablesLevelsLoader;
 
+        private readonly CompositeDisposable _disposables = new();
+
         private LevelObject _currentLevelObject;
         private int _currentLevelIndex;
 
@@ -29,6 +31,13 @@ namespace _Project.Scripts.LevelsManagement
             CreateLevelPoint = createLevelPoint;
             _addressablesLevelsLoader = addressablesLevelsLoader;
 
+            if (_addressablesLevelsLoader != null)
+            {
+                _addressablesLevelsLoader.ReadOnlyLevelPrefabLoaded
+                    .Subscribe(x => OnAddressablesLevelPrefabLoaded(x.LevelIndex, x.Prefab))
+                    .AddTo(_disposables);
+            }
+
             _currentLevelIndex = 0;
 
             // 1-й уровень создаётся сразу (не Addressables)
@@ -37,6 +46,7 @@ namespace _Project.Scripts.LevelsManagement
 
         public void Dispose()
         {
+            _disposables.Dispose();
             LevelCreated?.OnCompleted();
         }
 
@@ -58,7 +68,6 @@ namespace _Project.Scripts.LevelsManagement
             if (_currentLevelObject != null)
                 RemoveCurrentLevel();
 
-            // Пересоздание текущего уровня должно происходить сразу
             CreateLevelByIndex(_currentLevelIndex);
         }
 
@@ -70,7 +79,6 @@ namespace _Project.Scripts.LevelsManagement
                 return;
             }
 
-            // levelIndex == 0 => уровень #1 (не Addressables), создаём синхронно
             if (levelIndex == 0)
             {
                 CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
@@ -83,15 +91,29 @@ namespace _Project.Scripts.LevelsManagement
                 return;
             }
 
-            // Если уже загружен — создаём сразу.
-            if (_addressablesLevelsLoader.TryGetLoadedPrefab(levelIndex, out var loadedPrefab) && loadedPrefab != null)
+            // Если в списке уже лежит загруженный addressables-префаб — создаём сразу
+            if (AllLevelObjectPrefabs[levelIndex] != null)
             {
-                CreateLevelByIndexSync(levelIndex, loadedPrefab);
+                CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
                 return;
             }
 
             // Иначе — ждём загрузку и создаём после ожидания.
             CreateLevelByIndexAsync(levelIndex).Forget();
+        }
+
+        private void OnAddressablesLevelPrefabLoaded(int levelIndex, LevelObject prefab)
+        {
+            if (prefab == null)
+                return;
+
+            // гарантируем размер списка (если в инспекторе не было элементов под 2+)
+            while (AllLevelObjectPrefabs.Count <= levelIndex)
+                AllLevelObjectPrefabs.Add(null);
+
+            AllLevelObjectPrefabs[levelIndex] = prefab;
+
+            Debug.Log($"[LevelsCreator] Cached Addressables level prefab for level #{levelIndex + 1} into AllLevelObjectPrefabs[{levelIndex}]");
         }
 
         private void CreateLevelByIndexSync(int levelIndex, LevelObject prefabToInstantiate)
@@ -117,10 +139,10 @@ namespace _Project.Scripts.LevelsManagement
 
         private async UniTask CreateLevelByIndexAsync(int levelIndex)
         {
-            // Повторная быстрая проверка на случай, если пока ждали — он уже загрузился
-            if (_addressablesLevelsLoader.TryGetLoadedPrefab(levelIndex, out var loadedPrefab) && loadedPrefab != null)
+            // Если пока ждали ивентом уже закэшировали — создаём сразу
+            if (levelIndex >= 0 && levelIndex < AllLevelObjectPrefabs.Count && AllLevelObjectPrefabs[levelIndex] != null)
             {
-                CreateLevelByIndexSync(levelIndex, loadedPrefab);
+                CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
                 return;
             }
 
@@ -135,6 +157,9 @@ namespace _Project.Scripts.LevelsManagement
                 Debug.LogError($"Failed to load level {levelIndex + 1} from Addressables. {e.Message}");
                 return;
             }
+
+            // закэшируем на всякий случай (если событие ещё не пришло)
+            OnAddressablesLevelPrefabLoaded(levelIndex, prefabToInstantiate);
 
             CreateLevelByIndexSync(levelIndex, prefabToInstantiate);
         }

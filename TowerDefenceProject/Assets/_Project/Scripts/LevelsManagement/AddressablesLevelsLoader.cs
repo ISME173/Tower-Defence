@@ -16,6 +16,9 @@ namespace _Project.Scripts.LevelsManagement
         private readonly ReactiveProperty<LevelLoadingState> _levelLoadingState = new(new LevelLoadingState(0, LevelLoadingStatus.Idle));
         public ReadOnlyReactiveProperty<LevelLoadingState> ReadOnlyLevelLoadingState => _levelLoadingState;
 
+        private readonly Subject<(int LevelIndex, LevelObject Prefab)> _levelPrefabLoaded = new();
+        public Observable<(int LevelIndex, LevelObject Prefab)> ReadOnlyLevelPrefabLoaded => _levelPrefabLoaded;
+
         public int TotalLevelsCount => _levelIndexToKey.Count + 1; // +1 because level #1 is not loaded via Addressables
 
         public AddressablesLevelsLoader(IReadOnlyList<string> levelAddressKeysStartingFromLevel2)
@@ -30,6 +33,8 @@ namespace _Project.Scripts.LevelsManagement
 
         public void Dispose()
         {
+            _levelPrefabLoaded?.OnCompleted();
+
             foreach (var kv in _handlesByLevelIndex)
             {
                 var handle = kv.Value;
@@ -61,6 +66,12 @@ namespace _Project.Scripts.LevelsManagement
             if (IsLoaded(levelIndex))
             {
                 _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loaded, 1f);
+
+                // если уже загружен - всё равно опубликуем префаб (на случай поздних подписчиков это не поможет,
+                // но это корректно для текущего потока вызова)
+                if (TryGetLoadedPrefab(levelIndex, out var alreadyLoadedPrefab) && alreadyLoadedPrefab != null)
+                    _levelPrefabLoaded.OnNext((levelIndex, alreadyLoadedPrefab));
+
                 return;
             }
 
@@ -73,18 +84,9 @@ namespace _Project.Scripts.LevelsManagement
             {
                 _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loading, existing.PercentComplete);
 
-                float lastLoggedProgress = -1f;
                 while (!existing.IsDone)
                 {
-                    float p = existing.PercentComplete;
-                    _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loading, p);
-
-                    if (p >= 0f && p <= 1f && p - lastLoggedProgress >= 0.25f)
-                    {
-                        lastLoggedProgress = p;
-                        Debug.Log($"[AddressablesLevelsLoader] Loading level #{levelIndex + 1} (key='{key}') progress={(p * 100f):0}%");
-                    }
-
+                    _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loading, existing.PercentComplete);
                     await UniTask.Yield();
                 }
 
@@ -98,6 +100,10 @@ namespace _Project.Scripts.LevelsManagement
 
                 _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loaded, 1f);
                 Debug.Log($"[AddressablesLevelsLoader] Level #{levelIndex + 1} (key='{key}') loaded OK");
+
+                if (TryGetLoadedPrefab(levelIndex, out var prefab) && prefab != null)
+                    _levelPrefabLoaded.OnNext((levelIndex, prefab));
+
                 return;
             }
 
@@ -106,18 +112,9 @@ namespace _Project.Scripts.LevelsManagement
 
             _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loading, handle.PercentComplete);
 
-            float lastLoggedProgressNew = -1f;
             while (!handle.IsDone)
             {
-                float p = handle.PercentComplete;
-                _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loading, p);
-
-                if (p >= 0f && p <= 1f && p - lastLoggedProgressNew >= 0.25f)
-                {
-                    lastLoggedProgressNew = p;
-                    Debug.Log($"[AddressablesLevelsLoader] Loading level #{levelIndex + 1} (key='{key}') progress={(p * 100f):0}%");
-                }
-
+                _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loading, handle.PercentComplete);
                 await UniTask.Yield();
             }
 
@@ -126,11 +123,14 @@ namespace _Project.Scripts.LevelsManagement
                 string msg = $"Failed to load Addressables level prefab by key: {key}";
                 _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Failed, handle.PercentComplete, msg);
                 Debug.LogError($"[AddressablesLevelsLoader] Level #{levelIndex + 1} (key='{key}') load FAILED. {msg}");
-                throw new InvalidOperationException(msg);   
+                throw new InvalidOperationException(msg);
             }
 
             _levelLoadingState.Value = new LevelLoadingState(levelIndex, LevelLoadingStatus.Loaded, 1f);
             Debug.Log($"[AddressablesLevelsLoader] Level #{levelIndex + 1} (key='{key}') loaded OK");
+
+            if (TryGetLoadedPrefab(levelIndex, out var loadedPrefab) && loadedPrefab != null)
+                _levelPrefabLoaded.OnNext((levelIndex, loadedPrefab));
         }
 
         public async UniTask<LevelObject> GetPrefabAsync(int levelIndex)
