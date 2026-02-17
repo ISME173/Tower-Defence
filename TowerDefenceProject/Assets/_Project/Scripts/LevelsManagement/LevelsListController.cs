@@ -75,12 +75,16 @@ namespace _Project.Scripts.LevelsManagement
             if (LevelsListView.CurrentLevelsPanelIndex + 1 >= LevelsListView.LevelsPanelsCount)
                 return;
 
-            LevelsListView.OpenNextLevelsPanel();
+            LevelsListView.HideOpenPreviousLevelsPanelButton();
+            LevelsListView.HideOpenNextLevelsPanelButton();
 
-            if (LevelsListView.CurrentLevelsPanelIndex + 1 == LevelsListView.LevelsPanelsCount)
-                LevelsListView.HideOpenNextLevelsPanelButton();
+            LevelsListView.OpenNextLevelsPanel(() =>
+            {
+                LevelsListView.ShowOpenPreviousLevelsPanelButton();
 
-            LevelsListView.ShowOpenPreviousLevelsPanelButton();
+                if (LevelsListView.CurrentLevelsPanelIndex + 1 < LevelsListView.LevelsPanelsCount)
+                    LevelsListView.ShowOpenNextLevelsPanelButton();
+            });
         }
 
         private void OnPreviousLevelsPanelButtonClicked(Unit unit)
@@ -88,12 +92,16 @@ namespace _Project.Scripts.LevelsManagement
             if (LevelsListView.CurrentLevelsPanelIndex - 1 < 0)
                 return;
 
-            LevelsListView.OpenPreviousLevelsPanel();
+            LevelsListView.HideOpenPreviousLevelsPanelButton();
+            LevelsListView.HideOpenNextLevelsPanelButton();
 
-            if (LevelsListView.CurrentLevelsPanelIndex - 1 < 0)
-                LevelsListView.HideOpenPreviousLevelsPanelButton();
+            LevelsListView.OpenPreviousLevelsPanel(() =>
+            {
+                LevelsListView.ShowOpenNextLevelsPanelButton();
 
-            LevelsListView.ShowOpenNextLevelsPanelButton();
+                if (LevelsListView.CurrentLevelsPanelIndex - 1 >= 0)
+                    LevelsListView.ShowOpenPreviousLevelsPanelButton();
+            });
         }
 
         private void OnLevelButtonClicked(int levelIndex)

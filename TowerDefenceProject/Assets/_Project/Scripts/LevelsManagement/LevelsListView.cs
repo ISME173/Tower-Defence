@@ -1,3 +1,5 @@
+using LitMotion;
+using LitMotion.Extensions;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,11 @@ namespace _Project.Scripts.LevelsManagement
         [Space]
         [SerializeField] private LevelsPanel _levelsPanelPrefab;
 
+        [Header("Animation Settings")]
+        [SerializeField, Min(0)] private float _switchLevelsPanelAnimationDuration;
+        [SerializeField] private Ease _switchLevelsPanelAnimationEase;
+
+        private MotionHandle _switchLevelsPanelAnimationHandle;
         private int _currentLevelsPanelIndex = 0;
         private LevelsPanel _currentLevelsPanel;
 
@@ -95,40 +102,28 @@ namespace _Project.Scripts.LevelsManagement
             _viewForHideAndShow.gameObject.SetActive(false);
         }
 
-        public void OpenNextLevelsPanel()
+        public void OpenNextLevelsPanel(Action callback = null)
         {
             if (_currentLevelsPanelIndex + 1 >= LevelsPanels.Count)
                 throw new ArgumentOutOfRangeException();
 
-            _currentLevelsPanelIndex++;
-
-            _currentLevelsPanel.transform.SetParent(_pointForNextLevelsPanel, false);
-            _currentLevelsPanel.transform.localPosition = Vector3.zero; 
-            _currentLevelsPanel?.gameObject.SetActive(false);
-
-            _currentLevelsPanel = LevelsPanels[_currentLevelsPanelIndex];
-
-            _currentLevelsPanel.transform.SetParent(_parentForLevelsPanels, false);
-            _currentLevelsPanel.transform.localPosition = Vector3.zero;
-            _currentLevelsPanel.gameObject.SetActive(true);
+                SwitchLevelsPanelAnimated(
+                newIndex: _currentLevelsPanelIndex + 1,
+                newPointForOldPanel: _pointForPreviousLevelsPanel,
+                oldPointForNewPanel: _pointForNextLevelsPanel,
+                callback: callback);
         }
 
-        public void OpenPreviousLevelsPanel()
+        public void OpenPreviousLevelsPanel(Action callback = null)
         {
             if (_currentLevelsPanelIndex - 1 < 0)
                 throw new ArgumentOutOfRangeException();
 
-            _currentLevelsPanelIndex--;
-
-            _currentLevelsPanel.transform.SetParent(_pointForPreviousLevelsPanel, false);
-            _currentLevelsPanel.transform.localPosition = Vector3.zero;
-            _currentLevelsPanel?.gameObject.SetActive(false);
-
-            _currentLevelsPanel = LevelsPanels[_currentLevelsPanelIndex];
-
-            _currentLevelsPanel.transform.SetParent(_parentForLevelsPanels, false);
-            _currentLevelsPanel.transform.localPosition = Vector3.zero;
-            _currentLevelsPanel.gameObject.SetActive(true);
+            SwitchLevelsPanelAnimated(
+                newIndex: _currentLevelsPanelIndex - 1,
+                newPointForOldPanel: _pointForNextLevelsPanel,
+                oldPointForNewPanel: _pointForPreviousLevelsPanel,
+                callback: callback);
         }
 
         public void HideOpenPreviousLevelsPanelButton() => _openPreviousLevelsPanelButton.gameObject.SetActive(false);
@@ -136,6 +131,44 @@ namespace _Project.Scripts.LevelsManagement
 
         public void HideOpenNextLevelsPanelButton() => _openNextLevelsPanelButton.gameObject.SetActive(false);
         public void ShowOpenNextLevelsPanelButton() => _openNextLevelsPanelButton.gameObject.SetActive(true);
+
+        private void SwitchLevelsPanelAnimated(int newIndex, Transform newPointForOldPanel, Transform oldPointForNewPanel, Action callback = null)
+        {
+            if (newIndex < 0 || newIndex >= LevelsPanels.Count)
+                throw new ArgumentOutOfRangeException(nameof(newIndex));
+
+            _switchLevelsPanelAnimationHandle.TryCancel();
+
+            int oldIndex = _currentLevelsPanelIndex;
+            Transform oldPanel = _currentLevelsPanel.transform;
+            oldPanel.SetParent(newPointForOldPanel, false);
+
+            _currentLevelsPanelIndex = newIndex;
+
+            _currentLevelsPanel = LevelsPanels[_currentLevelsPanelIndex];
+            Transform newPanel = _currentLevelsPanel.transform;
+            _currentLevelsPanel.gameObject.SetActive(true);
+            newPanel.SetParent(_parentForLevelsPanels, false);
+
+            MotionSequenceBuilder motionSequenceBuilder = LSequence.Create();
+
+            motionSequenceBuilder.Append(
+                LMotion.Create(_parentForLevelsPanels.position, newPointForOldPanel.position, _switchLevelsPanelAnimationDuration)
+                    .WithEase(_switchLevelsPanelAnimationEase)
+                    .WithOnComplete(() =>
+                    {
+                        oldPanel.gameObject.SetActive(false);
+                        callback?.Invoke();
+                    })
+                    .BindToPosition(oldPanel));
+
+            motionSequenceBuilder.Join(
+                LMotion.Create(oldPointForNewPanel.position, _parentForLevelsPanels.position, _switchLevelsPanelAnimationDuration)
+                    .WithEase(_switchLevelsPanelAnimationEase)
+                    .BindToPosition(newPanel));
+
+            _switchLevelsPanelAnimationHandle = motionSequenceBuilder.Run();
+        }
 
         private void ClearLevelsPanels()
         {

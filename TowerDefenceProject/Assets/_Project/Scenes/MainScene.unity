@@ -4540,6 +4540,8 @@ MonoBehaviour:
   _pointForPreviousLevelsPanel: {fileID: 720533284}
   _viewForHideAndShow: {fileID: 1041355580}
   _levelsPanelPrefab: {fileID: 5678918188575816974, guid: 8dce5c5b7c7c0704592b04c4f5415bcd, type: 3}
+  _switchLevelsPanelAnimationDuration: 0.4
+  _switchLevelsPanelAnimationEase: 5
 --- !u!1 &951375246
 GameObject:
   m_ObjectHideFlags: 0
@@ -8137,21 +8139,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
-  - {fileID: 320640572}
-  - {fileID: 2060574963}
-  - {fileID: 1482966217}
   - {fileID: 1285109656}
+  - {fileID: 565078028}
   - {fileID: 322098973}
+  - {fileID: 2060574963}
+  - {fileID: 320640572}
+  - {fileID: 2108613273}
+  - {fileID: 1482966217}
   _readOnlyBindingModules:
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
-  - {fileID: 320640572}
-  - {fileID: 2060574963}
-  - {fileID: 1482966217}
   - {fileID: 1285109656}
+  - {fileID: 565078028}
   - {fileID: 322098973}
+  - {fileID: 2060574963}
+  - {fileID: 320640572}
+  - {fileID: 2108613273}
+  - {fileID: 1482966217}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
