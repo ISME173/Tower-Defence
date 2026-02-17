@@ -18,6 +18,7 @@ namespace _Project.Scripts.MoneySystem
         [SerializeField] private TextMeshProUGUI _amountOfMoneyText;
         [SerializeField] private Button _onAddMoneyByAdButton;
         [SerializeField] private RectTransform _moneyIcon;
+        [SerializeField] private RectTransform _viewForHideAndShow;
         [Space]
         [SerializeField] private Button _getMoneyButton;
         [SerializeField] private RectTransform _getMoneyAfterWatchAdvPanel;
@@ -50,6 +51,16 @@ namespace _Project.Scripts.MoneySystem
 
             OnWatchAdvButtonClicked.OnCompleted();
             OnNoWatchAdvButtonClicked.OnCompleted();
+        }
+
+        public void ShowMainView()
+        {
+            _viewForHideAndShow.gameObject.SetActive(true);
+        }
+
+        public void HideMainView()
+        {
+            _viewForHideAndShow.gameObject.SetActive(false);
         }
 
         public void ShowWatchAdvForGetMoneyPanel()

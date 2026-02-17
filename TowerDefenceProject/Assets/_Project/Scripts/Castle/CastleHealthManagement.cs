@@ -51,11 +51,19 @@ namespace _Project.Scripts.Castle
             _levelCompletionManagement = levelCompletionManagement;
 
             _levelCompletionManagement.ReadOnlyLevelFailed
-                .Subscribe(_ => CastleHealthView.HideWatchAdvForGetHeartsPanel())
+                .Subscribe(_ =>
+                {
+                    CastleHealthView.HideMainView();
+                    CastleHealthView.HideWatchAdvForGetHeartsPanel();
+                })
                 .AddTo(Disposables);
 
             _levelCompletionManagement.ReadOnlyLevelCompleted
-                .Subscribe(_ => CastleHealthView.HideWatchAdvForGetHeartsPanel())
+                .Subscribe(_ =>
+                {
+                    CastleHealthView.HideMainView();
+                    CastleHealthView.HideWatchAdvForGetHeartsPanel();
+                })
                 .AddTo(Disposables);
 
             Disposables.Add(_levelsCreator.ReadOnlyLevelCreated.Subscribe(OnLevelCreated));
@@ -88,6 +96,8 @@ namespace _Project.Scripts.Castle
         {
             _maxHealth = Math.Max(1, levelObject.MaxLevelHealth);
             CurrentHealth.Value = _maxHealth;
+
+            CastleHealthView.ShowMainView();    
         }
 
         private void OnEnemyMovedToLastPoint(Enemy enemy)

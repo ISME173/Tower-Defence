@@ -57,11 +57,19 @@ namespace _Project.Scripts.MoneySystem
                 .AddTo(Disposables);
 
             _levelCompletionManagement.ReadOnlyLevelFailed
-                .Subscribe(_ => MoneyView.HideWatchAdvForGetMoneyPanel())
+                .Subscribe(_ =>
+                {
+                    MoneyView.HideMainView();
+                    MoneyView.HideWatchAdvForGetMoneyPanel();
+                })
                 .AddTo(Disposables);
 
             _levelCompletionManagement.ReadOnlyLevelCompleted
-                .Subscribe(_ => MoneyView.HideWatchAdvForGetMoneyPanel())
+                .Subscribe(_ =>
+                {
+                    MoneyView.HideMainView();
+                    MoneyView.HideWatchAdvForGetMoneyPanel();
+                })
                 .AddTo(Disposables);
         }
 
@@ -141,6 +149,7 @@ namespace _Project.Scripts.MoneySystem
         private void OnLevelCreated(LevelObject levelObject)
         {
             CurrentAmountOfMoney.Value = levelObject.InitialAmountOfMoney;
+            MoneyView.ShowMainView();
         }
 
         private void OnEnemyDied(Enemy enemy)

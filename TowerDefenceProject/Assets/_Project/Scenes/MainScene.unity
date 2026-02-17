@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.68235296}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.7882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3322,10 +3322,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 109634304}
-  - {fileID: 9868015}
   - {fileID: 1208171569}
   - {fileID: 770873740}
+  - {fileID: 109634304}
+  - {fileID: 9868015}
   - {fileID: 938887563}
   m_Father: {fileID: 76481115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4742,6 +4742,7 @@ MonoBehaviour:
   _currentHealthText: {fileID: 1471796820}
   _addHealthByAdButton: {fileID: 705683879}
   _heartIcon: {fileID: 300982466}
+  _viewForHideAndShow: {fileID: 1499207408}
   _getHeartsButton: {fileID: 705683879}
   _getHeartsAfterWatchAdvPanel: {fileID: 1208171569}
   _watchAdvButton: {fileID: 792243209}
@@ -5790,6 +5791,7 @@ MonoBehaviour:
   _amountOfMoneyText: {fileID: 65368140}
   _onAddMoneyByAdButton: {fileID: 312926392}
   _moneyIcon: {fileID: 609611974}
+  _viewForHideAndShow: {fileID: 146631468}
   _getMoneyButton: {fileID: 312926392}
   _getMoneyAfterWatchAdvPanel: {fileID: 770873740}
   _watchAdvButton: {fileID: 257114125}
@@ -8135,21 +8137,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
+  - {fileID: 2108613273}
   - {fileID: 565078028}
+  - {fileID: 320640572}
   - {fileID: 2060574963}
   - {fileID: 1482966217}
-  - {fileID: 322098973}
   - {fileID: 1285109656}
-  - {fileID: 2108613273}
-  - {fileID: 320640572}
+  - {fileID: 322098973}
   _readOnlyBindingModules:
+  - {fileID: 2108613273}
   - {fileID: 565078028}
+  - {fileID: 320640572}
   - {fileID: 2060574963}
   - {fileID: 1482966217}
-  - {fileID: 322098973}
   - {fileID: 1285109656}
-  - {fileID: 2108613273}
-  - {fileID: 320640572}
+  - {fileID: 322098973}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0

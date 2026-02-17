@@ -19,6 +19,7 @@ namespace _Project.Scripts.Castle
         [SerializeField] private TextMeshProUGUI _currentHealthText;
         [SerializeField] private Button _addHealthByAdButton;
         [SerializeField] private RectTransform _heartIcon;
+        [SerializeField] private RectTransform _viewForHideAndShow;
         [Space]
         [SerializeField] private Button _getHeartsButton;
         [SerializeField] private RectTransform _getHeartsAfterWatchAdvPanel;
@@ -45,6 +46,16 @@ namespace _Project.Scripts.Castle
             
             OnWatchAdvButtonClicked.OnCompleted();
             OnNoWatchAdvButtonClicked.OnCompleted();
+        }
+
+        public void ShowMainView()
+        {
+            _viewForHideAndShow.gameObject.SetActive(true);
+        }
+
+        public void HideMainView()
+        {
+            _viewForHideAndShow.gameObject.SetActive(false);
         }
 
         public void ShowWatchAdvForGetHeartsPanel()
