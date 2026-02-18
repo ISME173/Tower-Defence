@@ -51,13 +51,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 40
     m_Right: 40
-    m_Top: 40
-    m_Bottom: 40
+    m_Top: 75
+    m_Bottom: 55
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 110, y: 110}
-  m_Spacing: {x: 30, y: 30}
+  m_CellSize: {x: 150, y: 150}
+  m_Spacing: {x: 40, y: 40}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &8445355785310067272
@@ -97,7 +97,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 600}
+  m_SizeDelta: {x: 1000, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1348086740025783739
 CanvasRenderer:
@@ -151,4 +151,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.LevelsManagement.LevelsPanel
   _levelButtonPrefab: {fileID: 8430161747649940264, guid: 9133db1910e462f4f9147c9450afac31, type: 3}
   _parentForLevelButtons: {fileID: 6484806468892394141}
-  _maxLevelButtonsInPanel: 3
+  _maxLevelButtonsInPanel: 10
