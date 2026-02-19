@@ -165,6 +165,10 @@ namespace _Project.Scripts.CameraControll
         public void LockMoving()
         {
             _movingIsLocked = true;
+
+            _yawStopElapsed = 0f;
+            _yawStopVelocity = 0f;
+            _yawVelocity = 0f;
         }
 
         public void UnlockMoving()

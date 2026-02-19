@@ -413,6 +413,9 @@ MonoBehaviour:
   _levelNumber: 2
   _maxLevelHealth: 6
   _initialAmountOfMoney: 40
+  _healthFor1Star: 6
+  _healthFor2Stars: 3
+  _healthFor3Stars: 1
 --- !u!1001 &3022926150050412
 PrefabInstance:
   m_ObjectHideFlags: 0

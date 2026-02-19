@@ -8102,6 +8102,7 @@ GameObject:
   - component: {fileID: 1804363958}
   - component: {fileID: 1804363960}
   - component: {fileID: 1804363959}
+  - component: {fileID: 1804363961}
   m_Layer: 0
   m_Name: SceneScope
   m_TagString: Untagged
@@ -8140,19 +8141,21 @@ MonoBehaviour:
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
   - {fileID: 1482966217}
-  - {fileID: 322098973}
   - {fileID: 1285109656}
   - {fileID: 565078028}
+  - {fileID: 1804706553}
   - {fileID: 2108613273}
   - {fileID: 2060574963}
+  - {fileID: 322098973}
   - {fileID: 320640572}
   _readOnlyBindingModules:
   - {fileID: 1482966217}
-  - {fileID: 322098973}
   - {fileID: 1285109656}
   - {fileID: 565078028}
+  - {fileID: 1804706553}
   - {fileID: 2108613273}
   - {fileID: 2060574963}
+  - {fileID: 322098973}
   - {fileID: 320640572}
 --- !u!114 &1804363960
 MonoBehaviour:
@@ -8166,6 +8169,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5312032623c34414a54ea00e35a7eb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Reflex::Reflex.Core.ContainerScope
+--- !u!114 &1804363961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804363957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d37b40ddc3b564f86b8da9569a18e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Saves.ClearAllSavesButton
+  _allowInEditMode: 1
+--- !u!1 &1804706551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804706552}
+  - component: {fileID: 1804706553}
+  m_Layer: 0
+  m_Name: Camera Bindings Module
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1804706552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804706551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1958740900}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1804706553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804706551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8673cbb6ef550b64998c698a479104a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.CameraControll.CameraBindingModule
+  _cameraMoving: {fileID: 330585548}
 --- !u!1 &1924082465
 GameObject:
   m_ObjectHideFlags: 0
@@ -8240,6 +8301,7 @@ Transform:
   - {fileID: 2108613272}
   - {fileID: 320640571}
   - {fileID: 322098972}
+  - {fileID: 1804706552}
   m_Father: {fileID: 1804363958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1960256658

@@ -45,6 +45,25 @@ namespace _Project.Scripts.LevelsManagement
             }
         }
 
+        public void UpdateButtons(Func<int, bool> isUnlocked, Func<int, int> getStars)
+        {
+            if (isUnlocked == null)
+                throw new ArgumentNullException(nameof(isUnlocked));
+            if (getStars == null)
+                throw new ArgumentNullException(nameof(getStars));
+
+            foreach (var button in LevelButtonsInPanel)
+            {
+                int levelIndex = button.LevelIndex;
+
+                bool unlocked = isUnlocked(levelIndex);
+                button.SetActiveLevelView(unlocked);
+
+                int stars = unlocked ? getStars(levelIndex) : 0;
+                button.SetActiveStars(stars);
+            }
+        }
+
         public void Dispose()
         {
             ClearCurrentLevelButtons();

@@ -85,6 +85,17 @@ namespace _Project.Scripts.LevelsManagement
             }
         }
 
+        public void UpdateProgress(Func<int, bool> isUnlocked, Func<int, int> getStars)
+        {
+            if (isUnlocked == null)
+                throw new ArgumentNullException(nameof(isUnlocked));
+            if (getStars == null)
+                throw new ArgumentNullException(nameof(getStars));
+
+            foreach (var panel in LevelsPanels)
+                panel.UpdateButtons(isUnlocked, getStars);
+        }
+
         public void Dispose()
         {
             ClearLevelsPanels();
@@ -138,7 +149,6 @@ namespace _Project.Scripts.LevelsManagement
 
             _switchLevelsPanelAnimationHandle.TryCancel();
 
-            int oldIndex = _currentLevelsPanelIndex;
             Transform oldPanel = _currentLevelsPanel.transform;
             oldPanel.SetParent(newPointForOldPanel, false);
 

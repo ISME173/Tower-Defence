@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using _Project.Scripts.CameraControll;
 
 namespace _Project.Scripts.LevelsManagement
 {
@@ -14,6 +15,7 @@ namespace _Project.Scripts.LevelsManagement
 
         private readonly CompositeDisposable _disposables = new();
 
+        private CameraMoving _cameraMoving;
         private LevelObject _currentLevelObject;
         private int _currentLevelIndex;
 
@@ -21,6 +23,7 @@ namespace _Project.Scripts.LevelsManagement
 
         public Observable<LevelObject> ReadOnlyLevelCreated => LevelCreated;
         public LevelObject CurrentLevelObject => _currentLevelObject;
+        public int CurrentLevelIndex => _currentLevelIndex;
 
         public LevelsCreator(
             ICollection<LevelObject> levelObjectPrefabs,
@@ -39,6 +42,11 @@ namespace _Project.Scripts.LevelsManagement
             }
 
             _currentLevelIndex = 0;
+        }
+
+        public void Initialize(CameraMoving cameraMoving)
+        {
+            _cameraMoving = cameraMoving;
 
             // 1-й уровень создаётся сразу (не Addressables)
             CreateLevelByIndex(_currentLevelIndex);
@@ -127,6 +135,7 @@ namespace _Project.Scripts.LevelsManagement
             _currentLevelIndex = levelIndex;
 
             LevelCreated?.OnNext(createdLevelObject);
+            _cameraMoving.UnlockMoving();
         }
 
         private void RemoveCurrentLevel()

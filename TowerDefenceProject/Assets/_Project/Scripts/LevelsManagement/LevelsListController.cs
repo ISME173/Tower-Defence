@@ -2,28 +2,30 @@ using _Project.Scripts.GameoverMagamenet;
 using _Project.Scripts.VictoryManagement;
 using R3;
 using System;
-using System.Diagnostics;
-
-using Debug = UnityEngine.Debug;   
 
 namespace _Project.Scripts.LevelsManagement
 {
-
     public class LevelsListController : IDisposable
     {
         private readonly CompositeDisposable Disposables = new();
         private readonly LevelsListView LevelsListView;
         private readonly AddressablesLevelsLoader AddressablesLevelsLoader;
         private readonly LevelsCreator LevelsCreator;
+        private readonly LevelsProgressionService LevelsProgressionService;
 
         private VictoryController _victoryController;
         private GameoverController _gameoverController;
 
-        public LevelsListController(LevelsListView levelsListView, AddressablesLevelsLoader addressablesLevelsLoader, LevelsCreator levelsCreator)
+        public LevelsListController(
+            LevelsListView levelsListView,
+            AddressablesLevelsLoader addressablesLevelsLoader,
+            LevelsCreator levelsCreator,
+            LevelsProgressionService levelsProgressionService)
         {
             LevelsCreator = levelsCreator;
             LevelsListView = levelsListView;
             AddressablesLevelsLoader = addressablesLevelsLoader;
+            LevelsProgressionService = levelsProgressionService;
         }
 
         public void Initialize(VictoryController victoryController, GameoverController gameoverController)
@@ -32,6 +34,11 @@ namespace _Project.Scripts.LevelsManagement
             _gameoverController = gameoverController;
 
             LevelsListView.Initialize(AddressablesLevelsLoader.TotalLevelsCount);
+            LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
+
+            LevelsProgressionService.ReadOnlyProgressChanged
+                .Subscribe(_ => LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars))
+                .AddTo(Disposables);
 
             LevelsListView.ReadOnlyOnNextLevelsPanelButtonClicked
                 .Subscribe(OnNextLevelsPanelButtonClicked)
@@ -67,6 +74,7 @@ namespace _Project.Scripts.LevelsManagement
 
         private void OnMenuButtonClicked(Unit unit)
         {
+            LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
             LevelsListView.ShowView();
         }
 
@@ -106,6 +114,9 @@ namespace _Project.Scripts.LevelsManagement
 
         private void OnLevelButtonClicked(int levelIndex)
         {
+            if (!LevelsProgressionService.IsLevelUnlocked(levelIndex))
+                return;
+
             LevelsListView.HideView();
             LevelsCreator.CreateLevelByIndex(levelIndex);
         }

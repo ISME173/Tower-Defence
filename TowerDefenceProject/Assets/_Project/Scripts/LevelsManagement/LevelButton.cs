@@ -11,7 +11,7 @@ namespace _Project.Scripts.LevelsManagement
     {
         [Header("Scene References")]
         [SerializeField] private TextMeshProUGUI _levelNumberText;
-        [SerializeField] private Image _levelImage;
+        [SerializeField] private Image _lockedLevelView;
         [SerializeField] private RectTransform _parentForStars;
         [Space]
         [SerializeField] private Image _oneStar;
@@ -21,9 +21,6 @@ namespace _Project.Scripts.LevelsManagement
         [Header("Assets References")]
         [SerializeField] private Sprite _activeStarSprite;
         [SerializeField] private Sprite _inactiveStarSprite;
-        [Space]
-        [SerializeField] private Sprite _lockedLevelSprite;
-        [SerializeField] private Sprite _unlockedLevelSprite;
 
         private Button _button;
         private int _levelIndex;
@@ -39,29 +36,27 @@ namespace _Project.Scripts.LevelsManagement
             _levelIndex = levelIndex;
             _button = GetComponent<Button>();
 
+            _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(() => OnLevelButtonClicked?.OnNext(_levelIndex));
+
             _levelNumberText.text = (_levelIndex + 1).ToString();
         }
 
         public void Dispose()
         {
-            _button.onClick.RemoveAllListeners();
+            if (_button != null)
+                _button.onClick.RemoveAllListeners();
         }
 
         public void SetActiveLevelView(bool active)
         {
-            if (active)
-            {
-                _parentForStars.gameObject.SetActive(true);
-                _levelImage.sprite = _activeStarSprite;
-                _levelNumberText.gameObject.SetActive(true);
-            }
-            else
-            {
-                _parentForStars.gameObject.SetActive(false);
-                _levelImage.sprite = _lockedLevelSprite;
-                _levelNumberText.gameObject.SetActive(false);
-            }
+            if (_button != null)
+                _button.interactable = active;
+
+            _parentForStars.gameObject.SetActive(active);
+            _levelNumberText.gameObject.SetActive(active);
+
+            _lockedLevelView.gameObject.SetActive(!active);
         }
 
         public void SetActiveStars(int activeStarsCount)

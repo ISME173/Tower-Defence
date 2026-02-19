@@ -10,7 +10,7 @@ namespace _Project.Scripts.Saves
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
             _saves = new PlayerPrefsSaves();
-            containerBuilder.RegisterValue(_saves);
+            containerBuilder.RegisterValue(_saves, new[] { typeof(ISaves) });
         }
     }
 }

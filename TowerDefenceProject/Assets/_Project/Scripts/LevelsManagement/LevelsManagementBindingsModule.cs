@@ -1,7 +1,9 @@
-﻿using _Project.Scripts.Castle;
+﻿using _Project.Scripts.CameraControll;
+using _Project.Scripts.Castle;
 using _Project.Scripts.DI;
 using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.GameoverMagamenet;
+using _Project.Scripts.Saves;
 using _Project.Scripts.VictoryManagement;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -24,8 +26,14 @@ namespace _Project.Scripts.LevelsManagement
         private LevelCompletionManagement _levelsCompletionManagement;
         private AddressablesLevelsLoader _addressablesLevelsLoader;
 
+        private LevelsProgressionService _levelsProgressionService;
+        private LevelsProgressionRuntimeTracker _levelsProgressionRuntimeTracker;
+
         private void OnDestroy()
         {
+            _levelsProgressionRuntimeTracker?.Dispose();
+            _levelsProgressionService?.Dispose();
+
             _levelsCreator?.Dispose();
             _levelsCompletionManagement?.Dispose();
             _addressablesLevelsLoader?.Dispose();
@@ -39,18 +47,38 @@ namespace _Project.Scripts.LevelsManagement
 
             _levelsCreator = new LevelsCreator(_levelObjectPrefabs, _createLevelPoint, _addressablesLevelsLoader);
             _levelsCompletionManagement = new LevelCompletionManagement();
-            _levelsListController = new LevelsListController(_levelsListView, _addressablesLevelsLoader, _levelsCreator);
+
+            _levelsProgressionService = new LevelsProgressionService();
+            _levelsProgressionRuntimeTracker = new LevelsProgressionRuntimeTracker();
+
+            _levelsListController = new LevelsListController(_levelsListView, _addressablesLevelsLoader, _levelsCreator, _levelsProgressionService);
 
             containerBuilder.RegisterValue(_levelsCompletionManagement);
             containerBuilder.RegisterValue(_addressablesLevelsLoader);
             containerBuilder.RegisterValue(_levelsCreator);
+            containerBuilder.RegisterValue(_levelsProgressionService);
             containerBuilder.RegisterValue(_levelsListController);
         }
 
         [Inject]
-        private void Initialize(CastleHealthManagement castleHealthManagement, EnemiesSpawner enemysSpawner, GameoverController gameoverController, VictoryController victoryController)
+        private void Initialize(
+            ISaves saves,
+            CastleHealthManagement castleHealthManagement,
+            EnemiesSpawner enemysSpawner,
+            GameoverController gameoverController,
+            VictoryController victoryController,
+            CameraMoving cameraMoving)
         {
-            _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner);
+            _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner, _levelsCreator, cameraMoving);
+            _levelsCreator.Initialize(cameraMoving);
+            _levelsProgressionService.Initialize(saves, _addressablesLevelsLoader.TotalLevelsCount);
+
+            _levelsProgressionRuntimeTracker.Initialize(
+                _levelsProgressionService,
+                _levelsCreator,
+                castleHealthManagement,
+                _levelsCompletionManagement);
+
             _levelsListController.Initialize(victoryController, gameoverController);
         }
     }
