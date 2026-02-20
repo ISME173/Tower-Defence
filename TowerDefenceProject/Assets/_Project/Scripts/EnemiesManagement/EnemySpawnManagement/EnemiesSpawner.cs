@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.LevelsManagement;
+using _Project.Scripts.PauseManagement;
 using _Project.Scripts.Utilities;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -21,6 +22,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
         private LevelCompletionManagement _levelCompletionManagement;
         private LevelsCreator _levelsCreator;
+        private PauseController _pauseController;
 
         private List<Transform> _currentMovingPoints;
         private EnemysInLevelSpawnSeqence _currentEnemiesInLevelSpawnSequence;
@@ -35,11 +37,12 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
         public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
 
-        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, Transform enemiesContainer)
+        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, Transform enemiesContainer)
         {
             _enemiesContainer = enemiesContainer;
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
+            _pauseController = pauseController;
 
             _levelsCreator.ReadOnlyLevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
@@ -50,6 +53,10 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                 .AddTo(Disposables);
 
             _levelCompletionManagement.ReadOnlyLevelCompleted
+                .Subscribe(_ => CancelSpawnProcess())
+                .AddTo(Disposables);
+
+            _pauseController.ReadOnlyOnOpenMenuButtonClicked
                 .Subscribe(_ => CancelSpawnProcess())
                 .AddTo(Disposables);
         }

@@ -47,6 +47,7 @@ namespace _Project.Scripts.PauseManagement
             _hidePauseButton.OnClickAsObservable().Subscribe(_ => OnHidePauseButtonClicked.OnNext(Unit.Default)).AddTo(Disposables);
             _musicsActiveSwitchButton.OnClickAsObservable().Subscribe(_ => OnMusicsActiveSwitchButtonClicked.OnNext(Unit.Default)).AddTo(Disposables);
             _sfxActiveSwitchButton.OnClickAsObservable().Subscribe(_ => OnSfxActiveSwitchButtonClicked.OnNext(Unit.Default)).AddTo(Disposables);
+            _openMenuButton.OnClickAsObservable().Subscribe(_ => OnOpenMenuButtonClicked.OnNext(Unit.Default)).AddTo(Disposables);
         }
 
         public void Dispose()

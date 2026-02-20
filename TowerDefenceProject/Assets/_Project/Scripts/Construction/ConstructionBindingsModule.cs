@@ -2,6 +2,7 @@
 using _Project.Scripts.DI;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
+using _Project.Scripts.PauseManagement;
 using Reflex.Attributes;
 using Reflex.Core;
 using UnityEngine;
@@ -31,9 +32,9 @@ namespace _Project.Scripts.Construction
         }
 
         [Inject]
-        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator)
+        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController)
         {
-            _constructionController.Initialize(moneyManagement, levelCompletionManagement, levelsCreator);
+            _constructionController.Initialize(moneyManagement, levelCompletionManagement, levelsCreator, pauseController);
         }
     }
 }

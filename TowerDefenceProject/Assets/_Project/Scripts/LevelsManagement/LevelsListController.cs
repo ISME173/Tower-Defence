@@ -1,4 +1,5 @@
 using _Project.Scripts.GameoverMagamenet;
+using _Project.Scripts.PauseManagement;
 using _Project.Scripts.VictoryManagement;
 using R3;
 using System;
@@ -15,6 +16,7 @@ namespace _Project.Scripts.LevelsManagement
 
         private VictoryController _victoryController;
         private GameoverController _gameoverController;
+        private PauseController _pauseController;
 
         public LevelsListController(
             LevelsListView levelsListView,
@@ -28,10 +30,11 @@ namespace _Project.Scripts.LevelsManagement
             LevelsProgressionService = levelsProgressionService;
         }
 
-        public void Initialize(VictoryController victoryController, GameoverController gameoverController)
+        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController)
         {
             _victoryController = victoryController;
             _gameoverController = gameoverController;
+            _pauseController = pauseController;
 
             LevelsListView.Initialize(AddressablesLevelsLoader.TotalLevelsCount);
             LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
@@ -62,6 +65,10 @@ namespace _Project.Scripts.LevelsManagement
                 .AddTo(Disposables);
 
             _gameoverController.ReadOnlyOnMenuButtonClicked
+                .Subscribe(OnMenuButtonClicked)
+                .AddTo(Disposables);
+
+            _pauseController.ReadOnlyOnOpenMenuButtonClicked
                 .Subscribe(OnMenuButtonClicked)
                 .AddTo(Disposables);
         }

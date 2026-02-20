@@ -1,3 +1,4 @@
+using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
 using _Project.Scripts.Saves;
 using Reflex.Attributes;
@@ -25,9 +26,9 @@ namespace _Project.Scripts.PauseManagement
         }
 
         [Inject]
-        private void Initialize(ISaves saves)
+        private void Initialize(ISaves saves, CameraMoving cameraMoving)
         {
-            _pauseController.Initialize(saves);
+            _pauseController.Initialize(saves, cameraMoving);
         }
     }
 }

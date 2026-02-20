@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.CameraControll;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
+using _Project.Scripts.PauseManagement;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace _Project.Scripts.Construction
         private DeferredClickProcessor _deferredClickProcessor;
         private MoneyManagement _moneyManagement;
         private LevelCompletionManagement _levelCompletionManagement;
+        private PauseController _pauseController;
 
         private InputAction _pointerPositionAction;
         private InputAction _pointerPressAction;
@@ -66,17 +68,34 @@ namespace _Project.Scripts.Construction
             _deferredClickProcessor = CreateDeferredClickProcessor();
         }
 
-        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator)
+        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController)
         {
             _moneyManagement = moneyManagement;
             _levelCompletionManagement = levelCompletionManagement;
             _levelCreator = levelsCreator;
+            _pauseController = pauseController;
 
             _levelCompletionManagement.ReadOnlyLevelFailed
-                .Subscribe(_ => ClearUsingBuildingSites())
+                .Subscribe(_ =>
+                {
+                    ClearUsingBuildingSites();
+
+                    ConstructionView.HideBuildView();
+                    ConstructionView.HideUpgradeView();
+                })
                 .AddTo(Disposables);
 
             _levelCompletionManagement.ReadOnlyLevelCompleted
+                .Subscribe(_ =>
+                {
+                    ClearUsingBuildingSites();
+
+                    ConstructionView.HideBuildView();
+                    ConstructionView.HideUpgradeView();
+                })
+                .AddTo(Disposables);
+
+            _pauseController.ReadOnlyOnOpenMenuButtonClicked
                 .Subscribe(_ => ClearUsingBuildingSites())
                 .AddTo(Disposables);
 

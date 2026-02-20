@@ -3,6 +3,7 @@ using _Project.Scripts.Castle;
 using _Project.Scripts.DI;
 using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.GameoverMagamenet;
+using _Project.Scripts.PauseManagement;
 using _Project.Scripts.Saves;
 using _Project.Scripts.VictoryManagement;
 using Reflex.Attributes;
@@ -67,7 +68,8 @@ namespace _Project.Scripts.LevelsManagement
             EnemiesSpawner enemysSpawner,
             GameoverController gameoverController,
             VictoryController victoryController,
-            CameraMoving cameraMoving)
+            CameraMoving cameraMoving, 
+            PauseController pauseController)
         {
             _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner, _levelsCreator, cameraMoving);
             _levelsCreator.Initialize(cameraMoving);
@@ -79,7 +81,7 @@ namespace _Project.Scripts.LevelsManagement
                 castleHealthManagement,
                 _levelsCompletionManagement);
 
-            _levelsListController.Initialize(victoryController, gameoverController);
+            _levelsListController.Initialize(victoryController, gameoverController, pauseController);
         }
     }
 }
