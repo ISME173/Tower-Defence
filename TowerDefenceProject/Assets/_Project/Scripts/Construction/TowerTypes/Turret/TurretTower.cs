@@ -16,6 +16,11 @@ namespace _Project.Scripts.Construction.TowerTypes.Turret
             enemy.TakeDamage(TowerData.AttackDamage, this);
         }
 
+        protected override void ClearSpawnedProjectiles()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override Type GetTowerDataType()
         {
             return typeof(TurretTowerData);

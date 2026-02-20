@@ -440,6 +440,9 @@ MonoBehaviour:
   _cameraPivot: {fileID: 1163783868145079098}
   _npcSpawnPoint: {fileID: 968261579745631551}
   _castleView: {fileID: 3080134444125338013}
+  _towerPrefabsCanPlaceInThisLevel:
+  - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
+  - {fileID: 1465518390504469703, guid: f7a20566111585c4f8e7d914d65da994, type: 3}
   _levelNumber: 4
   _maxLevelHealth: 6
   _initialAmountOfMoney: 60

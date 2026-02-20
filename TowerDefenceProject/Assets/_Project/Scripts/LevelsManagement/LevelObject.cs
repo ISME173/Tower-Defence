@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.EnemiesManagement.Spawn;
+﻿using _Project.Scripts.Construction;
+using _Project.Scripts.EnemiesManagement.Spawn;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace _Project.Scripts.LevelsManagement
         [SerializeField] private Transform _cameraPivot;
         [SerializeField] private Transform _npcSpawnPoint;
         [SerializeField] private GameObject _castleView;
+        [Space]
+        [SerializeField] private List<Tower> _towerPrefabsCanPlaceInThisLevel;
 
         [Header("Settings")]
         [SerializeField, Min(1)] private int _levelNumber;
@@ -32,6 +35,7 @@ namespace _Project.Scripts.LevelsManagement
         public EnemysInLevelSpawnSeqence EnemysInLevelSpawnSeqence => _enemySpawnSequence;
         public Transform CameraPivot => _cameraPivot;
         public Transform NpcSpawnPoint => _npcSpawnPoint;
+        public IReadOnlyList<Tower> TowerPrefabsCanPlaceInThisLevel => _towerPrefabsCanPlaceInThisLevel;
 
         public int HealthFor1Star => _healthFor1Star;
         public int HealthFor2Stars => _healthFor2Stars;

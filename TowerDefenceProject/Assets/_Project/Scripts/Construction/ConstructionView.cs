@@ -38,26 +38,46 @@ namespace _Project.Scripts.Construction
             _upgradeTowerSlot.BuildTowerButton.onClick.RemoveAllListeners();
         }
 
-        public void Initialize(ICollection<Tower> towerPrefabs)
+        public void UpdateCanPlaceTowersList(ICollection<Tower> towerPrefabsCanPlace)
         {
-            if (towerPrefabs.Count > _towerSlotsInBuildTowerView.Count)
+            if (towerPrefabsCanPlace.Count > _towerSlotsInBuildTowerView.Count)
             {
                 Debug.LogError("Tower prefabs count > tower slot UIs count");
                 return;
             }
+            List<Tower> towerPrefabsCanPlaceList = new(towerPrefabsCanPlace);
 
             TowerSlotUIsWithTowerPrefabs.Clear();
 
             for (int i = 0; i < _towerSlotsInBuildTowerView.Count; i++)
                 _towerSlotsInBuildTowerView[i].gameObject.SetActive(false);
 
+            for (int i = 0; i < _towerSlotsInBuildTowerView.Count; i++)
+            {
+                TowerSlotUI towerSlotUI = _towerSlotsInBuildTowerView[i];
+                Tower towerPrefab = towerPrefabsCanPlaceList.Count > i ? towerPrefabsCanPlaceList[i] : null;
+
+                towerSlotUI.gameObject.SetActive(true);
+
+                if (towerPrefab != null)
+                {
+                    towerSlotUI.UpdateView(towerPrefab.TowerIconSprite, towerPrefab.BuildPrice);
+                    towerSlotUI.SetActiveView(true);
+                }
+                else
+                {
+                    towerSlotUI.SetActiveView(false);
+                }
+            }
+
             int currentTowerSlotUiIndex = 0;
-            foreach (var towerPrefab in towerPrefabs)
+            foreach (var towerPrefab in towerPrefabsCanPlace)
             {
                 TowerSlotUI towerSlotUI = _towerSlotsInBuildTowerView[currentTowerSlotUiIndex];
                 towerSlotUI.UpdateView(towerPrefab.TowerIconSprite, towerPrefab.BuildPrice);
                 towerSlotUI.gameObject.SetActive(true);
 
+                towerSlotUI.BuildTowerButton.onClick.RemoveAllListeners();
                 towerSlotUI.BuildTowerButton.onClick.AddListener(() =>
                 {
                     OnBuildTowerButtonClickedEvent?.Invoke(towerPrefab);
@@ -66,7 +86,10 @@ namespace _Project.Scripts.Construction
                 TowerSlotUIsWithTowerPrefabs.Add(towerSlotUI, towerPrefab);
                 currentTowerSlotUiIndex++;
             }
+        }
 
+        public void Initialize()
+        {
             _upgradeTowerSlot.BuildTowerButton.onClick.AddListener(() =>
             {
                 OnUpgradeCurrentTowerButtonClicked?.OnNext(Unit.Default);

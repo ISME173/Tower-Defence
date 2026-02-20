@@ -2,12 +2,15 @@
 using LitMotion;
 using LitMotion.Extensions;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Project.Scripts.Construction.TowerTypes.Magic
 {
     public class MagicTower : Tower
     {
+        private readonly Dictionary<Projectile, MotionHandle> SpawnedProjectilesWithMotionHandles = new();
+
         [Header("Magic Tower References")]
         [SerializeField] private Transform _cristalsForAnimate;
 
@@ -67,6 +70,12 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
                     enemy.TakeDamage(TowerData.AttackDamage, this);
 
                     ProjectilesPool.AddObject(projectile);
+
+                    if (SpawnedProjectilesWithMotionHandles.ContainsKey(projectile))
+                    {
+                        SpawnedProjectilesWithMotionHandles[projectile].TryCancel();
+                        SpawnedProjectilesWithMotionHandles.Remove(projectile);
+                    }
                 })
                 .Bind(progress =>
                 {
@@ -75,6 +84,8 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
                     projectile.Transform.position = Vector3.LerpUnclamped(startPosition, targetPosition, progress);
                     projectile.Transform.LookAt(targetPosition);
                 });
+
+            SpawnedProjectilesWithMotionHandles.Add(projectile, motionHandle.Value);
         }
 
         protected override Type GetTowerDataType()
@@ -96,6 +107,17 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
         protected override void UpdateWeaponProjectileView()
         {
             _magicTowerData = TowerData as MagicTowerData;
+        }
+
+        protected override void ClearSpawnedProjectiles()
+        {
+            foreach (var key in SpawnedProjectilesWithMotionHandles.Keys)
+            {
+                ProjectilesPool.AddObject(key);
+                SpawnedProjectilesWithMotionHandles[key].TryCancel();
+            }
+
+            SpawnedProjectilesWithMotionHandles.Clear();
         }
     }
 }

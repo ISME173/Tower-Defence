@@ -36,23 +36,6 @@ namespace _Project.Scripts.Construction
         public int RefundAfterDestruction => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.RefundAfterDestruction;
         public Sprite TowerIconSprite => _upgradeLevelDatas[_upgradeLevelIndex].TowerData.TowerIconSprite;
 
-        protected virtual void Update()
-        {
-            if (_targetEnemy == null || _targetEnemy.Transform == null)
-                return;
-
-            _attackDelayTimer += Time.deltaTime;
-
-            if (_attackDelayTimer >= _currentTowerData.DelayBetweenAttacks)
-            {
-                AttackEnemy(_targetEnemy);
-                _attackDelayTimer = 0;
-            }
-
-            if (_targetEnemy != null)
-                RotateWeaponToTarget(_targetEnemy.Transform);
-        }
-
         private void OnValidate()
         {
             if (_upgradeLevelDatas == null || _upgradeLevelDatas.Count == 0)
@@ -69,6 +52,23 @@ namespace _Project.Scripts.Construction
                     return;
                 }
             }
+        }
+
+        protected virtual void Update()
+        {
+            if (_targetEnemy == null || _targetEnemy.Transform == null)
+                return;
+
+            _attackDelayTimer += Time.deltaTime;
+
+            if (_attackDelayTimer >= _currentTowerData.DelayBetweenAttacks)
+            {
+                AttackEnemy(_targetEnemy);
+                _attackDelayTimer = 0;
+            }
+
+            if (_targetEnemy != null)
+                RotateWeaponToTarget(_targetEnemy.Transform);
         }
 
         public bool CanUpgrade()
@@ -137,9 +137,11 @@ namespace _Project.Scripts.Construction
             _attackZone.OnTriggerEnterEvent -= OnTriggerEnterInAttackZone;
             _attackZone.OnTrggerExitEvent -= OnTriggerExitFromAttackZone;
 
+            ClearSpawnedProjectiles();
             _targetEnemy = null;
         }
 
+        protected abstract void ClearSpawnedProjectiles();
         protected abstract void UpdateCurrentTowerData();
         protected abstract Type GetTowerDataType();
         protected abstract void AttackEnemy(Enemy enemy);

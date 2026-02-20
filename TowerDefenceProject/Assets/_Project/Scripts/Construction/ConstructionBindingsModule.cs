@@ -31,9 +31,9 @@ namespace _Project.Scripts.Construction
         }
 
         [Inject]
-        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement)
+        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator)
         {
-            _constructionController.Initialize(moneyManagement, levelCompletionManagement);
+            _constructionController.Initialize(moneyManagement, levelCompletionManagement, levelsCreator);
         }
     }
 }

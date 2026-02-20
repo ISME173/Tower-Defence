@@ -2,17 +2,19 @@
 using LitMotion;
 using LitMotion.Extensions;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Project.Scripts.Construction.TowerTypes.Catapult
 {
     public class CatapultTower : Tower
     {
+        private readonly Dictionary<Projectile, MotionHandle> SpawnedProjectilesWithMotionHandles = new();
+
         [Space]
         [SerializeField] private Transform _weaponHorizontalRotationPivot;
         [SerializeField] private Transform _weaponVerticalRotationPivot;
 
-        private MotionHandle _attackHandle;
         private CatapultTowerData _catapultTowerData;
 
         protected override void AttackEnemy(Enemy enemy)
@@ -39,18 +41,26 @@ namespace _Project.Scripts.Construction.TowerTypes.Catapult
 
             motionHandle = motionSequenceBuilder
                 .Append(LMotion.Create(_catapultTowerData.WeaponVerticalRotationInIdle, _catapultTowerData.WeaponVerticalRotationInAttack, _catapultTowerData.RotateTime)
+                .WithCancelOnError()
                 .WithOnComplete(() =>
                 {
                     projectile.Transform.SetParent(null, true);
                 })
                 .BindToLocalEulerAngles(_weaponVerticalRotationPivot))
                 .Append(LMotion.Create(0f, 1f, projectileFlyingTime)
+                .WithCancelOnError()
                 .WithOnComplete(() =>
                 {
                     if (enemy != null && enemy.Alive)
                         enemy.TakeDamage(TowerData.AttackDamage, this);
 
                     ProjectilesPool.AddObject(projectile);
+
+                    if (SpawnedProjectilesWithMotionHandles.ContainsKey(projectile))
+                    {
+                        SpawnedProjectilesWithMotionHandles[projectile].TryCancel();
+                        SpawnedProjectilesWithMotionHandles.Remove(projectile);
+                    }
                 })
                 .Bind(progress =>
                 {
@@ -75,10 +85,22 @@ namespace _Project.Scripts.Construction.TowerTypes.Catapult
                         projectile.Transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
                 }))
                 .Append(LMotion.Create(_catapultTowerData.WeaponVerticalRotationInAttack, _catapultTowerData.WeaponVerticalRotationInIdle, _catapultTowerData.RotateTime)
+                .WithCancelOnError()
                 .BindToLocalEulerAngles(_weaponVerticalRotationPivot))
                 .Run();
 
-            _attackHandle = motionHandle.Value;
+            SpawnedProjectilesWithMotionHandles.Add(projectile, motionHandle.Value);
+        }
+
+        protected override void ClearSpawnedProjectiles()
+        {
+            foreach (var key in SpawnedProjectilesWithMotionHandles.Keys)
+            {
+                ProjectilesPool.AddObject(key);
+                SpawnedProjectilesWithMotionHandles[key].TryCancel();
+            }
+
+            SpawnedProjectilesWithMotionHandles.Clear();
         }
 
         protected override Type GetTowerDataType()

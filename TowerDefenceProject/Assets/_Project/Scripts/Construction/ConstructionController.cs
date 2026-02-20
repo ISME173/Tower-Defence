@@ -15,9 +15,11 @@ namespace _Project.Scripts.Construction
         private readonly ConstructionView ConstructionView;
         private readonly CameraMoving CameraMoving;
         private readonly CompositeDisposable Disposables = new();
-        private readonly HashSet<BuildingSite> UsingBuildingSitesInCurrentLevel = new HashSet<BuildingSite>();
+        private readonly HashSet<BuildingSite> UsingBuildingSitesInCurrentLevel = new();
+        private readonly HashSet<Tower> TowerPrefabsCanPlaceInCurrentLevel = new();
 
         private ConstructionControllerParameters _constructionControllerParameters;
+        private LevelsCreator _levelCreator;
         private BuildingSite _selectedBuildingSite;
         private DeferredClickProcessor _deferredClickProcessor;
         private MoneyManagement _moneyManagement;
@@ -31,7 +33,8 @@ namespace _Project.Scripts.Construction
             ConstructionView = constructionView;
             CameraMoving = cameraMoving;
 
-            ConstructionView.Initialize(constructionControllerParameters.TowerPrefabs);
+            ConstructionView.Initialize();
+            ConstructionView.UpdateCanPlaceTowersList(constructionControllerParameters.TowerPrefabs);
 
             ConstructionView.OnBuildTowerButtonClickedEvent += OnBuildTowerButtonClicked;
 
@@ -42,8 +45,6 @@ namespace _Project.Scripts.Construction
             ConstructionView.ReadOnlyOnDestroyCurrentTowerButtonClicled
                 .Subscribe(_ => OnDestroyCurrentTowerButtonClicked())
                 .AddTo(Disposables);
-
-            
 
             _constructionControllerParameters = constructionControllerParameters;
 
@@ -65,10 +66,11 @@ namespace _Project.Scripts.Construction
             _deferredClickProcessor = CreateDeferredClickProcessor();
         }
 
-        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement)
+        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator)
         {
             _moneyManagement = moneyManagement;
             _levelCompletionManagement = levelCompletionManagement;
+            _levelCreator = levelsCreator;
 
             _levelCompletionManagement.ReadOnlyLevelFailed
                 .Subscribe(_ => ClearUsingBuildingSites())
@@ -76,6 +78,18 @@ namespace _Project.Scripts.Construction
 
             _levelCompletionManagement.ReadOnlyLevelCompleted
                 .Subscribe(_ => ClearUsingBuildingSites())
+                .AddTo(Disposables);
+
+            _levelCreator.ReadOnlyLevelCreated
+                .Subscribe(levelObject =>
+                {
+                    TowerPrefabsCanPlaceInCurrentLevel.Clear();
+
+                    foreach (var towerPrefab in levelObject.TowerPrefabsCanPlaceInThisLevel)
+                        TowerPrefabsCanPlaceInCurrentLevel.Add(towerPrefab);
+
+                    ConstructionView.UpdateCanPlaceTowersList(TowerPrefabsCanPlaceInCurrentLevel);
+                })
                 .AddTo(Disposables);
         }
 
