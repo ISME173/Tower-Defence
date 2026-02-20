@@ -36,6 +36,7 @@ namespace AnimationsUI.CoreScripts.AnimationVariants
                 _hideAnimationHandle = LMotion.Create(_showedLocalScale, _hidedLocalScale, _hideAnimationSettings.Time)
                     .WithEase(_hideAnimationSettings.Ease)
                     .WithCancelOnError()
+                    .WithScheduler(_hideAnimationSettings.IgnoreTimeScale ? MotionScheduler.UpdateIgnoreTimeScale : MotionScheduler.Update)
                     .WithOnComplete(callback)
                     .BindToLocalScale(PanelForAnimate);
             }
@@ -45,6 +46,7 @@ namespace AnimationsUI.CoreScripts.AnimationVariants
                     .WithEase(_hideAnimationSettings.Ease)
                     .WithLoops(_hideAnimationSettings.LoopCount, _hideAnimationSettings.LoopType)
                     .WithCancelOnError()
+                    .WithScheduler(_hideAnimationSettings.IgnoreTimeScale ? MotionScheduler.UpdateIgnoreTimeScale : MotionScheduler.Update)
                     .WithOnComplete(callback)
                     .BindToLocalScale(PanelForAnimate);
             }
@@ -56,12 +58,15 @@ namespace AnimationsUI.CoreScripts.AnimationVariants
         {
             _hideAnimationHandle.TryCancel();
 
+            // Важно: выставляем стартовое состояние всегда, независимо от loop.
+            PanelForAnimate.localScale = _hidedLocalScale;
+
             if (_showAnimationsSettings.WithLoop == false)
             {
-                PanelForAnimate.localScale = _hidedLocalScale;
                 _showAnimationHandle = LMotion.Create(_hidedLocalScale, _showedLocalScale, _showAnimationsSettings.Time)
                     .WithEase(_showAnimationsSettings.Ease)
                     .WithCancelOnError()
+                    .WithScheduler(_showAnimationsSettings.IgnoreTimeScale ? MotionScheduler.UpdateIgnoreTimeScale : MotionScheduler.Update)
                     .WithOnComplete(callback)
                     .BindToLocalScale(PanelForAnimate);
             }
@@ -71,6 +76,7 @@ namespace AnimationsUI.CoreScripts.AnimationVariants
                     .WithEase(_showAnimationsSettings.Ease)
                     .WithLoops(_showAnimationsSettings.LoopCount, _showAnimationsSettings.LoopType)
                     .WithCancelOnError()
+                    .WithScheduler(_showAnimationsSettings.IgnoreTimeScale ? MotionScheduler.UpdateIgnoreTimeScale : MotionScheduler.Update)
                     .WithOnComplete(callback)
                     .BindToLocalScale(PanelForAnimate);
             }

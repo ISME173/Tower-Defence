@@ -24,7 +24,9 @@ namespace AnimationsUI.CoreScripts
             [SerializeField] private bool _withLoop;
             [SerializeField, Min(-1)] private int _loopCount;
             [SerializeField] private LoopType _loopType;
-            
+            [SerializeField] private bool _ignoreTimeScale;
+
+            public bool IgnoreTimeScale => _ignoreTimeScale;
             public float Time => _time;
             public Ease Ease => _ease;
             public LoopType LoopType => _loopType;

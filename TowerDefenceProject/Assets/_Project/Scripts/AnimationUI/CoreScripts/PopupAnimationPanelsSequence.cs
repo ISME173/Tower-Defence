@@ -7,6 +7,9 @@ namespace AnimationsUI.CoreScripts
 {
     public class PopupAnimationPanelsSequence : MonoBehaviour
     {
+        [Tooltip("Если true — sequence будет тикать на unscaled time (анимации продолжат играть при Time.timeScale = 0).")]
+        [SerializeField] private bool _ignoreTimeScale = true;
+
         [Tooltip("Панели для анимации показа.\n'Append' - присоеденить анимацию панели после окончания предыдущей.\n'Join' - начать анимацию панели вместе с предыдущей.\nДля первой панели выбранный вариант не имеет значения.")]
         [SerializeField] private List<PopupElement> _showPopupElements = new List<PopupElement>();
         [Space]
@@ -60,7 +63,8 @@ namespace AnimationsUI.CoreScripts
                 }
             }
 
-            _showMotionHandle = motionSequenceBuilder.Run();
+            _showMotionHandle = motionSequenceBuilder.Run(x =>
+                x.WithScheduler(_ignoreTimeScale ? MotionScheduler.UpdateIgnoreTimeScale : MotionScheduler.Update));
         }
 
         public void Hide(Action callback)
@@ -82,7 +86,8 @@ namespace AnimationsUI.CoreScripts
                 }
             }
 
-            _hideMotionHandle = motionSequenceBuilder.Run();
+            _hideMotionHandle = motionSequenceBuilder.Run(x =>
+                x.WithScheduler(_ignoreTimeScale ? MotionScheduler.UpdateIgnoreTimeScale : MotionScheduler.Update));
         }
 
         [Serializable]
