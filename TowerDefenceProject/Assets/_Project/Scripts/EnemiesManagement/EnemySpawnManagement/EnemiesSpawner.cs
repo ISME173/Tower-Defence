@@ -2,6 +2,7 @@
 using _Project.Scripts.PauseManagement;
 using _Project.Scripts.Utilities;
 using Cysharp.Threading.Tasks;
+using LitMotion;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         private LevelsCreator _levelsCreator;
         private PauseController _pauseController;
 
+        private MotionHandle _timerForStartWaveHandle;
         private List<Transform> _currentMovingPoints;
         private EnemysInLevelSpawnSeqence _currentEnemiesInLevelSpawnSequence;
         private CancellationTokenSource _spawnCancellationTokenSource;
@@ -32,7 +34,9 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         // R3 events
         private readonly Subject<Enemy> EnemyMovedToLastPoint = new(), EnemyDied = new();
         private readonly Subject<Unit> AllEnemiesDefeated = new();
+        private readonly ReplaySubject<int> SecondsRemainingUntilStartChanged = new();
 
+        public Observable<int> ReadOnlySecondsRemainingUntilStartChanged => SecondsRemainingUntilStartChanged;
         public Observable<Enemy> ReadOnlyEnemyDied => EnemyDied;
         public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
         public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
@@ -93,6 +97,34 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             }
         }
 
+        private float GetSecondsUntilFirstWaveStart()
+        {
+            if (_currentEnemiesInLevelSpawnSequence == null)
+                return 0f;
+
+            var groups = _currentEnemiesInLevelSpawnSequence.EnemyGroupsSpawnSettings;
+
+            if (groups == null || groups.Count == 0)
+                return 0f;
+
+            return Mathf.Max(0f, groups[0].SecondsDelayForSpawnAfterPreviousSpawn);
+        }
+
+        private async void RunTimerUntilFirstWaveStart(CancellationToken cancellationToken)
+        {
+            int secondsRemaining = Mathf.CeilToInt(GetSecondsUntilFirstWaveStart());
+
+            SecondsRemainingUntilStartChanged?.OnNext(secondsRemaining);
+
+            while (secondsRemaining > 0)
+            {
+                await UniTask.Delay(1000, cancellationToken: cancellationToken);
+                secondsRemaining--;
+
+                SecondsRemainingUntilStartChanged?.OnNext(secondsRemaining);
+            }
+        }
+
         private async void StartSpawnProcess()
         {
             if (Application.isPlaying == false)
@@ -119,8 +151,11 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
             _spawningProcessActive = true;
 
+            RunTimerUntilFirstWaveStart(cancellationToken);
+
             try
             {
+
                 foreach (var enemysGroupSettings in _currentEnemiesInLevelSpawnSequence.EnemyGroupsSpawnSettings)
                 {
                     // Await delay between spawn enemy groups
