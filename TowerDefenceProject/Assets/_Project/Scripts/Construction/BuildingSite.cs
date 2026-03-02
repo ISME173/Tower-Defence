@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.Training;
+using R3;
+using UnityEngine;
 
 namespace _Project.Scripts.Construction
 {
     [RequireComponent(typeof(Collider))]
-    public class BuildingSite : MonoBehaviour
+    public class BuildingSite : MonoBehaviour, ITrainingStageTrigger
     {
         [SerializeField] private GameObject _selectView;
         [SerializeField] private GameObject _mainView;
@@ -12,7 +14,10 @@ namespace _Project.Scripts.Construction
         private Collider _collider;
         private Tower _currentTower;
 
+        private readonly Subject<Unit> ReadOnlyOnTrainingTriggerActivate = new Subject<Unit>();
+
         public Tower CurrentTower => _currentTower;
+        public Observable<Unit> OnTrainingTriggerActivate => ReadOnlyOnTrainingTriggerActivate;
 
         private void Awake()
         {
@@ -24,6 +29,8 @@ namespace _Project.Scripts.Construction
         {
             if (_selectView != null)
                 _selectView.SetActive(true);
+
+            ReadOnlyOnTrainingTriggerActivate.OnNext(Unit.Default);
         }
 
         public void HideSelectView()

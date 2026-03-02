@@ -26,11 +26,11 @@ namespace _Project.Scripts.LevelsManagement
         public int CurrentLevelIndex => _currentLevelIndex;
 
         public LevelsCreator(
-            ICollection<LevelObject> levelObjectPrefabs,
+            LevelObject firstLevelOnScene,
             Transform createLevelPoint,
             AddressablesLevelsLoader addressablesLevelsLoader)
         {
-            AllLevelObjectPrefabs.AddRange(levelObjectPrefabs);
+            AllLevelObjectPrefabs.Add(firstLevelOnScene);
             CreateLevelPoint = createLevelPoint;
             _addressablesLevelsLoader = addressablesLevelsLoader;
 
@@ -41,6 +41,7 @@ namespace _Project.Scripts.LevelsManagement
                     .AddTo(_disposables);
             }
 
+            _currentLevelObject = firstLevelOnScene;
             _currentLevelIndex = 0;
         }
 
@@ -49,7 +50,12 @@ namespace _Project.Scripts.LevelsManagement
             _cameraMoving = cameraMoving;
 
             // 1-й уровень создаётся сразу (не Addressables)
-            CreateLevelByIndex(_currentLevelIndex);
+            //CreateLevelByIndex(_currentLevelIndex);
+
+            _currentLevelIndex = _currentLevelObject.LevelNumber - 1;
+
+            LevelCreated?.OnNext(_currentLevelObject);
+            _cameraMoving.UnlockMoving();
         }
 
         public void Dispose()

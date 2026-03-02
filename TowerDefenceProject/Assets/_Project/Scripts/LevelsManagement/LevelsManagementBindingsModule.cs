@@ -15,9 +15,10 @@ namespace _Project.Scripts.LevelsManagement
 {
     public class LevelsManagementBindingsModule : BindingModule
     {
+        [Header("References")]
         [SerializeField] private LevelsListView _levelsListView;
         [SerializeField] private Transform _createLevelPoint;
-        [SerializeField] private LevelObject[] _levelObjectPrefabs;
+        [SerializeField] private LevelObject _firstLevelOnScene;
 
         [Header("Addressables (levels starting from level 2)")]
         [SerializeField] private List<string> _levelAddressKeysStartingFromLevel2 = new();
@@ -46,7 +47,7 @@ namespace _Project.Scripts.LevelsManagement
             _addressablesLevelsLoader = new AddressablesLevelsLoader(_levelAddressKeysStartingFromLevel2);
             _addressablesLevelsLoader.WarmupAll(); // фон: начинаем грузить уровни 2+
 
-            _levelsCreator = new LevelsCreator(_levelObjectPrefabs, _createLevelPoint, _addressablesLevelsLoader);
+            _levelsCreator = new LevelsCreator(_firstLevelOnScene, _createLevelPoint, _addressablesLevelsLoader);
             _levelsCompletionManagement = new LevelCompletionManagement();
 
             _levelsProgressionService = new LevelsProgressionService();
