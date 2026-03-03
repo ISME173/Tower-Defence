@@ -2,6 +2,7 @@
 using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.PauseManagement;
+using _Project.Scripts.Training;
 using NaughtyAttributes;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -30,9 +31,9 @@ namespace _Project.Scripts.EnemiesManagement
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, TrainingController trainingController)
         {
-            _enemiesSpawner.Initialize(levelsCreator, levelCompletionManagement, pauseController, _enemiesInPoolContainer ?? transform);
+            _enemiesSpawner.Initialize(levelsCreator, levelCompletionManagement, pauseController, _enemiesInPoolContainer ?? transform, trainingController);
         }
     }
 }

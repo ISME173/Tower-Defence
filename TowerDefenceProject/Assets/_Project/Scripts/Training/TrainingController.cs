@@ -1,3 +1,4 @@
+using _Project.Scripts.CameraControll;
 using _Project.Scripts.Saves;
 using NaughtyAttributes;
 using R3;
@@ -15,11 +16,13 @@ namespace _Project.Scripts.Training
         private readonly TrainingSettings Settings;
         private readonly TrainingView TrainingView;
 
+        private CameraMoving _cameraMoving;
         private int _currentTrainingStageIndex;
         private ISaves _saves;
 
         private readonly Subject<Unit> ReadOnlyOnTutorialFinished = new();
-        
+
+        public bool TutorialIsFinished => _saves != null && (_saves.HasKey(IsShowedTutorialSaveKey) && _saves.GetBool(IsShowedTutorialSaveKey));
         public Observable<Unit> OnTutorialFinished => ReadOnlyOnTutorialFinished;
 
         public TrainingController(TrainingSettings trainingSettings, TrainingView trainingView)
@@ -31,9 +34,10 @@ namespace _Project.Scripts.Training
                 stage.StageTriggerListener.Initialize();
         }
 
-        public void Initialize(ISaves saves)
+        public void Initialize(ISaves saves, CameraMoving cameraMoving)
         {
             _saves = saves;
+            _cameraMoving = cameraMoving;
 
             if (_saves.HasKey(IsShowedTutorialSaveKey) == false || _saves.GetBool(IsShowedTutorialSaveKey) == false)
             {
@@ -44,6 +48,8 @@ namespace _Project.Scripts.Training
 
                 TrainingView.ShowInfoPanel();
                 TrainingView.SetInfoText(Settings.TrainingStages[_currentTrainingStageIndex].InfoText);
+
+                _cameraMoving.LockMoving();
             }
         }
 
@@ -66,7 +72,11 @@ namespace _Project.Scripts.Training
                 TrainingView.HideInfoPanel();
                 TrainingView.HideIndexFinger();
 
+                _cameraMoving.UnlockMoving();
+                _saves.SetBool(IsShowedTutorialSaveKey, true);
+
                 ReadOnlyOnTutorialFinished.OnNext(Unit.Default);
+
 
                 return;
             }

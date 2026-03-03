@@ -1,3 +1,4 @@
+using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
 using _Project.Scripts.Saves;
 using Reflex.Attributes;
@@ -24,12 +25,13 @@ namespace _Project.Scripts.Training
         public override void Bind(ContainerBuilder containerBuilder)
         {
             _trainingController = new TrainingController(_trainingSettings, _trainingView);
+            containerBuilder.RegisterValue(_trainingController);
         }
 
         [Inject]
-        private void Initialize(ISaves saves)
+        private void Initialize(ISaves saves, CameraMoving cameraMoving)
         {
-            _trainingController.Initialize(saves);
+            _trainingController.Initialize(saves, cameraMoving);
         }
     }
 }

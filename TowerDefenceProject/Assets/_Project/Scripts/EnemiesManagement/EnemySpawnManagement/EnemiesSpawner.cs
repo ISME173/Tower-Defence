@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.PauseManagement;
+using _Project.Scripts.Training;
 using _Project.Scripts.Utilities;
 using Cysharp.Threading.Tasks;
 using LitMotion;
@@ -20,7 +21,9 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
         private Transform _enemiesContainer;
         private Transform _currentSpawnEnemiesPoint;
+        private IDisposable _tutorialDisposable;
 
+        private TrainingController _trainingController;
         private LevelCompletionManagement _levelCompletionManagement;
         private LevelsCreator _levelsCreator;
         private PauseController _pauseController;
@@ -41,12 +44,13 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
         public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
 
-        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, Transform enemiesContainer)
+        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, Transform enemiesContainer, TrainingController trainingController)
         {
             _enemiesContainer = enemiesContainer;
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
             _pauseController = pauseController;
+            _trainingController = trainingController;
 
             _levelsCreator.ReadOnlyLevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
@@ -73,6 +77,18 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
         private void OnLevelCreated(LevelObject levelObject)
         {
+            if (_trainingController.TutorialIsFinished == false)
+            {
+                _tutorialDisposable = _trainingController.OnTutorialFinished
+                    .Subscribe(_ =>
+                    {
+                        _tutorialDisposable?.Dispose();
+                        OnLevelCreated(levelObject);
+                    });
+
+                return;
+            }
+
             CancelSpawnProcess();
             UpdatePoolsByLevel(levelObject);
 
@@ -81,8 +97,8 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             _currentSpawnEnemiesPoint = levelObject.NpcSpawnPoint;
 
             StartSpawnProcess();
-        }
 
+        }
         private void UpdatePoolsByLevel(LevelObject levelObject)
         {
             foreach (var enemyGroupSettings in levelObject.EnemysInLevelSpawnSeqence.EnemyGroupsSpawnSettings)

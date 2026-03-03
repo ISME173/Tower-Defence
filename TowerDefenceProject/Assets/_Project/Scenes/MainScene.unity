@@ -6536,9 +6536,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4518101495118954297, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518101495118954297, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7948580448978899080, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
       propertyPath: m_Name
       value: Level_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605620100249003750, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605620100249003750, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10581,27 +10597,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
-  - {fileID: 322098973}
-  - {fileID: 1482966217}
-  - {fileID: 340790981}
-  - {fileID: 1285109656}
   - {fileID: 2060574963}
-  - {fileID: 1804706553}
+  - {fileID: 1285109656}
+  - {fileID: 340790981}
+  - {fileID: 322098973}
   - {fileID: 320640572}
+  - {fileID: 1482966217}
   - {fileID: 363965721}
+  - {fileID: 565078028}
+  - {fileID: 1804706553}
+  - {fileID: 2108613273}
   _readOnlyBindingModules:
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
-  - {fileID: 322098973}
-  - {fileID: 1482966217}
-  - {fileID: 340790981}
-  - {fileID: 1285109656}
   - {fileID: 2060574963}
-  - {fileID: 1804706553}
+  - {fileID: 1285109656}
+  - {fileID: 340790981}
+  - {fileID: 322098973}
   - {fileID: 320640572}
+  - {fileID: 1482966217}
   - {fileID: 363965721}
+  - {fileID: 565078028}
+  - {fileID: 1804706553}
+  - {fileID: 2108613273}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
