@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_8
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.EnemySpawnManagement.EnemysInLevelSpawnSeqence
   _enemyGroupsSpawnSettings:
-  - _secondsDelayForSpawnAfterPreviousSpawn: 4
+  - _secondsDelayForSpawnAfterPreviousSpawn: 3
     _enemySpawnSettings:
     - _enemyPrefab: {fileID: 332400333826459216, guid: aeb643d9c6cd2084899af739dda6662b, type: 3}
       _spawnCount: 2

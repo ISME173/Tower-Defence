@@ -54,6 +54,7 @@ namespace _Project.Scripts.LevelsManagement
 
             _currentLevelIndex = _currentLevelObject.LevelNumber - 1;
 
+            // First level already in scene
             LevelCreated?.OnNext(_currentLevelObject);
             _cameraMoving.UnlockMoving();
         }

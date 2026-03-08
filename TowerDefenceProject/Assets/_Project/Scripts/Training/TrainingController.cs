@@ -51,6 +51,10 @@ namespace _Project.Scripts.Training
 
                 _cameraMoving.LockMoving();
             }
+            else
+            {
+                ReadOnlyOnTutorialFinished.OnNext(Unit.Default);
+            }
         }
 
         public void Dispose()
