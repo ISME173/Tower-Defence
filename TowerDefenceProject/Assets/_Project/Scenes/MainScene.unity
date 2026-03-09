@@ -2253,13 +2253,33 @@ MonoBehaviour:
     _trainingStages:
     - _infoText: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
         \u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
-      _moveFingerPosition: {x: 0, y: 0, z: 0}
-      _clickAnimationActive: 1
+      _moveFingerType: 0
+      _moveFingerPoint: {fileID: 1541578484}
+      _clickAnimationSettings:
+        _animationDuration: 0.3
+        _animationEase: 0
+        _loopsCount: -1
+        _loopType: 3
+      _moveAnimationSettings:
+        _animationDuration: 0
+        _animationEase: 0
+        _loopsCount: 0
+        _loopType: 0
       _trainingStageTriggerListener: {fileID: 1706919842}
     - _infoText: "\u041F\u043E\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0435\u0440\u0432\u0443\u044E
         \u0431\u0430\u0448\u043D\u044E!"
-      _moveFingerPosition: {x: 0, y: 0, z: 0}
-      _clickAnimationActive: 1
+      _moveFingerType: 0
+      _moveFingerPoint: {fileID: 78264954}
+      _clickAnimationSettings:
+        _animationDuration: 0
+        _animationEase: 0
+        _loopsCount: 0
+        _loopType: 0
+      _moveAnimationSettings:
+        _animationDuration: 0
+        _animationEase: 0
+        _loopsCount: 0
+        _loopType: 0
       _trainingStageTriggerListener: {fileID: 1827627535}
 --- !u!1 &372022346
 GameObject:
@@ -9773,6 +9793,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518488575}
   m_CullTransparentMesh: 1
+--- !u!4 &1541578484 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8605620100249003750, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
+  m_PrefabInstance: {fileID: 1069945777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1622543187
 GameObject:
   m_ObjectHideFlags: 0
@@ -10597,27 +10622,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2060574963}
-  - {fileID: 1285109656}
-  - {fileID: 340790981}
+  - {fileID: 2108613273}
   - {fileID: 322098973}
-  - {fileID: 320640572}
+  - {fileID: 340790981}
+  - {fileID: 1285109656}
+  - {fileID: 1804706553}
   - {fileID: 1482966217}
   - {fileID: 363965721}
+  - {fileID: 320640572}
+  - {fileID: 2060574963}
   - {fileID: 565078028}
-  - {fileID: 1804706553}
-  - {fileID: 2108613273}
   _readOnlyBindingModules:
-  - {fileID: 2060574963}
-  - {fileID: 1285109656}
-  - {fileID: 340790981}
+  - {fileID: 2108613273}
   - {fileID: 322098973}
-  - {fileID: 320640572}
+  - {fileID: 340790981}
+  - {fileID: 1285109656}
+  - {fileID: 1804706553}
   - {fileID: 1482966217}
   - {fileID: 363965721}
+  - {fileID: 320640572}
+  - {fileID: 2060574963}
   - {fileID: 565078028}
-  - {fileID: 1804706553}
-  - {fileID: 2108613273}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0

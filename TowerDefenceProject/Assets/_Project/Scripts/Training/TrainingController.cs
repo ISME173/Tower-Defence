@@ -1,5 +1,6 @@
 using _Project.Scripts.CameraControll;
 using _Project.Scripts.Saves;
+using _Project.Scripts.Utilities;
 using NaughtyAttributes;
 using R3;
 using System;
@@ -98,20 +99,31 @@ namespace _Project.Scripts.Training
         {
             [SerializeField] private List<TrainingStage> _trainingStages;
             
+            public enum MoveFingerType
+            {
+                MoveImmediately, MoveFromCurrentPosition
+            }
+
             public IReadOnlyList<TrainingStage> TrainingStages => _trainingStages;
 
             [Serializable]
             public struct TrainingStage
             {
                 [SerializeField, TextArea] private string _infoText;
-                [SerializeField] private Vector3 _moveFingerPosition;
-                [SerializeField] private bool _clickAnimationActive;
+                [Space]
+                [SerializeField] private MoveFingerType _moveFingerType;
+                [SerializeField] private Transform _moveFingerPoint;
+                [Space]
+                [SerializeField] private LMotionSerializableCustomSettings _clickAnimationSettings;
+                [SerializeField] private LMotionSerializableCustomSettings _moveAnimationSettings;
                 [Space]
                 [SerializeField] private TrainingStageTriggerListener _trainingStageTriggerListener;
 
+                public MoveFingerType MoveFingerType => _moveFingerType;
                 public string InfoText => _infoText;
-                public Vector3 MoveFingerPosition => _moveFingerPosition;
-                public bool ClickAnimationActive => _clickAnimationActive;
+                public Transform MoveFingerPoint => _moveFingerPoint;
+                public LMotionSerializableCustomSettings ClickAnimationSettings => _clickAnimationSettings;
+                public LMotionSerializableCustomSettings MoveAnimationSettings => _moveAnimationSettings;
                 public TrainingStageTriggerListener StageTriggerListener => _trainingStageTriggerListener;
             }
         }
