@@ -16,7 +16,6 @@ namespace _Project.Scripts.Training
         private readonly TrainingSettings Settings;
         private readonly TrainingView TrainingView;
 
-        private CameraMoving _cameraMoving;
         private int _currentTrainingStageIndex;
         private ISaves _saves;
 
@@ -32,12 +31,14 @@ namespace _Project.Scripts.Training
 
             foreach (var stage in Settings.TrainingStages)
                 stage.StageTriggerListener.Initialize();
+
+            foreach (var entitySwitchDuringTraining in Settings.EntitysSwitchDuringTraining)
+                entitySwitchDuringTraining.Initialize();
         }
 
-        public void Initialize(ISaves saves, CameraMoving cameraMoving)
+        public void Initialize(ISaves saves)
         {
             _saves = saves;
-            _cameraMoving = cameraMoving;
 
             if (_saves.HasKey(IsShowedTutorialSaveKey) == false || _saves.GetBool(IsShowedTutorialSaveKey) == false)
             {
@@ -49,7 +50,14 @@ namespace _Project.Scripts.Training
                 TrainingView.ShowInfoPanel();
                 TrainingView.SetInfoText(Settings.TrainingStages[_currentTrainingStageIndex].InfoText);
 
-                _cameraMoving.LockMoving();
+                foreach (var entitySwitchDuringTraining in Settings.EntitysSwitchDuringTraining)
+                    entitySwitchDuringTraining.Disable();
+
+                foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForActivate)
+                    objectForActivate.SetActive(true);
+
+                foreach (var objectForDeactivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForDeactivate)
+                    objectForDeactivate.SetActive(false);
             }
             else
             {
@@ -69,6 +77,12 @@ namespace _Project.Scripts.Training
         {
             DisposablesByTrainingStageListeners[Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener].Dispose();
 
+            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForActivate)
+                objectForActivate.SetActive(false);
+
+            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForDeactivate)
+                objectForActivate.SetActive(true);
+
             _currentTrainingStageIndex++;
 
             if (Settings.TrainingStages.Count <= _currentTrainingStageIndex)
@@ -76,17 +90,25 @@ namespace _Project.Scripts.Training
                 TrainingView.HideInfoPanel();
                 TrainingView.HideIndexFinger();
 
-                _cameraMoving.UnlockMoving();
                 _saves.SetBool(IsShowedTutorialSaveKey, true);
 
-                ReadOnlyOnTutorialFinished.OnNext(Unit.Default);
+                foreach (var entitySwitchDuringTraining in Settings.EntitysSwitchDuringTraining)
+                    entitySwitchDuringTraining.Enable();
 
+                ReadOnlyOnTutorialFinished.OnNext(Unit.Default);
 
                 return;
             }
 
             DisposablesByTrainingStageListeners.Add(Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener,
                 Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener.OnStageTriggerActivated.Subscribe(OnTriggerStageActivated));
+
+
+            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForActivate)
+                objectForActivate.SetActive(true);
+
+            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForDeactivate)
+                objectForActivate.SetActive(false);
 
             TrainingView.ShowInfoPanel();
             TrainingView.SetInfoText(Settings.TrainingStages[_currentTrainingStageIndex].InfoText);
@@ -97,22 +119,25 @@ namespace _Project.Scripts.Training
         public struct TrainingSettings
         {
             [SerializeField] private List<TrainingStage> _trainingStages;
+            [SerializeField] private List<EntitySwitchDuringTraining> _entitysSwitchDuringTraining;
             
             public IReadOnlyList<TrainingStage> TrainingStages => _trainingStages;
+            public IReadOnlyList<EntitySwitchDuringTraining> EntitysSwitchDuringTraining => _entitysSwitchDuringTraining;
 
             [Serializable]
             public struct TrainingStage
             {
                 [SerializeField, TextArea] private string _infoText;
-                [SerializeField] private Vector3 _moveFingerPosition;
-                [SerializeField] private bool _clickAnimationActive;
                 [Space]
                 [SerializeField] private TrainingStageTriggerListener _trainingStageTriggerListener;
+                [Space]
+                [SerializeField] private List<GameObject> _objectsForActivate;
+                [SerializeField] private List<GameObject> _objectsForDeactivate;
 
                 public string InfoText => _infoText;
-                public Vector3 MoveFingerPosition => _moveFingerPosition;
-                public bool ClickAnimationActive => _clickAnimationActive;
                 public TrainingStageTriggerListener StageTriggerListener => _trainingStageTriggerListener;
+                public IReadOnlyList<GameObject> ObjectsForActivate => _objectsForActivate;
+                public IReadOnlyList<GameObject> ObjectsForDeactivate => _objectsForDeactivate;
             }
         }
     }

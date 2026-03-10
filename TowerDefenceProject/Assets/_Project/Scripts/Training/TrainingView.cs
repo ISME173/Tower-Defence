@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace _Project.Scripts.Training
 {
-
     public class TrainingView : MonoBehaviour
     {
         [Header("References")]

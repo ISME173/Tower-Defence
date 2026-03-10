@@ -5,7 +5,7 @@ using UnityEngine;
 namespace _Project.Scripts.Construction
 {
     [RequireComponent(typeof(Collider))]
-    public class BuildingSite : MonoBehaviour, ITrainingStageTrigger
+    public class BuildingSite : MonoBehaviour, ITrainingStageTrigger, IDisableDuringTraining
     {
         [SerializeField] private GameObject _selectView;
         [SerializeField] private GameObject _mainView;
@@ -109,6 +109,18 @@ namespace _Project.Scripts.Construction
             _currentTower = null;
 
             _mainView.SetActive(true);
+        }
+
+        public void Disable()
+        {
+            Collider collider = _collider ?? GetComponent<Collider>();
+            collider.enabled = false;
+        }
+
+        public void Enable()
+        {
+            Collider collider = _collider ?? GetComponent<Collider>();
+            collider.enabled = true;
         }
     }
 }

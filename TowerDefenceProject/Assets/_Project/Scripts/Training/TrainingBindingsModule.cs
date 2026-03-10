@@ -29,9 +29,9 @@ namespace _Project.Scripts.Training
         }
 
         [Inject]
-        private void Initialize(ISaves saves, CameraMoving cameraMoving)
+        private void Initialize(ISaves saves)
         {
-            _trainingController.Initialize(saves, cameraMoving);
+            _trainingController.Initialize(saves);
         }
     }
 }
