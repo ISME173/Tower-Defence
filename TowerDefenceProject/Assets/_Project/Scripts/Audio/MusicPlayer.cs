@@ -58,9 +58,10 @@ namespace _Project.Scripts.Audio
             }
             _source.volume = 0;
             _source.clip = evt.Clip;
-            _source.loop = evt.Loop || true; // музыка обычно должна лупиться
+            _source.loop = evt.Loop;
             _source.pitch = evt.Pitch;
             _source.Play();
+            CurrentEvent = evt;
             float targetVol = evt.Volume;
             // fade in
             for (float t = 0; t < time; t += Time.unscaledDeltaTime)

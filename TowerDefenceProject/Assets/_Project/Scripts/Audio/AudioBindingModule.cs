@@ -31,6 +31,9 @@ namespace _Project.Scripts.Audio
         {
             var saves = Container.RootContainer.Resolve<ISaves>();
 
+            if (saves == null)
+                throw new System.NullReferenceException($"The {typeof(ISaves)} type cannot be found in RootContainer!");
+
             var groups = new Dictionary<AudioCategory, AudioMixerGroup>
             {
                 { AudioCategory.Music, _musicGroup },
