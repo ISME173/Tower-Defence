@@ -8,7 +8,6 @@ namespace _Project.Scripts.Training
     public class TrainingView : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private RectTransform _indexFinger;
         [SerializeField] private RectTransform _mainInfoPanel;
         [SerializeField] private TextMeshProUGUI _infoText;
 
@@ -25,17 +24,6 @@ namespace _Project.Scripts.Training
 
         private MotionHandle _currentMotionHandle;
 
-        public Vector3 IndexFingerPosition => _indexFinger.position;
-
-        public void ShowIndexFinger()
-        {
-            _indexFinger.gameObject.SetActive(true);
-        }
-
-        public void HideIndexFinger()
-        {
-            _indexFinger.gameObject.SetActive(false);
-        }
 
         public void ShowInfoPanel()
         {
@@ -57,25 +45,5 @@ namespace _Project.Scripts.Training
             _currentMotionHandle.TryCancel();
         }
 
-        public void MoveIndexFinger(Vector3 from, Vector3 to)
-        {
-            _indexFinger.transform.position = from;
-
-            _currentMotionHandle.TryCancel();
-
-            _currentMotionHandle = LMotion.Create(from, to, _moveAnimationDuration)
-                .WithEase(_moveAnimationEase)
-                .BindToPosition(_indexFinger);
-        }
-
-        public void IndexFingerClickAnimationStart()
-        {
-            _currentMotionHandle.TryCancel();
-
-            _currentMotionHandle = LMotion.Create(_startClickAnimation, _endClickAnimation, _clickAnimationDuration)
-                .WithEase(_clickAnimationEase)
-                .WithLoops(-1, LoopType.Restart)
-                .BindToPosition(_indexFinger);
-        }
     }
 }

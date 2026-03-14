@@ -1,6 +1,4 @@
-using _Project.Scripts.CameraControll;
 using _Project.Scripts.Saves;
-using NaughtyAttributes;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -40,7 +38,7 @@ namespace _Project.Scripts.Training
         {
             _saves = saves;
 
-            if (_saves.HasKey(IsShowedTutorialSaveKey) == false || _saves.GetBool(IsShowedTutorialSaveKey) == false)
+            if (TutorialIsFinished == false)
             {
                 _currentTrainingStageIndex = 0;
 
@@ -88,9 +86,9 @@ namespace _Project.Scripts.Training
             if (Settings.TrainingStages.Count <= _currentTrainingStageIndex)
             {
                 TrainingView.HideInfoPanel();
-                TrainingView.HideIndexFinger();
 
                 _saves.SetBool(IsShowedTutorialSaveKey, true);
+                _saves.Save();
 
                 foreach (var entitySwitchDuringTraining in Settings.EntitysSwitchDuringTraining)
                     entitySwitchDuringTraining.Enable();
