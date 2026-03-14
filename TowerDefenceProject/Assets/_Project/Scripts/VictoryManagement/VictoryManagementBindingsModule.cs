@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.DI;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.DI;
 using _Project.Scripts.LevelsManagement;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -9,7 +10,11 @@ namespace _Project.Scripts.VictoryManagement
 
     public class VictoryManagementBindingsModule : BindingModule
     {
+        [Header("Scene References")]
         [SerializeField] private VictoryView _victoryView;
+
+        [Header("Audio")]
+        [SerializeField] private AudioEvent _buttonClickAudioEvent;
 
         private VictoryController _victoryController;
 
@@ -25,9 +30,9 @@ namespace _Project.Scripts.VictoryManagement
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, IAudioService audioService)
         {
-            _victoryController.Initialize(levelsCreator, levelCompletionManagement);
+            _victoryController.Initialize(levelsCreator, levelCompletionManagement, audioService, _buttonClickAudioEvent);
         }
     }
 }

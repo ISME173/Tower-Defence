@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.LevelsManagement;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.LevelsManagement;
 using R3;
 using System;
 
@@ -12,6 +13,9 @@ namespace _Project.Scripts.VictoryManagement
         private LevelsCreator _levelsCreator;
         private LevelCompletionManagement _levelsCompletionManagement;
 
+        private IAudioService _audioService;
+        private AudioEvent _buttonClickAudioEvent;
+
         public Observable<Unit> ReadOnlyOnMenuButtonClicked => VictoryView.ReadOnlyOnMenuButtonClicked;
 
         public VictoryController(VictoryView victoryView)
@@ -19,10 +23,14 @@ namespace _Project.Scripts.VictoryManagement
             VictoryView = victoryView;
         }
 
-        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelsCompletionManagement)
+        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelsCompletionManagement,
+            IAudioService audioService, AudioEvent buttonClickEvent)
         {
             _levelsCreator = levelsCreator;
             _levelsCompletionManagement = levelsCompletionManagement;
+
+            _audioService = audioService;
+            _buttonClickAudioEvent = buttonClickEvent;
 
             _levelsCompletionManagement.ReadOnlyLevelCompleted
                 .Subscribe(OnLevelCompleted)
@@ -39,7 +47,11 @@ namespace _Project.Scripts.VictoryManagement
                 .AddTo(Disposables);
 
             VictoryView.ReadOnlyOnMenuButtonClicked
-                .Subscribe(_ => VictoryView.Hide())
+                .Subscribe(_ =>
+                {
+                    _audioService.PlayOneShot(_buttonClickAudioEvent);
+                    VictoryView.Hide();
+                })
                 .AddTo(Disposables);
         }
 
@@ -56,12 +68,16 @@ namespace _Project.Scripts.VictoryManagement
 
         private void OnContinueButtonDown(Unit unit)
         {
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
             VictoryView.Hide();
             _levelsCreator.CreateNextLevel();
         }
 
         private void OnRestartButtonDown(Unit unit)
         {
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
             VictoryView.Hide();
             _levelsCreator.RebuildCurrentLevel();
         }
