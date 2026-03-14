@@ -6069,6 +6069,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979140749}
   m_CullTransparentMesh: 1
+--- !u!1 &1017092598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1017092599}
+  - component: {fileID: 1017092600}
+  m_Layer: 0
+  m_Name: Audio Bindings Module
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1017092599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017092598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1958740900}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1017092600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017092598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92227c46fc97ff64ab90dc456305bcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Audio.AudioBindingModule
+  _runnerForCoroutines: {fileID: 1017092600}
+  _audioMixer: {fileID: 24100000, guid: 9ed4506139afad74ab2b6bb43a3c19b7, type: 2}
+  _musicGroup: {fileID: 6012321817290356613, guid: 9ed4506139afad74ab2b6bb43a3c19b7, type: 2}
+  _sfxGroup: {fileID: 8485980833704410087, guid: 9ed4506139afad74ab2b6bb43a3c19b7, type: 2}
+  _uiGroup: {fileID: 5966104362922906007, guid: 9ed4506139afad74ab2b6bb43a3c19b7, type: 2}
+  _musicVolumeParam: MusicVolume
+  _sfxVolumeParam: SfxVolume
+  _uiVolumeParam: UiVolume
+  _initialPoolSize: 12
 --- !u!1 &1023577265
 GameObject:
   m_ObjectHideFlags: 0
@@ -6904,7 +6957,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf7ce073f0ed6446beece79c7add918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Training.TrainingView
-  _indexFinger: {fileID: 0}
   _mainInfoPanel: {fileID: 679874586}
   _infoText: {fileID: 526396285}
   _clickAnimationDuration: 0
@@ -10653,27 +10705,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 320640572}
-  - {fileID: 2108613273}
   - {fileID: 1482966217}
-  - {fileID: 363965721}
-  - {fileID: 1285109656}
-  - {fileID: 340790981}
-  - {fileID: 2060574963}
   - {fileID: 565078028}
+  - {fileID: 320640572}
   - {fileID: 1804706553}
+  - {fileID: 1285109656}
+  - {fileID: 2108613273}
   - {fileID: 322098973}
+  - {fileID: 340790981}
+  - {fileID: 363965721}
+  - {fileID: 2060574963}
   _readOnlyBindingModules:
-  - {fileID: 320640572}
-  - {fileID: 2108613273}
   - {fileID: 1482966217}
-  - {fileID: 363965721}
-  - {fileID: 1285109656}
-  - {fileID: 340790981}
-  - {fileID: 2060574963}
   - {fileID: 565078028}
+  - {fileID: 320640572}
   - {fileID: 1804706553}
+  - {fileID: 1285109656}
+  - {fileID: 2108613273}
   - {fileID: 322098973}
+  - {fileID: 340790981}
+  - {fileID: 363965721}
+  - {fileID: 2060574963}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10974,6 +11026,7 @@ Transform:
   - {fileID: 1804706552}
   - {fileID: 340790980}
   - {fileID: 363965720}
+  - {fileID: 1017092599}
   m_Father: {fileID: 1804363958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1960256658

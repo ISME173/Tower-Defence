@@ -132,12 +132,19 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
 
             SecondsRemainingUntilStartChanged?.OnNext(secondsRemaining);
 
-            while (secondsRemaining > 0)
+            try
             {
-                await UniTask.Delay(1000, cancellationToken: cancellationToken);
-                secondsRemaining--;
+                while (secondsRemaining > 0)
+                {
+                    await UniTask.Delay(1000, cancellationToken: cancellationToken);
+                    secondsRemaining--;
 
-                SecondsRemainingUntilStartChanged?.OnNext(secondsRemaining);
+                    SecondsRemainingUntilStartChanged?.OnNext(secondsRemaining);
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+                // Its normal
             }
         }
 
