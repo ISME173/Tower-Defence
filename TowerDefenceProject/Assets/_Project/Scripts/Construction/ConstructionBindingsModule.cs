@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.CameraControll;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
@@ -32,9 +33,10 @@ namespace _Project.Scripts.Construction
         }
 
         [Inject]
-        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController)
+        private void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController,
+            IAudioService audioService)
         {
-            _constructionController.Initialize(moneyManagement, levelCompletionManagement, levelsCreator, pauseController);
+            _constructionController.Initialize(moneyManagement, levelCompletionManagement, levelsCreator, pauseController, audioService);
         }
     }
 }

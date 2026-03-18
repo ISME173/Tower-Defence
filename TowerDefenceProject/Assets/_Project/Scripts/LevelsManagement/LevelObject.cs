@@ -8,13 +8,15 @@ namespace _Project.Scripts.LevelsManagement
 {
     public class LevelObject : MonoBehaviour
     {
-        [Header("References")]
-        [SerializeField] private List<Transform> _movingPoints;
-        [SerializeField] private EnemysInLevelSpawnSeqence _enemySpawnSequence;
+        [Header("Scene References")]
         [SerializeField] private Transform _cameraPivot;
         [SerializeField] private Transform _npcSpawnPoint;
         [SerializeField] private GameObject _castleView;
-        [Space]
+        [SerializeField] private List<Transform> _movingPoints;
+        [SerializeField] private List<BuildingSite> _buildingSitesInLevel;
+
+        [Header("Assets References")]
+        [SerializeField] private EnemysInLevelSpawnSeqence _enemySpawnSequence;
         [SerializeField] private List<Tower> _towerPrefabsCanPlaceInThisLevel;
 
         [Header("Settings")]
@@ -32,6 +34,7 @@ namespace _Project.Scripts.LevelsManagement
         public int MaxLevelHealth => _maxLevelHealth;
         public int LevelNumber => _levelNumber;
         public IReadOnlyList<Transform> MovingPoints => _movingPoints;
+        public IReadOnlyList<BuildingSite> BuildingSitesInLevel => _buildingSitesInLevel;
         public EnemysInLevelSpawnSeqence EnemysInLevelSpawnSeqence => _enemySpawnSequence;
         public Transform CameraPivot => _cameraPivot;
         public Transform NpcSpawnPoint => _npcSpawnPoint;

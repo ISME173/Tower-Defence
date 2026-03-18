@@ -400,16 +400,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf798fb35d58fe4395513a3309ca115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.LevelsManagement.LevelData
+  _cameraPivot: {fileID: 1163783868145079098}
+  _npcSpawnPoint: {fileID: 968261579745631551}
+  _castleView: {fileID: 1091212985227997516}
   _movingPoints:
   - {fileID: 2916916978173558238}
   - {fileID: 6031920116176172574}
   - {fileID: 1729099041087527046}
   - {fileID: 7972579837663270885}
   - {fileID: 6949143805926756845}
+  _buildingSitesInLevel:
+  - {fileID: 7819015018435100930}
+  - {fileID: 5029075222125947661}
+  - {fileID: 2692149851347523805}
+  - {fileID: 1146220754304418723}
   _enemySpawnSequence: {fileID: 11400000, guid: ec58ce07092409d46ad46e3d9153425a, type: 2}
-  _cameraPivot: {fileID: 1163783868145079098}
-  _npcSpawnPoint: {fileID: 968261579745631551}
-  _castleView: {fileID: 1091212985227997516}
   _towerPrefabsCanPlaceInThisLevel:
   - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
   - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
@@ -1649,6 +1654,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+--- !u!114 &7819015018435100930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8805418859550353696, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+  m_PrefabInstance: {fileID: 1635256879536072738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f28c74d0b1e56146899d057a6faee45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Building.BuildingSite
 --- !u!4 &8605620100249003750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7051744853877542596, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
@@ -3401,6 +3417,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+--- !u!114 &5029075222125947661 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8805418859550353696, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+  m_PrefabInstance: {fileID: 4609993355803165229}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f28c74d0b1e56146899d057a6faee45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Building.BuildingSite
 --- !u!4 &6783872520660471017 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7051744853877542596, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
@@ -4803,6 +4830,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+--- !u!114 &2692149851347523805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8805418859550353696, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+  m_PrefabInstance: {fileID: 6876805084139139581}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f28c74d0b1e56146899d057a6faee45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Building.BuildingSite
 --- !u!4 &4518101495118954297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7051744853877542596, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
@@ -5259,6 +5297,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+--- !u!114 &1146220754304418723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8805418859550353696, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}
+  m_PrefabInstance: {fileID: 8492399661199977091}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f28c74d0b1e56146899d057a6faee45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Building.BuildingSite
 --- !u!4 &1443338717018694727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7051744853877542596, guid: ee68efd4e58995b42ab085c57a30403d, type: 3}

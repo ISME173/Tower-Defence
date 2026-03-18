@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.CameraControll;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.CameraControll;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
 using _Project.Scripts.PauseManagement;
@@ -16,9 +17,9 @@ namespace _Project.Scripts.Construction
         private readonly ConstructionView ConstructionView;
         private readonly CameraMoving CameraMoving;
         private readonly CompositeDisposable Disposables = new();
-        private readonly HashSet<BuildingSite> UsingBuildingSitesInCurrentLevel = new();
         private readonly HashSet<Tower> TowerPrefabsCanPlaceInCurrentLevel = new();
 
+        private IAudioService AudioService;
         private ConstructionControllerParameters _constructionControllerParameters;
         private LevelsCreator _levelCreator;
         private BuildingSite _selectedBuildingSite;
@@ -68,8 +69,9 @@ namespace _Project.Scripts.Construction
             _deferredClickProcessor = CreateDeferredClickProcessor();
         }
 
-        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController)
+        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController, IAudioService audioService)
         {
+            AudioService = audioService;
             _moneyManagement = moneyManagement;
             _levelCompletionManagement = levelCompletionManagement;
             _levelCreator = levelsCreator;
@@ -107,6 +109,9 @@ namespace _Project.Scripts.Construction
                     foreach (var towerPrefab in levelObject.TowerPrefabsCanPlaceInThisLevel)
                         TowerPrefabsCanPlaceInCurrentLevel.Add(towerPrefab);
 
+                    foreach (var buildingSite in levelObject.BuildingSitesInLevel)
+                        buildingSite.Initialize(AudioService);
+                    
                     ConstructionView.UpdateCanPlaceTowersList(TowerPrefabsCanPlaceInCurrentLevel);
                 })
                 .AddTo(Disposables);
@@ -118,6 +123,12 @@ namespace _Project.Scripts.Construction
                 UnityEngine.Object.Destroy(_deferredClickProcessor.gameObject);
 
             ClearUsingBuildingSites();
+
+            if (_levelCreator != null)
+            {
+                foreach (var buildingSite in _levelCreator.CurrentLevelObject.BuildingSitesInLevel)
+                    buildingSite?.Dispose();
+            }
 
             ConstructionView.OnBuildTowerButtonClickedEvent -= OnBuildTowerButtonClicked;
 
@@ -134,13 +145,11 @@ namespace _Project.Scripts.Construction
 
         private void ClearUsingBuildingSites()
         {
-            foreach (var buildingSite in UsingBuildingSitesInCurrentLevel)
+            foreach (var buildingSite in _levelCreator.CurrentLevelObject.BuildingSitesInLevel)
             {
                 if (buildingSite.CurrentTower != null)
-                    buildingSite.RemoveCurrentTower();
+                    buildingSite.RemoveCurrentTower(false);
             }
-
-            UsingBuildingSitesInCurrentLevel.Clear();
         }
 
         private void OnPointerPressPerformed(InputAction.CallbackContext callbackContext)
@@ -239,9 +248,7 @@ namespace _Project.Scripts.Construction
                 return;
 
             _moneyManagement.OnDestroyedTower(_selectedBuildingSite.CurrentTower);
-            _selectedBuildingSite.RemoveCurrentTower();
-
-            UsingBuildingSitesInCurrentLevel.Remove(_selectedBuildingSite);
+            _selectedBuildingSite.RemoveCurrentTower(true);
 
             _selectedBuildingSite.HideSelectView();
             ConstructionView.HideUpgradeView();
@@ -256,8 +263,6 @@ namespace _Project.Scripts.Construction
             {
                 _selectedBuildingSite.BuildTower(towerPrefab);
                 _selectedBuildingSite.HideSelectView();
-
-                UsingBuildingSitesInCurrentLevel.Add(_selectedBuildingSite);
 
                 ConstructionView.HideBuildView();
                 CameraMoving.UnlockMoving();

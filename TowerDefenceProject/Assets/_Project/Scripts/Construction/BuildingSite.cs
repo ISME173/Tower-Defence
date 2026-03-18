@@ -1,16 +1,27 @@
-﻿using _Project.Scripts.Training;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.Training;
 using R3;
+using System;
 using UnityEngine;
 
 namespace _Project.Scripts.Construction
 {
     [RequireComponent(typeof(Collider))]
-    public class BuildingSite : MonoBehaviour, ITrainingStageTrigger, IDisableDuringTraining
+    public class BuildingSite : MonoBehaviour, ITrainingStageTrigger, IDisableDuringTraining, IDisposable
     {
+        [Header("Scene References")]
         [SerializeField] private GameObject _selectView;
         [SerializeField] private GameObject _mainView;
+
+        [Header("VFX")]
         [SerializeField] private ParticleSystem _buildEffect;
 
+        [Header("SFX")]
+        [SerializeField] private AudioEvent _buildTowerAudioEvent;
+        [SerializeField] private AudioEvent _removeTowerAudioEvent;
+        [SerializeField] private AudioEvent _upgradeTowerAudioEvent;
+
+        private IAudioService _audioService;
         private Collider _collider;
         private Tower _currentTower;
 
@@ -19,10 +30,18 @@ namespace _Project.Scripts.Construction
         public Tower CurrentTower => _currentTower;
         public Observable<Unit> OnTrainingTriggerActivate => ReadOnlyOnTrainingTriggerActivate;
 
-        private void Awake()
+        public void Initialize(IAudioService audioService)
         {
+            _audioService = audioService;
+
             _collider = GetComponent<Collider>();
             _collider.isTrigger = false;
+        }
+
+        public void Dispose()
+        {
+            ReadOnlyOnTrainingTriggerActivate.OnCompleted();
+            ReadOnlyOnTrainingTriggerActivate.Dispose();
         }
 
         public void ShowSelectView()
@@ -58,6 +77,7 @@ namespace _Project.Scripts.Construction
                 return;
             }
 
+            _audioService.PlayOneShot(_upgradeTowerAudioEvent);
             _buildEffect.Play();
 
             _mainView.SetActive(false);
@@ -73,6 +93,7 @@ namespace _Project.Scripts.Construction
                 return;
             }
 
+            _audioService.PlayOneShot(_buildTowerAudioEvent);
             _buildEffect.Play();
 
             _mainView.SetActive(false);
@@ -94,13 +115,16 @@ namespace _Project.Scripts.Construction
             return true;
         }
 
-        public void RemoveCurrentTower()
+        public void RemoveCurrentTower(bool playAudio)
         {
             if (CanRemoveCurrentTower() == false)
             {
                 Debug.LogError($"You can't remove a tower!");
                 return;
             }
+
+            if (playAudio)
+                _audioService.PlayOneShot(_removeTowerAudioEvent);
 
             _buildEffect.Play();
 
