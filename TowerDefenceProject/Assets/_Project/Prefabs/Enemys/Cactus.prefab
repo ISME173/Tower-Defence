@@ -820,6 +820,9 @@ MonoBehaviour:
   _rotationTime: 0.1
   _diedEffect: {fileID: 7701797186074914683}
   _center: {fileID: 9076990670964812598}
+  _vulnerabilityToTowerPrefabsList: []
+  _resistanceToTowerPrefabsList: []
+  _enemyDiedAudioEvent: {fileID: 11400000, guid: e315e9feb2fd19543a89396730d28e43, type: 2}
 --- !u!1001 &7002669337293289208
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -40,7 +40,6 @@ namespace _Project.Scripts.Construction
 
         public void Dispose()
         {
-            ReadOnlyOnTrainingTriggerActivate.OnCompleted();
             ReadOnlyOnTrainingTriggerActivate.Dispose();
         }
 

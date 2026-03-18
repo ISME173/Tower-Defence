@@ -762,6 +762,7 @@ MonoBehaviour:
   - _towerPrefab: {fileID: 8613262054551672572, guid: 1a2d1023f61a23f42ba4cb292126436a, type: 3}
     _percentageDamageOffset: 50
   _resistanceToTowerPrefabsList: []
+  _enemyDiedAudioEvent: {fileID: 11400000, guid: e315e9feb2fd19543a89396730d28e43, type: 2}
 --- !u!1 &7919257122036262516
 GameObject:
   m_ObjectHideFlags: 0

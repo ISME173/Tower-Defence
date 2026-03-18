@@ -20,17 +20,20 @@ namespace _Project.Scripts.LevelsManagement
         private int _currentLevelIndex;
 
         private readonly ReplaySubject<LevelObject> LevelCreated = new();
+        private readonly Subject<LevelObject> LevelDestroyStart = new();
 
         public Observable<LevelObject> ReadOnlyLevelCreated => LevelCreated;
+        public Observable<LevelObject> ReadOnlyLevelDestroyStart => LevelDestroyStart;
         public LevelObject CurrentLevelObject => _currentLevelObject;
         public int CurrentLevelIndex => _currentLevelIndex;
 
         public LevelsCreator(
             LevelObject firstLevelOnScene,
+            LevelObject firstLevelPrefab,
             Transform createLevelPoint,
             AddressablesLevelsLoader addressablesLevelsLoader)
         {
-            AllLevelObjectPrefabs.Add(firstLevelOnScene);
+            AllLevelObjectPrefabs.Add(firstLevelPrefab);
             CreateLevelPoint = createLevelPoint;
             _addressablesLevelsLoader = addressablesLevelsLoader;
 
@@ -94,7 +97,8 @@ namespace _Project.Scripts.LevelsManagement
                 return;
             }
 
-            if (levelIndex == 0)
+            // Если в списке уже лежит загруженный addressables-префаб — создаём сразу
+            if (levelIndex == 0 || AllLevelObjectPrefabs[levelIndex] != null)
             {
                 CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
                 return;
@@ -103,13 +107,6 @@ namespace _Project.Scripts.LevelsManagement
             if (_addressablesLevelsLoader == null)
             {
                 Debug.LogError("AddressablesLevelsLoader is not bound, but levelIndex > 0 requested.");
-                return;
-            }
-
-            // Если в списке уже лежит загруженный addressables-префаб — создаём сразу
-            if (AllLevelObjectPrefabs[levelIndex] != null)
-            {
-                CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
                 return;
             }
 
@@ -135,13 +132,16 @@ namespace _Project.Scripts.LevelsManagement
         {
             RemoveCurrentLevel();
 
+            if (prefabToInstantiate == null)
+                throw new NullReferenceException($"{nameof(prefabToInstantiate)} is empty!");
+
             LevelObject createdLevelObject = GameObject.Instantiate(prefabToInstantiate);
             createdLevelObject.transform.position = CreateLevelPoint.position;
 
             _currentLevelObject = createdLevelObject;
             _currentLevelIndex = levelIndex;
 
-            LevelCreated?.OnNext(createdLevelObject);
+            LevelCreated?.OnNext(_currentLevelObject);
             _cameraMoving.UnlockMoving();
         }
 
@@ -150,7 +150,10 @@ namespace _Project.Scripts.LevelsManagement
             if (_currentLevelObject == null)
                 return;
 
+            LevelDestroyStart?.OnNext(_currentLevelObject);
+
             GameObject.Destroy(_currentLevelObject.gameObject);
+            _currentLevelObject = null;
         }
 
         private async UniTask CreateLevelByIndexAsync(int levelIndex)

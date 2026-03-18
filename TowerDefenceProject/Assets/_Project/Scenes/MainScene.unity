@@ -3301,6 +3301,7 @@ MonoBehaviour:
   _levelsListView: {fileID: 938887564}
   _createLevelPoint: {fileID: 1263585418}
   _firstLevelOnScene: {fileID: 674771579}
+  _firstLevelPrefab: {fileID: 6215329666418542582, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
   _levelAddressKeysStartingFromLevel2:
   - Level_2
   - Level_3
@@ -10706,29 +10707,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 363965721}
   - {fileID: 2060574963}
-  - {fileID: 1017092600}
-  - {fileID: 320640572}
   - {fileID: 1285109656}
-  - {fileID: 1804706553}
-  - {fileID: 340790981}
-  - {fileID: 322098973}
   - {fileID: 1482966217}
-  - {fileID: 2108613273}
+  - {fileID: 320640572}
   - {fileID: 565078028}
+  - {fileID: 1017092600}
+  - {fileID: 1804706553}
+  - {fileID: 2108613273}
+  - {fileID: 363965721}
+  - {fileID: 322098973}
+  - {fileID: 340790981}
   _readOnlyBindingModules:
-  - {fileID: 363965721}
   - {fileID: 2060574963}
-  - {fileID: 1017092600}
-  - {fileID: 320640572}
   - {fileID: 1285109656}
-  - {fileID: 1804706553}
-  - {fileID: 340790981}
-  - {fileID: 322098973}
   - {fileID: 1482966217}
-  - {fileID: 2108613273}
+  - {fileID: 320640572}
   - {fileID: 565078028}
+  - {fileID: 1017092600}
+  - {fileID: 1804706553}
+  - {fileID: 2108613273}
+  - {fileID: 363965721}
+  - {fileID: 322098973}
+  - {fileID: 340790981}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0

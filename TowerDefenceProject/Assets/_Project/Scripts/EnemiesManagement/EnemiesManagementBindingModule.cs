@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.DI;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.DI;
 using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.PauseManagement;
@@ -31,9 +32,9 @@ namespace _Project.Scripts.EnemiesManagement
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, TrainingController trainingController)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, TrainingController trainingController, IAudioService audioService)
         {
-            _enemiesSpawner.Initialize(levelsCreator, levelCompletionManagement, pauseController, _enemiesInPoolContainer ?? transform, trainingController);
+            _enemiesSpawner.Initialize(levelsCreator, levelCompletionManagement, pauseController, _enemiesInPoolContainer ?? transform, trainingController, audioService);
         }
     }
 }

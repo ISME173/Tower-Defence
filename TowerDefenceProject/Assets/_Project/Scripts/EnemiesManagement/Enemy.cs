@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Construction;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.Construction;
 using LitMotion;
 using LitMotion.Extensions;
 using NaughtyAttributes;
@@ -26,7 +27,7 @@ namespace _Project.Scripts.EnemiesManagement
         [Space]
         [SerializeField, Min(0)] private float _rotationTime = 0.1f;
 
-        [Header("References")]
+        [Header("Scene References")]
         [SerializeField] private ParticleSystem _diedEffect;
         [SerializeField] private Transform _center;
         [Space]
@@ -34,6 +35,10 @@ namespace _Project.Scripts.EnemiesManagement
         [SerializeField] private List<TowerAndDamageOffset> _vulnerabilityToTowerPrefabsList;
         [SerializeField] private List<TowerAndDamageOffset> _resistanceToTowerPrefabsList;
 
+        [Header("SFX")]
+        [SerializeField] private AudioEvent _enemyDiedAudioEvent;
+
+        private IAudioService _audioService;
         private int _currentPointIndex;
         private MotionHandle _diedEffectLifeHandle;
         private MotionHandle _movingHandle;
@@ -57,8 +62,10 @@ namespace _Project.Scripts.EnemiesManagement
         public bool Alive => CurrentHealth.Value > 0;
         public int MaxHealth => _maxHealth;
 
-        public virtual void Initialize(Vector3[] movingPoints)
+        public virtual void Initialize(Vector3[] movingPoints, IAudioService audioService)
         {
+            _audioService = audioService;
+
             _collider = GetComponent<Collider>();
             _transform = transform;
 
@@ -91,7 +98,7 @@ namespace _Project.Scripts.EnemiesManagement
             // Проверка на уязвимость к типу башни
             TowerAndDamageOffset vulnerability = _vulnerabilityToTowerPrefabsList
                 .FirstOrDefault(x => x.TowerPrefab.Name == attackTower.Name);
-            
+
             if (vulnerability.TowerPrefab != null)
             {
                 int additionalDamage = (damage * vulnerability.PercentageDamageOffset) / 100;
@@ -102,7 +109,7 @@ namespace _Project.Scripts.EnemiesManagement
             // Проверка на сопротивление к типу башни
             TowerAndDamageOffset resistance = _resistanceToTowerPrefabsList
                 .FirstOrDefault(x => x.TowerPrefab.Name == attackTower.Name);
-            
+
             if (resistance.TowerPrefab != null)
             {
                 int reducedDamage = (damage * resistance.PercentageDamageOffset) / 100;
@@ -146,6 +153,8 @@ namespace _Project.Scripts.EnemiesManagement
         {
             _movingHandle.TryCancel();
             _rotationHandle.TryCancel();
+
+            _audioService.PlayOneShot(_enemyDiedAudioEvent);
 
             _diedEffect.transform.SetParent(null);
             _diedEffect.Play();

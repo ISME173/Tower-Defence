@@ -341,6 +341,7 @@ MonoBehaviour:
   _center: {fileID: 3849080631560092773}
   _vulnerabilityToTowerPrefabsList: []
   _resistanceToTowerPrefabsList: []
+  _enemyDiedAudioEvent: {fileID: 11400000, guid: e315e9feb2fd19543a89396730d28e43, type: 2}
 --- !u!1 &6274419047420644117
 GameObject:
   m_ObjectHideFlags: 0

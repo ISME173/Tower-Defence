@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.LevelsManagement;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.PauseManagement;
 using _Project.Scripts.Training;
 using _Project.Scripts.Utilities;
@@ -23,6 +24,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         private Transform _currentSpawnEnemiesPoint;
         private IDisposable _tutorialDisposable;
 
+        private IAudioService _audioService;
         private TrainingController _trainingController;
         private LevelCompletionManagement _levelCompletionManagement;
         private LevelsCreator _levelsCreator;
@@ -44,13 +46,15 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
         public Observable<Enemy> ReadOnlyEnemyMovedToLastPoint => EnemyMovedToLastPoint;
         public Observable<Unit> ReadOnlyAllEnemiedDefeated => AllEnemiesDefeated;
 
-        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, Transform enemiesContainer, TrainingController trainingController)
+        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, PauseController pauseController, Transform enemiesContainer, TrainingController trainingController,
+            IAudioService audioService)
         {
             _enemiesContainer = enemiesContainer;
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
             _pauseController = pauseController;
             _trainingController = trainingController;
+            _audioService = audioService;
 
             _levelsCreator.ReadOnlyLevelCreated
                 .Subscribe(levelObject => OnLevelCreated(levelObject))
@@ -148,6 +152,36 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             }
         }
 
+        private int GetEnemiesCountToSpawn()
+        {
+            if (_currentEnemiesInLevelSpawnSequence == null)
+                return 0;
+
+            var groups = _currentEnemiesInLevelSpawnSequence.EnemyGroupsSpawnSettings;
+
+            if (groups == null)
+                return 0;
+
+            int totalEnemiesCount = 0;
+
+            foreach (var enemyGroupSettings in groups)
+            {
+                if (enemyGroupSettings.EnemySpawnSettings == null)
+                    continue;
+
+                foreach (var enemySpawnSettings in enemyGroupSettings.EnemySpawnSettings)
+                    totalEnemiesCount += enemySpawnSettings.SpawnCount;
+            }
+
+            return totalEnemiesCount;
+        }
+
+        private void TryNotifyAllEnemiesDefeated()
+        {
+            if (_spawningProcessActive == false && EnemiesInLevel.Count == 0)
+                AllEnemiesDefeated?.OnNext(Unit.Default);
+        }
+
         private async void StartSpawnProcess()
         {
             if (Application.isPlaying == false)
@@ -166,22 +200,28 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             _spawnCancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = _spawnCancellationTokenSource.Token;
 
-            List<Enemy> createdEnemys = new();
             Vector3[] movingPositions = new Vector3[_currentMovingPoints.Count];
 
             for (int i = 0; i < movingPositions.Length; i++)
                 movingPositions[i] = _currentMovingPoints[i].position;
 
+            int enemiesRemainingToSpawn = GetEnemiesCountToSpawn();
+
             _spawningProcessActive = true;
 
             RunTimerUntilFirstWaveStart(cancellationToken);
 
+            if (enemiesRemainingToSpawn == 0)
+            {
+                _spawningProcessActive = false;
+                TryNotifyAllEnemiesDefeated();
+                return;
+            }
+
             try
             {
-
                 foreach (var enemysGroupSettings in _currentEnemiesInLevelSpawnSequence.EnemyGroupsSpawnSettings)
                 {
-                    // Await delay between spawn enemy groups
                     await UniTask.Delay(
                         Mathf.RoundToInt(enemysGroupSettings.SecondsDelayForSpawnAfterPreviousSpawn * 1000),
                         cancellationToken: cancellationToken);
@@ -192,27 +232,32 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
                         {
                             cancellationToken.ThrowIfCancellationRequested();
 
-                            // Spawn enemy
                             Enemy spawnedEnemy = ObjectPoolsByEnemy[enemySpawnSettings.EnemyPrefab.EnemyName].GetObject();
                             spawnedEnemy.transform.position = _currentSpawnEnemiesPoint.position;
-                            spawnedEnemy.Initialize(movingPositions);
+                            spawnedEnemy.Initialize(movingPositions, _audioService);
 
                             EnemiesInLevel.Add(spawnedEnemy, new CompositeDisposable());
 
-                            // Subscribe to spawned enemy events
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnDied.Subscribe(OnEnemyDied));
                             EnemiesInLevel[spawnedEnemy].Add(spawnedEnemy.OnMovedToLastPoint.Subscribe(OnEnemyMovedToLastPoint));
 
+                            enemiesRemainingToSpawn--;
+
+                            if (enemiesRemainingToSpawn == 0)
+                            {
+                                _spawningProcessActive = false;
+                                TryNotifyAllEnemiesDefeated();
+                                return;
+                            }
+
                             try
                             {
-                                // Await delay between spawn enemies
                                 await UniTask.Delay(
                                     Mathf.RoundToInt(enemySpawnSettings.SecondsDelayBetweenSpawn * 1000),
                                     cancellationToken: cancellationToken);
                             }
                             catch (OperationCanceledException)
                             {
-                                // Its normal
                                 _spawningProcessActive = false;
                                 return;
                             }
@@ -230,6 +275,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             }
 
             _spawningProcessActive = false;
+            TryNotifyAllEnemiesDefeated();
         }
 
         private void OnEnemyMovedToLastPoint(Enemy enemy)
@@ -251,8 +297,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             if (ObjectPoolsByEnemy[enemy.EnemyName].ContainsObject(enemy) == false)
                 ObjectPoolsByEnemy[enemy.EnemyName].AddObject(enemy);
 
-            if (_spawningProcessActive == false && EnemiesInLevel.Count == 0)
-                AllEnemiesDefeated?.OnNext(Unit.Default);
+            TryNotifyAllEnemiesDefeated();
         }
 
         private void CancelSpawnProcess()
