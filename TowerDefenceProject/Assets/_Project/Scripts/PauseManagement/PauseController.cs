@@ -1,3 +1,4 @@
+using _Project.Scripts.Audio;
 using _Project.Scripts.CameraControll;
 using _Project.Scripts.Saves;
 using R3;
@@ -13,6 +14,9 @@ namespace _Project.Scripts.PauseManagement
 
         private CameraMoving _cameraMoving;
         private ISaves _saves;
+
+        private IAudioService _audioService;
+        private AudioEvent _buttonClickAudioEvent;
 
         public Observable<Unit> ReadOnlyOnOpenMenuButtonClicked => PauseView.ReadOnlyOnOpenMenuButtonClicked;
 
@@ -47,10 +51,13 @@ namespace _Project.Scripts.PauseManagement
                 .AddTo(Disposables);
         }
 
-        public void Initialize(ISaves saves, CameraMoving cameraMoving)
+        public void Initialize(ISaves saves, CameraMoving cameraMoving, IAudioService audioService, AudioEvent buttonClickAudioEvent)
         {
             _saves = saves;
             _cameraMoving = cameraMoving;
+
+            _audioService = audioService;
+            _buttonClickAudioEvent = buttonClickAudioEvent;
         }
 
         public void Dispose()
@@ -61,6 +68,8 @@ namespace _Project.Scripts.PauseManagement
 
         private void OnShowPauseButtonClicked()
         {
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
             PauseView.Show();
             Time.timeScale = 0f;
 
@@ -69,6 +78,8 @@ namespace _Project.Scripts.PauseManagement
 
         private void OnHidePauseButtonClicked()
         {
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
             PauseView.Hide();
             Time.timeScale = 1f;
 
@@ -77,12 +88,12 @@ namespace _Project.Scripts.PauseManagement
 
         private void OnMusicsActiveSwitchButtonClicked()
         {
-
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
         }
 
         private void OnSfxActiveSwitchButtonClicked()
         {
-
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.LevelsManagement;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.LevelsManagement;
 using R3;
 using System;
 
@@ -12,6 +13,10 @@ namespace _Project.Scripts.GameoverMagamenet
         private LevelsCreator _levelsCreator;
         private LevelCompletionManagement _levelCompletionManagement;
 
+        private IAudioService _audioService;
+        private AudioEvent _gameoverAudioEvent;
+        private AudioEvent _buttonClickAudioEvent;
+
         public Observable<Unit> ReadOnlyOnMenuButtonClicked => GameoverView.ReadOnlyOnMenuButtonClicked;
 
         public GameoverController(GameoverView gameoverView)
@@ -19,10 +24,15 @@ namespace _Project.Scripts.GameoverMagamenet
             GameoverView = gameoverView;
         }
 
-        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
+        public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, IAudioService audioService,
+            AudioEvent buttonClickAudioEvent, AudioEvent gameoverAudioEvent)
         {
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
+
+            _audioService = audioService;
+            _buttonClickAudioEvent = buttonClickAudioEvent;
+            _gameoverAudioEvent = gameoverAudioEvent;
 
             GameoverView.Initialize();
 
@@ -35,7 +45,11 @@ namespace _Project.Scripts.GameoverMagamenet
                 .AddTo(Disposables);
 
             GameoverView.ReadOnlyOnMenuButtonClicked
-                .Subscribe(_ => GameoverView.Hide())
+                .Subscribe(_ =>
+                {
+                    _audioService.PlayOneShot(_buttonClickAudioEvent);
+                    GameoverView.Hide();
+                })
                 .AddTo(Disposables);
         }
 
@@ -47,12 +61,15 @@ namespace _Project.Scripts.GameoverMagamenet
 
         private void OnRestartButtonClicked(Unit unit)
         {
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
             GameoverView.Hide();
+
             _levelsCreator.RebuildCurrentLevel();
         }
 
         private void OnLevelFailed(Unit unit)
         {
+            _audioService.PlayOneShot(_gameoverAudioEvent);
             GameoverView.Show();
         }
     }

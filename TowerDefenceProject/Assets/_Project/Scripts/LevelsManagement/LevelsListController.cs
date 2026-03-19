@@ -1,3 +1,4 @@
+using _Project.Scripts.Audio;
 using _Project.Scripts.GameoverMagamenet;
 using _Project.Scripts.PauseManagement;
 using _Project.Scripts.VictoryManagement;
@@ -18,23 +19,29 @@ namespace _Project.Scripts.LevelsManagement
         private GameoverController _gameoverController;
         private PauseController _pauseController;
 
+        private IAudioService _audioService;
+        private AudioEvent _buttonClickAudioEvent;
+
         public LevelsListController(
             LevelsListView levelsListView,
             AddressablesLevelsLoader addressablesLevelsLoader,
             LevelsCreator levelsCreator,
-            LevelsProgressionService levelsProgressionService)
+            LevelsProgressionService levelsProgressionService,
+            AudioEvent buttonClickAudioEvent)
         {
             LevelsCreator = levelsCreator;
             LevelsListView = levelsListView;
             AddressablesLevelsLoader = addressablesLevelsLoader;
             LevelsProgressionService = levelsProgressionService;
+            _buttonClickAudioEvent = buttonClickAudioEvent;
         }
 
-        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController)
+        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController, IAudioService audioService)
         {
             _victoryController = victoryController;
             _gameoverController = gameoverController;
             _pauseController = pauseController;
+            _audioService = audioService;
 
             LevelsListView.Initialize(AddressablesLevelsLoader.TotalLevelsCount);
             LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
@@ -81,6 +88,8 @@ namespace _Project.Scripts.LevelsManagement
 
         private void OnMenuButtonClicked(Unit unit)
         {
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
             LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
             LevelsListView.ShowView();
         }
@@ -89,6 +98,8 @@ namespace _Project.Scripts.LevelsManagement
         {
             if (LevelsListView.CurrentLevelsPanelIndex + 1 >= LevelsListView.LevelsPanelsCount)
                 return;
+
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
 
             LevelsListView.HideOpenPreviousLevelsPanelButton();
             LevelsListView.HideOpenNextLevelsPanelButton();
@@ -107,6 +118,8 @@ namespace _Project.Scripts.LevelsManagement
             if (LevelsListView.CurrentLevelsPanelIndex - 1 < 0)
                 return;
 
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
             LevelsListView.HideOpenPreviousLevelsPanelButton();
             LevelsListView.HideOpenNextLevelsPanelButton();
 
@@ -123,6 +136,8 @@ namespace _Project.Scripts.LevelsManagement
         {
             if (!LevelsProgressionService.IsLevelUnlocked(levelIndex))
                 return;
+
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
 
             LevelsListView.HideView();
             LevelsCreator.CreateLevelByIndex(levelIndex);

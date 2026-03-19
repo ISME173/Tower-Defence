@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.EnemiesManagement;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.EnemiesManagement;
 using LitMotion;
 using LitMotion.Extensions;
 using System;
@@ -18,9 +19,9 @@ namespace _Project.Scripts.Construction.TowerTypes.Magic
         private MotionHandle _cristalsRotateAnimateHandle;
         private MagicTowerData _magicTowerData;
 
-        public override void Initialize()
+        public override void Initialize(IAudioService audioService)
         {
-            base.Initialize();
+            base.Initialize(audioService);  
 
             float maxYPosition = _cristalsForAnimate.transform.localPosition.y + _magicTowerData.AnimateCristalYOffset;
             float minYPosition = _cristalsForAnimate.transform.localPosition.y - _magicTowerData.AnimateCristalYOffset;

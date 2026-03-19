@@ -13,8 +13,9 @@ namespace _Project.Scripts.VictoryManagement
         [Header("Scene References")]
         [SerializeField] private VictoryView _victoryView;
 
-        [Header("Audio")]
+        [Header("SFX")]
         [SerializeField] private AudioEvent _buttonClickAudioEvent;
+        [SerializeField] private AudioEvent _victoryAudioEvent;
 
         private VictoryController _victoryController;
 
@@ -32,7 +33,7 @@ namespace _Project.Scripts.VictoryManagement
         [Inject]
         private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, IAudioService audioService)
         {
-            _victoryController.Initialize(levelsCreator, levelCompletionManagement, audioService, _buttonClickAudioEvent);
+            _victoryController.Initialize(levelsCreator, levelCompletionManagement, audioService, _buttonClickAudioEvent, _victoryAudioEvent);
         }
     }
 }

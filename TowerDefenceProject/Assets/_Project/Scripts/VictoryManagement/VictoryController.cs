@@ -15,6 +15,7 @@ namespace _Project.Scripts.VictoryManagement
 
         private IAudioService _audioService;
         private AudioEvent _buttonClickAudioEvent;
+        private AudioEvent _victoryAudioEvent;
 
         public Observable<Unit> ReadOnlyOnMenuButtonClicked => VictoryView.ReadOnlyOnMenuButtonClicked;
 
@@ -24,12 +25,13 @@ namespace _Project.Scripts.VictoryManagement
         }
 
         public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelsCompletionManagement,
-            IAudioService audioService, AudioEvent buttonClickEvent)
+            IAudioService audioService, AudioEvent buttonClickEvent, AudioEvent victoryAudioEvent)
         {
             _levelsCreator = levelsCreator;
             _levelsCompletionManagement = levelsCompletionManagement;
 
             _audioService = audioService;
+            _victoryAudioEvent = victoryAudioEvent;
             _buttonClickAudioEvent = buttonClickEvent;
 
             _levelsCompletionManagement.ReadOnlyLevelCompleted
@@ -63,6 +65,7 @@ namespace _Project.Scripts.VictoryManagement
 
         private void OnLevelCompleted(Unit unit)
         {
+            _audioService.PlayOneShot(_victoryAudioEvent);
             VictoryView.Show();
         }
 

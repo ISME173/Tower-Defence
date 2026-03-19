@@ -1954,6 +1954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.VictoryManagement.VictoryManagementBindingsModule
   _victoryView: {fileID: 109634305}
   _buttonClickAudioEvent: {fileID: 11400000, guid: 54b5eebb67365f1478c3dd480570af7a, type: 2}
+  _victoryAudioEvent: {fileID: 11400000, guid: 20c026122c7942246a10266b7d29324a, type: 2}
 --- !u!1 &322098971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,6 +2000,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.GameoverMagamenet.GameoverManagementBindingsModule
   _gameoverView: {fileID: 9868016}
+  _buttonClickEvent: {fileID: 11400000, guid: 54b5eebb67365f1478c3dd480570af7a, type: 2}
+  _gameoverEvent: {fileID: 11400000, guid: a439eb36b35ee694681984af4a547d1a, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2204,6 +2207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.PauseManagement.PauseManagementBindingModule
   _pauseView: {fileID: 2139202378}
+  _buttonClickAudioEvent: {fileID: 11400000, guid: 54b5eebb67365f1478c3dd480570af7a, type: 2}
 --- !u!1 &363965719
 GameObject:
   m_ObjectHideFlags: 0
@@ -3312,6 +3316,7 @@ MonoBehaviour:
   - Level_8
   - Level_9
   - Level_10
+  _buttonClickAudioEvent: {fileID: 11400000, guid: 54b5eebb67365f1478c3dd480570af7a, type: 2}
 --- !u!1 &568591197
 GameObject:
   m_ObjectHideFlags: 0
@@ -6081,6 +6086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017092599}
   - component: {fileID: 1017092600}
+  - component: {fileID: 1017092601}
   m_Layer: 0
   m_Name: Audio Bindings Module
   m_TagString: Untagged
@@ -6124,6 +6130,19 @@ MonoBehaviour:
   _sfxVolumeParam: SfxVolume
   _uiVolumeParam: UiVolume
   _initialPoolSize: 12
+--- !u!114 &1017092601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017092598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257885c0a2d98654580c3deaa2ff3590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Audio.MusicController
+  _backgroundMusicInGame: {fileID: 11400000, guid: c56ea6eb8502c2f4ab96e89fb30dcb8b, type: 2}
 --- !u!1 &1023577265
 GameObject:
   m_ObjectHideFlags: 0
@@ -10707,28 +10726,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 2060574963}
-  - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 320640572}
-  - {fileID: 565078028}
-  - {fileID: 1017092600}
   - {fileID: 1804706553}
   - {fileID: 2108613273}
-  - {fileID: 363965721}
   - {fileID: 322098973}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
+  - {fileID: 363965721}
+  - {fileID: 2060574963}
+  - {fileID: 1017092600}
+  - {fileID: 1285109656}
   - {fileID: 340790981}
   _readOnlyBindingModules:
-  - {fileID: 2060574963}
-  - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 320640572}
-  - {fileID: 565078028}
-  - {fileID: 1017092600}
   - {fileID: 1804706553}
   - {fileID: 2108613273}
-  - {fileID: 363965721}
   - {fileID: 322098973}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
+  - {fileID: 363965721}
+  - {fileID: 2060574963}
+  - {fileID: 1017092600}
+  - {fileID: 1285109656}
   - {fileID: 340790981}
 --- !u!114 &1804363960
 MonoBehaviour:

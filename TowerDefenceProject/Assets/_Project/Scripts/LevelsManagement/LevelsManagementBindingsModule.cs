@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.CameraControll;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.CameraControll;
 using _Project.Scripts.Castle;
 using _Project.Scripts.DI;
 using _Project.Scripts.EnemiesManagement.Spawn;
@@ -24,6 +25,9 @@ namespace _Project.Scripts.LevelsManagement
 
         [Header("Addressables (levels starting from level 2)")]
         [SerializeField] private List<string> _levelAddressKeysStartingFromLevel2 = new();
+
+        [Header("SFX")]
+        [SerializeField] private AudioEvent _buttonClickAudioEvent;
 
         private LevelsListController _levelsListController;
         private LevelsCreator _levelsCreator;
@@ -55,7 +59,7 @@ namespace _Project.Scripts.LevelsManagement
             _levelsProgressionService = new LevelsProgressionService();
             _levelsProgressionRuntimeTracker = new LevelsProgressionRuntimeTracker();
 
-            _levelsListController = new LevelsListController(_levelsListView, _addressablesLevelsLoader, _levelsCreator, _levelsProgressionService);
+            _levelsListController = new LevelsListController(_levelsListView, _addressablesLevelsLoader, _levelsCreator, _levelsProgressionService, _buttonClickAudioEvent);
 
             containerBuilder.RegisterValue(_levelsCompletionManagement);
             containerBuilder.RegisterValue(_addressablesLevelsLoader);
@@ -72,7 +76,8 @@ namespace _Project.Scripts.LevelsManagement
             GameoverController gameoverController,
             VictoryController victoryController,
             CameraMoving cameraMoving, 
-            PauseController pauseController)
+            PauseController pauseController,
+            IAudioService audioService)
         {
             _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner, _levelsCreator, cameraMoving);
             _levelsCreator.Initialize(cameraMoving);
@@ -84,7 +89,7 @@ namespace _Project.Scripts.LevelsManagement
                 castleHealthManagement,
                 _levelsCompletionManagement);
 
-            _levelsListController.Initialize(victoryController, gameoverController, pauseController);
+            _levelsListController.Initialize(victoryController, gameoverController, pauseController, audioService);
         }
     }
 }

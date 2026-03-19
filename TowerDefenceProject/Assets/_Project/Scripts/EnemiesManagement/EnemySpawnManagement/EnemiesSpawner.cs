@@ -268,6 +268,7 @@ namespace _Project.Scripts.EnemiesManagement.Spawn
             catch (OperationCanceledException)
             {
                 // Its normal
+                return;
             }
             catch (Exception ex)
             {

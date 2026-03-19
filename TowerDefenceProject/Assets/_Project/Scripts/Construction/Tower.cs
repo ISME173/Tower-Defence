@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.EnemiesManagement;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.EnemiesManagement;
 using _Project.Scripts.Utilities;
 using R3;
 using System;
@@ -20,6 +21,10 @@ namespace _Project.Scripts.Construction
         [SerializeField] private string _name;
         [SerializeField] private List<UpgradeLevelDatas> _upgradeLevelDatas;
 
+        [Header("SFX")]
+        [SerializeField] private AudioEvent _shootAudioEvent;
+
+        private IAudioService _audioService;
         private int _upgradeLevelIndex;
         private TowerData _currentTowerData;
         private Enemy _targetEnemy;
@@ -63,6 +68,8 @@ namespace _Project.Scripts.Construction
 
             if (_attackDelayTimer >= _currentTowerData.DelayBetweenAttacks)
             {
+                _audioService.PlayOneShot(_shootAudioEvent);
+
                 AttackEnemy(_targetEnemy);
                 _attackDelayTimer = 0;
             }
@@ -113,8 +120,10 @@ namespace _Project.Scripts.Construction
             _upgradeLevelIndex++;
         }
 
-        public virtual void Initialize()
+        public virtual void Initialize(IAudioService audioService)
         {
+            _audioService ??= audioService;
+
             _upgradeLevelIndex = 0;
             _currentTowerData = _upgradeLevelDatas[_upgradeLevelIndex].TowerData;
             UpdateCurrentTowerData();

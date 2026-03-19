@@ -98,7 +98,7 @@ namespace _Project.Scripts.Construction
             _mainView.SetActive(false);
 
             Tower newTower = Instantiate(towerPrefab);
-            newTower.Initialize();
+            newTower.Initialize(_audioService);
 
             newTower.transform.SetParent(transform);
             newTower.transform.localPosition = Vector3.zero;

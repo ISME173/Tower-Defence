@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.DI;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.DI;
 using _Project.Scripts.LevelsManagement;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -8,7 +9,12 @@ namespace _Project.Scripts.GameoverMagamenet
 {
     public class GameoverManagementBindingsModule : BindingModule
     {
+        [Header("Scene References")]
         [SerializeField] private GameoverView _gameoverView;
+
+        [Header("SFX")]
+        [SerializeField] private AudioEvent _buttonClickEvent;
+        [SerializeField] private AudioEvent _gameoverEvent;
 
         private GameoverController _gameoverController;
 
@@ -24,9 +30,9 @@ namespace _Project.Scripts.GameoverMagamenet
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement completionManagement)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement completionManagement, IAudioService audioService)
         {
-            _gameoverController.Initialize(levelsCreator, completionManagement);
+            _gameoverController.Initialize(levelsCreator, completionManagement, audioService, _buttonClickEvent, _gameoverEvent);
         }
     }
 }
