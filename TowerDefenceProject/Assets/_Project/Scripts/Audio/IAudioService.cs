@@ -1,9 +1,13 @@
+using R3;
 using UnityEngine;
 
 namespace _Project.Scripts.Audio
 {
     public interface IAudioService
     {
+        public Observable<float> OnMusicsVolumeChanged { get; }
+        public Observable<float> OnSoundsVolumeChanged { get; }
+
         void Play(AudioEvent audioEvent);
         void PlayAt(AudioEvent audioEvent, Vector3 position);
         void PlayOneShot(AudioEvent audioEvent);

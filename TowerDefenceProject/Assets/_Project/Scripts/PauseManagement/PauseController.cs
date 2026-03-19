@@ -9,6 +9,9 @@ namespace _Project.Scripts.PauseManagement
 {
     public class PauseController : IDisposable
     {
+        private const string SoundsVolumeSaveKey = "SoundsValueSaveKey";
+        private const string MusicsVolumeSaveKey = "MusicsValueSaveKey";
+
         private readonly CompositeDisposable Disposables = new();
         private readonly PauseView PauseView;
 
@@ -58,6 +61,8 @@ namespace _Project.Scripts.PauseManagement
 
             _audioService = audioService;
             _buttonClickAudioEvent = buttonClickAudioEvent;
+
+            UpdateSettingsByCurrentSaves();
         }
 
         public void Dispose()
@@ -89,11 +94,40 @@ namespace _Project.Scripts.PauseManagement
         private void OnMusicsActiveSwitchButtonClicked()
         {
             _audioService.PlayOneShot(_buttonClickAudioEvent);
+
+            float newMusicsVolume = _saves.GetFloat(MusicsVolumeSaveKey, 1) == 0 ? 1f : 0;
+            _saves.SetFloat(MusicsVolumeSaveKey, newMusicsVolume);
+
+            _audioService.SetCategoryVolume(AudioCategory.Music, newMusicsVolume);
+
+            PauseView.SetActiveMusicView(newMusicsVolume == 1 ? true : false);
         }
 
         private void OnSfxActiveSwitchButtonClicked()
         {
             _audioService.PlayOneShot(_buttonClickAudioEvent);
+
+            float newSoundsVolume = _saves.GetFloat(SoundsVolumeSaveKey, 1) == 0 ? 1f : 0;
+            _saves.SetFloat(SoundsVolumeSaveKey, newSoundsVolume);
+
+            _audioService.SetCategoryVolume(AudioCategory.Ui, newSoundsVolume);
+            _audioService.SetCategoryVolume(AudioCategory.Sfx, newSoundsVolume);
+
+            PauseView.SetActiveSoundsView(newSoundsVolume == 1 ? true : false);
+        }
+
+        private void UpdateSettingsByCurrentSaves()
+        {
+            float soundsVolume = _saves.GetFloat(SoundsVolumeSaveKey, 1);
+            float musicsVolume = _saves.GetFloat(MusicsVolumeSaveKey, 1);
+
+            _audioService.SetCategoryVolume(AudioCategory.Ui, soundsVolume);
+            _audioService.SetCategoryVolume(AudioCategory.Sfx, soundsVolume);
+
+            _audioService.SetCategoryVolume(AudioCategory.Music, musicsVolume);
+
+            PauseView.SetActiveSoundsView(soundsVolume == 1 ? true : false);
+            PauseView.SetActiveMusicView(musicsVolume == 1 ? true : false);
         }
     }
 }

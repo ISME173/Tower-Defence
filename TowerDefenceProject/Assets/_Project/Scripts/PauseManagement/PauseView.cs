@@ -71,7 +71,7 @@ namespace _Project.Scripts.PauseManagement
             _musicIcon.sprite = isActive ? _musicActiveSprite : _musicInactiveSprite;
         }
 
-        public void SetActiveSfxView(bool isActive)
+        public void SetActiveSoundsView(bool isActive)
         {
             _sfxIcon.sprite = isActive ? _sfxActiveSprite : _sfxInactiveSprite;
         }

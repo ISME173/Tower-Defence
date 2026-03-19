@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Saves;
+using R3;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -10,7 +11,12 @@ namespace _Project.Scripts.Audio
         private readonly Dictionary<AudioCategory, float> _categoryLinearVolumes = new();
         private readonly Dictionary<AudioCategory, AudioMixerGroup> _categoryGroups;
         private readonly Dictionary<AudioCategory, string> _categoryVolumeParams;
+
+        private readonly Dictionary<AudioCategory, bool> _categoryMuted = new();
+        private readonly Dictionary<AudioCategory, bool> _mixerParamValid = new();
+
         private readonly List<PooledAudioSource> _pool = new();
+
         private readonly Transform _root;
         private readonly int _initialPoolSize;
         private readonly MusicPlayer _musicPlayer;
@@ -21,10 +27,11 @@ namespace _Project.Scripts.Audio
         private const string SfxVolumeKey = "sfx_volume";
         private const string UiVolumeKey = "ui_volume";
 
-        private readonly Dictionary<AudioCategory, bool> _categoryMuted = new();
+        private readonly ReplaySubject<float> ReadOnlyOnSoundsVolumeChanged = new ReplaySubject<float>();
+        private readonly ReplaySubject<float> ReadOnlyOnMusicsVolumeChanged = new ReplaySubject<float>();
 
-        // Новое: отслеживание валидности параметров микшера для категории
-        private readonly Dictionary<AudioCategory, bool> _mixerParamValid = new();
+        public Observable<float> OnSoundsVolumeChanged => ReadOnlyOnSoundsVolumeChanged;
+        public Observable<float> OnMusicsVolumeChanged => ReadOnlyOnMusicsVolumeChanged;
 
         public AudioService(
             MonoBehaviour runner,
@@ -296,13 +303,24 @@ namespace _Project.Scripts.Audio
             volume = Mathf.Clamp01(volume);
             _categoryLinearVolumes[category] = volume;
 
-            string key = category switch
+            string key = null;
+
+            switch (category)
             {
-                AudioCategory.Music => MusicVolumeKey,
-                AudioCategory.Sfx => SfxVolumeKey,
-                AudioCategory.Ui => UiVolumeKey,
-                _ => null
-            };
+                case AudioCategory.Music:
+                    key = MusicVolumeKey;
+                    ReadOnlyOnMusicsVolumeChanged?.OnNext(volume);
+                    break;
+                case AudioCategory.Sfx:
+                    key = SfxVolumeKey;
+                    ReadOnlyOnSoundsVolumeChanged?.OnNext(volume);
+                    break;
+                case AudioCategory.Ui:
+                    key = UiVolumeKey;
+                    ReadOnlyOnSoundsVolumeChanged?.OnNext(volume);
+                    break;
+            }
+
             if (key != null)
                 _saves.SetFloat(key, volume);
 
