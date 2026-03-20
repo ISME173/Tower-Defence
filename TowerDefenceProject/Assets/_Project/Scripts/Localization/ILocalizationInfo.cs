@@ -7,7 +7,7 @@ namespace _Project.Scripts.Localization
     {
         Russian,
         English,
-        Turkey,
+        Turkish,
         Spanish,
         German,
         French

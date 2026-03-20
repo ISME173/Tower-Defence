@@ -19,7 +19,7 @@ namespace _Project.Scripts.Localization
                     _currentLanguageType = LanguageType.English;
                     break;
                 case SystemLanguage.Turkish:
-                    _currentLanguageType = LanguageType.Turkey;
+                    _currentLanguageType = LanguageType.Turkish;
                     break;
                 case SystemLanguage.Spanish:
                     _currentLanguageType = LanguageType.Spanish;

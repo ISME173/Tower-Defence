@@ -16,6 +16,8 @@ namespace _Project.Scripts.Localization
         [Inject]
         private void Initialize(ILocalizationInfo localizationInfo)
         {
+            //Debug.Log($"Inject localization info by lang: {localizationInfo.CurrentLanguageType}");
+
             ValidateTextsByLanguages();
 
             _text = GetComponent<TMP_Text>();
