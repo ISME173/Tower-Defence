@@ -391,7 +391,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Catapult.CatapultTower
   _attackZone: {fileID: 5532322807860910446}
-  _towerIconSprite: {fileID: 21300000, guid: 048c11ad525f66e438726fe4c58dd6ea, type: 3}
   _projectilePointInWeapon: {fileID: 8197575957641531444}
   _name: Catapult
   _upgradeLevelDatas:
@@ -404,5 +403,6 @@ MonoBehaviour:
   - _upgradeTowerView: {fileID: 4736806204692080080}
     _upgradeLevel: 3
     _towerData: {fileID: 11400000, guid: 4446db749a38fb141a756c82659bfd32, type: 2}
+  _shootAudioEvent: {fileID: 11400000, guid: 16b6cf69137e9344f8b13d79aa06ede1, type: 2}
   _weaponHorizontalRotationPivot: {fileID: 6980119920974140482}
   _weaponVerticalRotationPivot: {fileID: 8840586868893003843}

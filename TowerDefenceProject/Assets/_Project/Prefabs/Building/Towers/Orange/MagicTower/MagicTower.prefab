@@ -377,7 +377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Magic.MagicTower
   _attackZone: {fileID: 6773239647743860996}
-  _towerIconSprite: {fileID: 21300000, guid: 6d370ba2dd2daf646a76dce3284d60b9, type: 3}
   _projectilePointInWeapon: {fileID: 7791050169149675803}
   _name: Magic
   _upgradeLevelDatas:
@@ -390,6 +389,7 @@ MonoBehaviour:
   - _upgradeTowerView: {fileID: 5802087671367179706}
     _upgradeLevel: 3
     _towerData: {fileID: 11400000, guid: 494731f813db77447b9f12f059a131f1, type: 2}
+  _shootAudioEvent: {fileID: 11400000, guid: 769ecdea64ac7d14f91b75df5b0623fc, type: 2}
   _cristalsForAnimate: {fileID: 3751070637087769369}
 --- !u!1 &5802087671367179706 stripped
 GameObject:
