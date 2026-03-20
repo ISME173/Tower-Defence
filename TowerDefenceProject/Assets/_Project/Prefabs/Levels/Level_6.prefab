@@ -434,19 +434,23 @@ MonoBehaviour:
   _npcSpawnPoint: {fileID: 968261579745631551}
   _castleView: {fileID: 1091212985227997516}
   _movingPoints:
-  - {fileID: 2916916978173558238}
-  - {fileID: 6031920116176172574}
-  - {fileID: 1729099041087527046}
-  - {fileID: 7972579837663270885}
-  - {fileID: 6949143805926756845}
   - {fileID: 5538262552375696893}
+  - {fileID: 6949143805926756845}
+  - {fileID: 7972579837663270885}
+  - {fileID: 1729099041087527046}
+  - {fileID: 6031920116176172574}
+  - {fileID: 2916916978173558238}
   _buildingSitesInLevel:
   - {fileID: 7819015018435100930}
   - {fileID: 5029075222125947661}
   - {fileID: 2692149851347523805}
   - {fileID: 1146220754304418723}
   _enemySpawnSequence: {fileID: 11400000, guid: f56418ee4a8aca9409914f7bcd8423ee, type: 2}
-  _towerPrefabsCanPlaceInThisLevel: []
+  _towerPrefabsCanPlaceInThisLevel:
+  - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
+  - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
+  - {fileID: 1465518390504469703, guid: f7a20566111585c4f8e7d914d65da994, type: 3}
+  - {fileID: 8613262054551672572, guid: 1a2d1023f61a23f42ba4cb292126436a, type: 3}
   _levelNumber: 6
   _maxLevelHealth: 6
   _initialAmountOfMoney: 40
