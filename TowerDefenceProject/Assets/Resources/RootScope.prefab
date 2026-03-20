@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6645000010239191965}
   - component: {fileID: 3016174793111758027}
   - component: {fileID: 6151161121308010909}
+  - component: {fileID: 311939020147616683}
   m_Layer: 0
   m_Name: RootScope
   m_TagString: Untagged
@@ -57,3 +58,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb8d858847212449b3ef2bbf502772b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Saves.SavesModuleInstaller
+--- !u!114 &311939020147616683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8618568771787578009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b0a00660147b548b5621fd9a489e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationInstaller
