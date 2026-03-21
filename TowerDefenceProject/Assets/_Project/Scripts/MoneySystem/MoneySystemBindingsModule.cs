@@ -1,4 +1,7 @@
-﻿using _Project.Scripts.DI;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
+using _Project.Scripts.CameraControll;
+using _Project.Scripts.DI;
 using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.LevelsManagement;
 using Reflex.Attributes;
@@ -11,6 +14,9 @@ namespace _Project.Scripts.MoneySystem
     {
         [SerializeField] private MoneyView _moneyView;
         [SerializeField, Min(0)] private int _getMoneyCountAfterWatchAdv;
+
+        [Header("SFX")]
+        [SerializeField] private AudioEvent _buttonClickAudioEvent;
 
         private MoneyManagement _moneyManagement;
 
@@ -29,9 +35,10 @@ namespace _Project.Scripts.MoneySystem
         }
 
         [Inject]
-        private void Initialize(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement)
+        private void Initialize(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, CameraMoving cameraMoving, LevelCompletionManagement levelCompletionManagement, IAdvertisement advertisement, IAudioService audioService)
         {
-            _moneyManagement.Initialze(enemiesSpawner, levelsCreator, levelCompletionManagement, _getMoneyCountAfterWatchAdv);
+            _moneyManagement.Initialze(enemiesSpawner, levelsCreator, levelCompletionManagement, cameraMoving, advertisement, _getMoneyCountAfterWatchAdv,
+                audioService, _buttonClickAudioEvent);
         }
     }
 }

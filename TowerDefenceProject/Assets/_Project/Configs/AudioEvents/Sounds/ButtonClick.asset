@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f96b0d9fee971847828c222912c9faf, type: 3}
   m_Name: ButtonClick
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Audio.AudioEvent
-  _clip: {fileID: 8300000, guid: 117cc94bc2afd6d42bc22e73754194b3, type: 3}
+  _clip: {fileID: 8300000, guid: cdf6cd8dcc336fb4d82deb29c9d96d7a, type: 3}
   _category: 2
   _volume: 1
   _pitch: 1
