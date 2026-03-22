@@ -76,10 +76,10 @@ namespace _Project.Scripts.Training
             DisposablesByTrainingStageListeners[Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener].Dispose();
 
             foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForActivate)
-                objectForActivate.SetActive(false);
-
-            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForDeactivate)
                 objectForActivate.SetActive(true);
+
+            foreach (var objectForDeactivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForDeactivate)
+                objectForDeactivate.SetActive(false);
 
             _currentTrainingStageIndex++;
 
@@ -100,13 +100,6 @@ namespace _Project.Scripts.Training
 
             DisposablesByTrainingStageListeners.Add(Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener,
                 Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener.OnStageTriggerActivated.Subscribe(OnTriggerStageActivated));
-
-
-            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForActivate)
-                objectForActivate.SetActive(true);
-
-            foreach (var objectForActivate in Settings.TrainingStages[_currentTrainingStageIndex].ObjectsForDeactivate)
-                objectForActivate.SetActive(false);
 
             TrainingView.ShowInfoPanel();
             TrainingView.SetInfoText(Settings.TrainingStages[_currentTrainingStageIndex].InfoText);

@@ -2260,13 +2260,15 @@ MonoBehaviour:
       _trainingStageTriggerListener: {fileID: 1706919842}
       _objectsForActivate:
       - {fileID: 1303597878}
-      _objectsForDeactivate: []
+      _objectsForDeactivate:
+      - {fileID: 803447138}
     - _infoText: "\u041F\u043E\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0435\u0440\u0432\u0443\u044E
         \u0431\u0430\u0448\u043D\u044E!"
       _trainingStageTriggerListener: {fileID: 1827627535}
       _objectsForActivate:
+      - {fileID: 803447138}
+      _objectsForDeactivate:
       - {fileID: 1303597878}
-      _objectsForDeactivate: []
     _entitysSwitchDuringTraining:
     - {fileID: 1069945783}
     - {fileID: 1069945782}
@@ -9277,7 +9279,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1.4273, y: 7.3343}
-  m_SizeDelta: {x: 240.2818, y: 67.7621}
+  m_SizeDelta: {x: 350, y: 67.7621}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1450995174
 MonoBehaviour:
@@ -11147,29 +11149,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 565078028}
-  - {fileID: 340790981}
-  - {fileID: 1804706553}
   - {fileID: 1285109656}
-  - {fileID: 2060574963}
   - {fileID: 363965721}
-  - {fileID: 1017092600}
   - {fileID: 2108613273}
+  - {fileID: 340790981}
+  - {fileID: 565078028}
+  - {fileID: 1017092600}
+  - {fileID: 2060574963}
+  - {fileID: 1482966217}
   - {fileID: 322098973}
   - {fileID: 320640572}
-  - {fileID: 1482966217}
+  - {fileID: 1804706553}
   _readOnlyBindingModules:
-  - {fileID: 565078028}
-  - {fileID: 340790981}
-  - {fileID: 1804706553}
   - {fileID: 1285109656}
-  - {fileID: 2060574963}
   - {fileID: 363965721}
-  - {fileID: 1017092600}
   - {fileID: 2108613273}
+  - {fileID: 340790981}
+  - {fileID: 565078028}
+  - {fileID: 1017092600}
+  - {fileID: 2060574963}
+  - {fileID: 1482966217}
   - {fileID: 322098973}
   - {fileID: 320640572}
-  - {fileID: 1482966217}
+  - {fileID: 1804706553}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
