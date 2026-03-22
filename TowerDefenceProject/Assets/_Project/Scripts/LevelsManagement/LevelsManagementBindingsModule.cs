@@ -91,7 +91,7 @@ namespace _Project.Scripts.LevelsManagement
                 castleHealthManagement,
                 _levelsCompletionManagement);
 
-            _levelsListController.Initialize(victoryController, gameoverController, pauseController, audioService, advertisement);
+            _levelsListController.Initialize(victoryController, gameoverController, pauseController, audioService, advertisement, saves);
         }
     }
 }

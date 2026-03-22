@@ -48,7 +48,7 @@ namespace _Project.Scripts.LevelsManagement
             if (_totalLevelsCount > 0)
                 _maxUnlockedLevelIndex = Math.Max(_maxUnlockedLevelIndex, 0);
 
-            Save();
+            //Save();
             ProgressChanged.OnNext(Unit.Default);
         }
 
