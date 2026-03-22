@@ -2,6 +2,7 @@ using _Project.Scripts.Advertisement;
 using _Project.Scripts.Audio;
 using _Project.Scripts.GameoverMagamenet;
 using _Project.Scripts.PauseManagement;
+using _Project.Scripts.Saves;
 using _Project.Scripts.VictoryManagement;
 using R3;
 using System;
@@ -25,6 +26,8 @@ namespace _Project.Scripts.LevelsManagement
 
         private IAdvertisement _advertisement;
 
+        private ISaves _saves;
+
         public LevelsListController(
             LevelsListView levelsListView,
             AddressablesLevelsLoader addressablesLevelsLoader,
@@ -39,13 +42,15 @@ namespace _Project.Scripts.LevelsManagement
             _buttonClickAudioEvent = buttonClickAudioEvent;
         }
 
-        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController, IAudioService audioService, IAdvertisement advertisement)
+        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController,
+            IAudioService audioService, IAdvertisement advertisement, ISaves saves)
         {
             _victoryController = victoryController;
             _gameoverController = gameoverController;
             _pauseController = pauseController;
             _audioService = audioService;
             _advertisement = advertisement;
+            _saves = saves;
 
             LevelsListView.Initialize(AddressablesLevelsLoader.TotalLevelsCount);
             LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
@@ -88,6 +93,8 @@ namespace _Project.Scripts.LevelsManagement
         {
             LevelsListView?.Dispose();
             Disposables.Dispose();
+
+            _saves.Save();
         }
 
         private void OnMenuButtonClicked(Unit unit)
