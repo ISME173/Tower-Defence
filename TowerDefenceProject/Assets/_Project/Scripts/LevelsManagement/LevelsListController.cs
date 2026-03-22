@@ -1,3 +1,4 @@
+using _Project.Scripts.Advertisement;
 using _Project.Scripts.Audio;
 using _Project.Scripts.GameoverMagamenet;
 using _Project.Scripts.PauseManagement;
@@ -22,6 +23,8 @@ namespace _Project.Scripts.LevelsManagement
         private IAudioService _audioService;
         private AudioEvent _buttonClickAudioEvent;
 
+        private IAdvertisement _advertisement;
+
         public LevelsListController(
             LevelsListView levelsListView,
             AddressablesLevelsLoader addressablesLevelsLoader,
@@ -36,12 +39,13 @@ namespace _Project.Scripts.LevelsManagement
             _buttonClickAudioEvent = buttonClickAudioEvent;
         }
 
-        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController, IAudioService audioService)
+        public void Initialize(VictoryController victoryController, GameoverController gameoverController, PauseController pauseController, IAudioService audioService, IAdvertisement advertisement)
         {
             _victoryController = victoryController;
             _gameoverController = gameoverController;
             _pauseController = pauseController;
             _audioService = audioService;
+            _advertisement = advertisement;
 
             LevelsListView.Initialize(AddressablesLevelsLoader.TotalLevelsCount);
             LevelsListView.UpdateProgress(LevelsProgressionService.IsLevelUnlocked, LevelsProgressionService.GetStars);
@@ -138,6 +142,7 @@ namespace _Project.Scripts.LevelsManagement
                 return;
 
             _audioService.PlayOneShot(_buttonClickAudioEvent);
+            _advertisement.ShowFullscreenAdv();
 
             LevelsListView.HideView();
             LevelsCreator.CreateLevelByIndex(levelIndex);

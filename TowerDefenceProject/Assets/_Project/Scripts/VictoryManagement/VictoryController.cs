@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Audio;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
 using _Project.Scripts.LevelsManagement;
 using R3;
 using System;
@@ -17,6 +18,8 @@ namespace _Project.Scripts.VictoryManagement
         private AudioEvent _buttonClickAudioEvent;
         private AudioEvent _victoryAudioEvent;
 
+        private IAdvertisement _advertisement;
+
         public Observable<Unit> ReadOnlyOnMenuButtonClicked => VictoryView.ReadOnlyOnMenuButtonClicked;
 
         public VictoryController(VictoryView victoryView)
@@ -25,11 +28,12 @@ namespace _Project.Scripts.VictoryManagement
         }
 
         public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelsCompletionManagement,
-            IAudioService audioService, AudioEvent buttonClickEvent, AudioEvent victoryAudioEvent)
+            IAudioService audioService, AudioEvent buttonClickEvent, AudioEvent victoryAudioEvent, IAdvertisement advertisement)
         {
             _levelsCreator = levelsCreator;
             _levelsCompletionManagement = levelsCompletionManagement;
 
+            _advertisement = advertisement;
             _audioService = audioService;
             _victoryAudioEvent = victoryAudioEvent;
             _buttonClickAudioEvent = buttonClickEvent;
@@ -52,6 +56,9 @@ namespace _Project.Scripts.VictoryManagement
                 .Subscribe(_ =>
                 {
                     _audioService.PlayOneShot(_buttonClickAudioEvent);
+
+                    _advertisement.ShowFullscreenAdv();
+
                     VictoryView.Hide();
                 })
                 .AddTo(Disposables);
@@ -73,6 +80,8 @@ namespace _Project.Scripts.VictoryManagement
         {
             _audioService.PlayOneShot(_buttonClickAudioEvent);
 
+            _advertisement.ShowFullscreenAdv();
+
             VictoryView.Hide();
             _levelsCreator.CreateNextLevel();
         }
@@ -80,6 +89,8 @@ namespace _Project.Scripts.VictoryManagement
         private void OnRestartButtonDown(Unit unit)
         {
             _audioService.PlayOneShot(_buttonClickAudioEvent);
+
+            _advertisement.ShowFullscreenAdv();
 
             VictoryView.Hide();
             _levelsCreator.RebuildCurrentLevel();

@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Audio;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
 using _Project.Scripts.DI;
 using _Project.Scripts.LevelsManagement;
 using Reflex.Attributes;
@@ -31,9 +32,9 @@ namespace _Project.Scripts.VictoryManagement
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, IAudioService audioService)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, IAudioService audioService, IAdvertisement advertisement)
         {
-            _victoryController.Initialize(levelsCreator, levelCompletionManagement, audioService, _buttonClickAudioEvent, _victoryAudioEvent);
+            _victoryController.Initialize(levelsCreator, levelCompletionManagement, audioService, _buttonClickAudioEvent, _victoryAudioEvent, advertisement);
         }
     }
 }

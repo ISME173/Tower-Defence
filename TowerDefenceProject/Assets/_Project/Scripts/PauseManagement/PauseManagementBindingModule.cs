@@ -1,3 +1,4 @@
+using _Project.Scripts.Advertisement;
 using _Project.Scripts.Audio;
 using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
@@ -31,9 +32,9 @@ namespace _Project.Scripts.PauseManagement
         }
 
         [Inject]
-        private void Initialize(ISaves saves, CameraMoving cameraMoving, IAudioService audioService)
+        private void Initialize(ISaves saves, CameraMoving cameraMoving, IAudioService audioService, IAdvertisement advertisement)
         {
-            _pauseController.Initialize(saves, cameraMoving, audioService, _buttonClickAudioEvent);
+            _pauseController.Initialize(saves, cameraMoving, audioService, _buttonClickAudioEvent, advertisement);
         }
     }
 }
