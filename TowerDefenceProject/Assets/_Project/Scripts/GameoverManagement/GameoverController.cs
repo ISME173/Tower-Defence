@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Audio;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
 using _Project.Scripts.LevelsManagement;
 using R3;
 using System;
@@ -17,6 +18,8 @@ namespace _Project.Scripts.GameoverMagamenet
         private AudioEvent _gameoverAudioEvent;
         private AudioEvent _buttonClickAudioEvent;
 
+        private IAdvertisement _advertisement;
+
         public Observable<Unit> ReadOnlyOnMenuButtonClicked => GameoverView.ReadOnlyOnMenuButtonClicked;
 
         public GameoverController(GameoverView gameoverView)
@@ -25,11 +28,12 @@ namespace _Project.Scripts.GameoverMagamenet
         }
 
         public void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, IAudioService audioService,
-            AudioEvent buttonClickAudioEvent, AudioEvent gameoverAudioEvent)
+            AudioEvent buttonClickAudioEvent, AudioEvent gameoverAudioEvent, IAdvertisement advertisement)
         {
             _levelsCreator = levelsCreator;
             _levelCompletionManagement = levelCompletionManagement;
 
+            _advertisement = advertisement;
             _audioService = audioService;
             _buttonClickAudioEvent = buttonClickAudioEvent;
             _gameoverAudioEvent = gameoverAudioEvent;
@@ -48,6 +52,7 @@ namespace _Project.Scripts.GameoverMagamenet
                 .Subscribe(_ =>
                 {
                     _audioService.PlayOneShot(_buttonClickAudioEvent);
+                    _advertisement.ShowFullscreenAdv();
                     GameoverView.Hide();
                 })
                 .AddTo(Disposables);
@@ -62,6 +67,7 @@ namespace _Project.Scripts.GameoverMagamenet
         private void OnRestartButtonClicked(Unit unit)
         {
             _audioService.PlayOneShot(_buttonClickAudioEvent);
+            _advertisement.ShowFullscreenAdv();
             GameoverView.Hide();
 
             _levelsCreator.RebuildCurrentLevel();

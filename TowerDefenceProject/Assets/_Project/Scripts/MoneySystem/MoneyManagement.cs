@@ -1,4 +1,7 @@
-﻿using _Project.Scripts.Construction;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
+using _Project.Scripts.CameraControll;
+using _Project.Scripts.Construction;
 using _Project.Scripts.EnemiesManagement;
 using _Project.Scripts.EnemiesManagement.Spawn;
 using _Project.Scripts.LevelsManagement;
@@ -18,6 +21,12 @@ namespace _Project.Scripts.MoneySystem
         private LevelCompletionManagement _levelCompletionManagement;
         private EnemiesSpawner _enemiesSpawner;
         private LevelsCreator _levelCreator;
+        private CameraMoving _cameraMoving;
+
+        private IAudioService _audioService;
+        private AudioEvent _buttonClickAudioEvent;
+
+        private IAdvertisement _advertisement;
 
         private readonly Subject<Unit> OnMoneysAdded = new Subject<Unit>();
 
@@ -41,12 +50,17 @@ namespace _Project.Scripts.MoneySystem
                 .AddTo(Disposables);
         }
 
-        public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, int getMoneysCountAfterWatchAdv)
+        public void Initialze(EnemiesSpawner enemiesSpawner, LevelsCreator levelsCreator, LevelCompletionManagement levelCompletionManagement, CameraMoving cameraMoving, 
+            IAdvertisement advertisement, int getMoneysCountAfterWatchAdv, IAudioService audioService, AudioEvent buttonClickAudioEvent)
         {
             _enemiesSpawner = enemiesSpawner;
             _levelCreator = levelsCreator;
             _getMoneysCountAfterWatchAdv = getMoneysCountAfterWatchAdv;
             _levelCompletionManagement = levelCompletionManagement;
+            _advertisement = advertisement;
+            _cameraMoving = cameraMoving;
+            _audioService = audioService;
+            _buttonClickAudioEvent = buttonClickAudioEvent;
 
             _enemiesSpawner.ReadOnlyEnemyDied
                 .Subscribe(OnEnemyDied)
@@ -104,7 +118,7 @@ namespace _Project.Scripts.MoneySystem
                 CurrentAmountOfMoney.Value -= towerBuildPrice;
                 return true;
             }
-            
+
             return false;
         }
 
@@ -132,17 +146,34 @@ namespace _Project.Scripts.MoneySystem
 
         private void OnGetMoneyButtonClicked(Unit unit)
         {
+            _cameraMoving.LockMoving();
+            Time.timeScale = 0;
+
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
             MoneyView.ShowWatchAdvForGetMoneyPanel();
         }
 
         private void OnWatchAdvForGetMoneyButtonClicked(Unit unit)
         {
-            CurrentAmountOfMoney.Value += _getMoneysCountAfterWatchAdv;
-            MoneyView.HideWatchAdvForGetMoneyPanel();
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
+
+            _advertisement.ShowRewardedAdv(() =>
+            {
+                CurrentAmountOfMoney.Value += _getMoneysCountAfterWatchAdv;
+
+                MoneyView.HideWatchAdvForGetMoneyPanel();
+
+                _cameraMoving.UnlockMoving();
+                Time.timeScale = 1;
+            });
         }
 
         private void OnNoWatchAdvForGetMoneyButtonClicked(Unit unit)
         {
+            _cameraMoving.UnlockMoving();
+            Time.timeScale = 1;
+
+            _audioService.PlayOneShot(_buttonClickAudioEvent);
             MoneyView.HideWatchAdvForGetMoneyPanel();
         }
 

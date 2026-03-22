@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Audio;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
 using _Project.Scripts.DI;
 using _Project.Scripts.LevelsManagement;
 using Reflex.Attributes;
@@ -30,9 +31,9 @@ namespace _Project.Scripts.GameoverMagamenet
         }
 
         [Inject]
-        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement completionManagement, IAudioService audioService)
+        private void Initialize(LevelsCreator levelsCreator, LevelCompletionManagement completionManagement, IAudioService audioService, IAdvertisement advertisement)
         {
-            _gameoverController.Initialize(levelsCreator, completionManagement, audioService, _buttonClickEvent, _gameoverEvent);
+            _gameoverController.Initialize(levelsCreator, completionManagement, audioService, _buttonClickEvent, _gameoverEvent, advertisement);
         }
     }
 }

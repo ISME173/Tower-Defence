@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Audio;
+﻿using _Project.Scripts.Advertisement;
+using _Project.Scripts.Audio;
 using _Project.Scripts.CameraControll;
 using _Project.Scripts.Castle;
 using _Project.Scripts.DI;
@@ -77,7 +78,8 @@ namespace _Project.Scripts.LevelsManagement
             VictoryController victoryController,
             CameraMoving cameraMoving, 
             PauseController pauseController,
-            IAudioService audioService)
+            IAudioService audioService,
+            IAdvertisement advertisement)
         {
             _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner, _levelsCreator, cameraMoving);
             _levelsCreator.Initialize(cameraMoving);
@@ -89,7 +91,7 @@ namespace _Project.Scripts.LevelsManagement
                 castleHealthManagement,
                 _levelsCompletionManagement);
 
-            _levelsListController.Initialize(victoryController, gameoverController, pauseController, audioService);
+            _levelsListController.Initialize(victoryController, gameoverController, pauseController, audioService, advertisement);
         }
     }
 }

@@ -1,3 +1,4 @@
+using _Project.Scripts.Advertisement;
 using _Project.Scripts.Audio;
 using _Project.Scripts.CameraControll;
 using _Project.Scripts.Saves;
@@ -20,6 +21,8 @@ namespace _Project.Scripts.PauseManagement
 
         private IAudioService _audioService;
         private AudioEvent _buttonClickAudioEvent;
+
+        private IAdvertisement _advertisement;
 
         public Observable<Unit> ReadOnlyOnOpenMenuButtonClicked => PauseView.ReadOnlyOnOpenMenuButtonClicked;
 
@@ -54,10 +57,12 @@ namespace _Project.Scripts.PauseManagement
                 .AddTo(Disposables);
         }
 
-        public void Initialize(ISaves saves, CameraMoving cameraMoving, IAudioService audioService, AudioEvent buttonClickAudioEvent)
+        public void Initialize(ISaves saves, CameraMoving cameraMoving, IAudioService audioService, AudioEvent buttonClickAudioEvent, IAdvertisement advertisement)
         {
             _saves = saves;
             _cameraMoving = cameraMoving;
+
+            _advertisement = advertisement;
 
             _audioService = audioService;
             _buttonClickAudioEvent = buttonClickAudioEvent;
@@ -84,6 +89,7 @@ namespace _Project.Scripts.PauseManagement
         private void OnHidePauseButtonClicked()
         {
             _audioService.PlayOneShot(_buttonClickAudioEvent);
+            _advertisement.ShowFullscreenAdv();
 
             PauseView.Hide();
             Time.timeScale = 1f;
