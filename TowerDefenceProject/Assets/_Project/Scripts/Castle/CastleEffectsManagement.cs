@@ -45,7 +45,7 @@ namespace _Project.Scripts.Castle
 
         private void OnCastleDamageTaken(int currentHealth)
         {
-            Debug.Log($"Castle damage taken. Current health: {currentHealth}");
+            //Debug.Log($"Castle damage taken. Current health: {currentHealth}");
 
             Transform castleView = _levelsCreator.CurrentLevelObject.CastleView.transform;
             Vector3 castlePosition = castleView.position;

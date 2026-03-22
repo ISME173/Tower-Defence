@@ -7,7 +7,7 @@ namespace _Project.Scripts.Advertisement
     {
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterValue(new DevAdvertisement(), new[] { typeof(IAdvertisement) });
+            containerBuilder.RegisterValue(new YgAdvertisement(), new[] { typeof(IAdvertisement) });
         }
     }
 }
