@@ -5,7 +5,7 @@
     ],
     "stringValues": [
         "true",
-        "[3,3,3,3,0,0,0,0,0,0]"
+        "[3,3,3,3,3,3,3,3,3,3]"
     ],
     "floatKeys": [
         "ui_volume",
@@ -23,7 +23,7 @@
         "levels.maxUnlockedLevelIndex"
     ],
     "intValues": [
-        4
+        9
     ],
     "intExample": 5,
     "strExample": "Hello!",
@@ -33,5 +33,5 @@
         false,
         false
     ],
-    "idSave": 9
+    "idSave": 19
 }
