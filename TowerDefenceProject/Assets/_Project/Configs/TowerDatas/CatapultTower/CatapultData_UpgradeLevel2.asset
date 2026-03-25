@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c16039c2a8fc649b61a9301d4239ea, type: 3}
   m_Name: CatapultData_UpgradeLevel2
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Catapult.CatapultTowerData
-  _attackDamage: 35
-  _delayBetweenAttacks: 1
+  _attackDamage: 180
+  _delayBetweenAttacks: 2
   _projectileSpeed: 2
-  _buildPrice: 35
-  _refundAfterDestruction: 15
+  _buildPrice: 75
+  _refundAfterDestruction: 168
   _towerIconSprite: {fileID: 21300000, guid: 048c11ad525f66e438726fe4c58dd6ea, type: 3}
   _projectilePrefab: {fileID: 96794479901081327, guid: be59df2effabbc94abedff28fdb9c492, type: 3}
   _trajectoryHeight: 1

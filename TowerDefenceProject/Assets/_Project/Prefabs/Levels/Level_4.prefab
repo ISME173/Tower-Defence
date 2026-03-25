@@ -447,13 +447,14 @@ MonoBehaviour:
   _enemySpawnSequence: {fileID: 11400000, guid: bbf8c52f50a938b459fed5f73f077524, type: 2}
   _towerPrefabsCanPlaceInThisLevel:
   - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
+  - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
   - {fileID: 1465518390504469703, guid: f7a20566111585c4f8e7d914d65da994, type: 3}
   _levelNumber: 4
-  _maxLevelHealth: 6
-  _initialAmountOfMoney: 60
+  _maxLevelHealth: 25
+  _initialAmountOfMoney: 200
   _healthFor1Star: 1
-  _healthFor2Stars: 2
-  _healthFor3Stars: 3
+  _healthFor2Stars: 13
+  _healthFor3Stars: 20
 --- !u!1 &8933375256235161763
 GameObject:
   m_ObjectHideFlags: 0
