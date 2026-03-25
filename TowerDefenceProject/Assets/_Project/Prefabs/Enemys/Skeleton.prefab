@@ -1509,7 +1509,7 @@ MonoBehaviour:
   _maxHealth: 100
   _movingSpeed: 1
   _attackDamage: 1
-  _moneyForMurder: 25
+  _moneyForMurder: 10
   _rotationTime: 0.1
   _diedEffect: {fileID: 3341092639582381331}
   _center: {fileID: 5020074000796414401}

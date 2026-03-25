@@ -1115,25 +1115,9 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
-      propertyPath: _maxLevelHealth
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
-      propertyPath: _healthFor2Stars
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
-      propertyPath: _healthFor3Stars
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
       propertyPath: _enemySpawnSequence
       value: 
       objectReference: {fileID: 11400000, guid: faf65065381cfc447ba688111a4692e7, type: 2}
-    - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
-      propertyPath: _initialAmountOfMoney
-      value: 250
-      objectReference: {fileID: 0}
     - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
       propertyPath: _movingPoints.Array.size
       value: 5

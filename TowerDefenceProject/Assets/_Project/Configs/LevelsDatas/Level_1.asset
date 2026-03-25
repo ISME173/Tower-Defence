@@ -13,19 +13,14 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Enemy.EnemySpawnManagement.EnemysInLevelSpawnSeqence
   _enemyGroupsSpawnSettings:
-  - _secondsDelayForSpawnAfterPreviousSpawn: 2
+  - _secondsDelayForSpawnAfterPreviousSpawn: 3
     _enemySpawnSettings:
     - _enemyPrefab: {fileID: 332400333826459216, guid: aeb643d9c6cd2084899af739dda6662b, type: 3}
-      _spawnCount: 1
-      _secondsDelayBetweenSpawn: 1
-    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
       _spawnCount: 2
-      _secondsDelayBetweenSpawn: 1
-  - _secondsDelayForSpawnAfterPreviousSpawn: 2
-    _enemySpawnSettings:
-    - _enemyPrefab: {fileID: 332400333826459216, guid: aeb643d9c6cd2084899af739dda6662b, type: 3}
-      _spawnCount: 1
       _secondsDelayBetweenSpawn: 1
     - _enemyPrefab: {fileID: 4805909369041381582, guid: a7fc5214cd5472c4d9fd59aef4a6bb6a, type: 3}
       _spawnCount: 2
+      _secondsDelayBetweenSpawn: 1
+    - _enemyPrefab: {fileID: 4668417689676691802, guid: c48c7313d70935147a5b275e828e50b7, type: 3}
+      _spawnCount: 1
       _secondsDelayBetweenSpawn: 1

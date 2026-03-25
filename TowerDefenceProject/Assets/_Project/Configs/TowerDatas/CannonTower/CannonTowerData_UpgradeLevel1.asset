@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71cdee175ed031d4494e71dcb0ed715d, type: 3}
   m_Name: CannonTowerData_UpgradeLevel1
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Construction.TowerTypes.Cannon.CannonTowerData
-  _attackDamage: 60
-  _delayBetweenAttacks: 1
+  _attackDamage: 20
+  _delayBetweenAttacks: 0.85
   _projectileSpeed: 10
-  _buildPrice: 100
-  _refundAfterDestruction: 75
+  _buildPrice: 20
+  _refundAfterDestruction: 10
   _towerIconSprite: {fileID: 21300000, guid: ac0c43117add9d44bbf223751a3f4698, type: 3}
   _projectilePrefab: {fileID: 2826483462132512936, guid: a48bd30f64a15734caa33fbf1b985be2, type: 3}
