@@ -2225,6 +2225,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
+      propertyPath: _levelNumber
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215329666418542582, guid: 64ec39bfef6abeb4e98920ebe4ecc249, type: 3}
       propertyPath: _maxLevelHealth
       value: 35
       objectReference: {fileID: 0}
