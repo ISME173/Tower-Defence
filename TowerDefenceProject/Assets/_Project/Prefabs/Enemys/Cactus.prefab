@@ -813,9 +813,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.EnemiesManagement.EnemyTypes.Cactus
   _enemyName: Cactus
-  _maxHealth: 70
+  _maxHealth: 100
   _movingSpeed: 1.2
-  _attackDamage: 2
+  _attackDamage: 1
   _moneyForMurder: 25
   _rotationTime: 0.1
   _diedEffect: {fileID: 7701797186074914683}

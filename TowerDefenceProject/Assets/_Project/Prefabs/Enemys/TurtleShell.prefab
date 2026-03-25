@@ -570,9 +570,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.EnemiesManagement.EnemyTypes.TurtleShell
   _enemyName: Turtle Shell
   _maxHealth: 200
-  _movingSpeed: 0.5
-  _attackDamage: 3
-  _moneyForMurder: 25
+  _movingSpeed: 0.6
+  _attackDamage: 2
+  _moneyForMurder: 50
   _rotationTime: 0.1
   _diedEffect: {fileID: 9036815779736595135}
   _center: {fileID: 5994579920285154497}

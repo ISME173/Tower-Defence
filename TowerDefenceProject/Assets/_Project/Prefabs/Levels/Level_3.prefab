@@ -485,11 +485,11 @@ MonoBehaviour:
   - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
   - {fileID: 1465518390504469703, guid: f7a20566111585c4f8e7d914d65da994, type: 3}
   _levelNumber: 3
-  _maxLevelHealth: 6
-  _initialAmountOfMoney: 100
+  _maxLevelHealth: 25
+  _initialAmountOfMoney: 200
   _healthFor1Star: 1
-  _healthFor2Stars: 2
-  _healthFor3Stars: 3
+  _healthFor2Stars: 13
+  _healthFor3Stars: 20
 --- !u!1001 &17135300427702568
 PrefabInstance:
   m_ObjectHideFlags: 0
