@@ -52,7 +52,7 @@ namespace _Project.Scripts.LevelsManagement
         public override void Bind(ContainerBuilder containerBuilder)
         {
             _addressablesLevelsLoader = new AddressablesLevelsLoader(_levelAddressKeysStartingFromLevel2);
-            _addressablesLevelsLoader.WarmupAll(); // фон: начинаем грузить уровни 2+
+            _addressablesLevelsLoader.WarmupAll();
 
             _levelsCreator = new LevelsCreator(_firstLevelOnScene, _firstLevelPrefab, _createLevelPoint, _addressablesLevelsLoader);
             _levelsCompletionManagement = new LevelCompletionManagement();
@@ -76,14 +76,14 @@ namespace _Project.Scripts.LevelsManagement
             EnemiesSpawner enemysSpawner,
             GameoverController gameoverController,
             VictoryController victoryController,
-            CameraMoving cameraMoving, 
+            CameraMoving cameraMoving,
             PauseController pauseController,
             IAudioService audioService,
             IAdvertisement advertisement)
         {
             _levelsCompletionManagement.Initialize(castleHealthManagement, enemysSpawner, _levelsCreator, cameraMoving);
-            _levelsCreator.Initialize(cameraMoving);
             _levelsProgressionService.Initialize(saves, _addressablesLevelsLoader.TotalLevelsCount);
+            _levelsCreator.Initialize(cameraMoving, _levelsProgressionService.MaxUnlockedLevelIndex);
 
             _levelsProgressionRuntimeTracker.Initialize(
                 _levelsProgressionService,

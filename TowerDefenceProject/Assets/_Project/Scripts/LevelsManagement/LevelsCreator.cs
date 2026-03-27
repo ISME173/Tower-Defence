@@ -50,16 +50,35 @@ namespace _Project.Scripts.LevelsManagement
 
         public void Initialize(CameraMoving cameraMoving)
         {
-            _cameraMoving = cameraMoving;
+            Initialize(cameraMoving, 0);
+        }
 
-            // 1-й уровень создаётся сразу (не Addressables)
-            //CreateLevelByIndex(_currentLevelIndex);
+        public void Initialize(CameraMoving cameraMoving, int startLevelIndex)
+        {
+            _cameraMoving = cameraMoving ?? throw new ArgumentNullException(nameof(cameraMoving));
 
-            _currentLevelIndex = _currentLevelObject.LevelNumber - 1;
+            if (_currentLevelObject != null)
+                _currentLevelIndex = Math.Max(0, _currentLevelObject.LevelNumber - 1);
+            else
+                _currentLevelIndex = 0;
 
-            // First level already in scene
-            LevelCreated?.OnNext(_currentLevelObject);
-            _cameraMoving.UnlockMoving();
+            int normalizedStartLevelIndex = Mathf.Clamp(startLevelIndex, 0, Math.Max(0, GetTotalLevelsCount() - 1));
+
+            if (normalizedStartLevelIndex == _currentLevelIndex)
+            {
+                if (_currentLevelObject == null)
+                {
+                    CreateLevelByIndex(normalizedStartLevelIndex);
+                    return;
+                }
+
+                LevelCreated?.OnNext(_currentLevelObject);
+                _cameraMoving.UnlockMoving();
+                return;
+            }
+
+            RemoveCurrentLevel();
+            CreateLevelByIndex(normalizedStartLevelIndex);
         }
 
         public void Dispose()
@@ -72,7 +91,7 @@ namespace _Project.Scripts.LevelsManagement
         {
             int nextLevelIndex = _currentLevelIndex + 1;
 
-            if (nextLevelIndex >= AllLevelObjectPrefabs.Count)
+            if (nextLevelIndex >= GetTotalLevelsCount())
             {
                 Debug.LogError($"Invalid level index: {nextLevelIndex}");
                 return;
@@ -91,16 +110,25 @@ namespace _Project.Scripts.LevelsManagement
 
         public void CreateLevelByIndex(int levelIndex)
         {
-            if (levelIndex < 0 || levelIndex >= AllLevelObjectPrefabs.Count)
+            int totalLevelsCount = GetTotalLevelsCount();
+
+            if (levelIndex < 0 || levelIndex >= totalLevelsCount)
             {
                 Debug.LogError($"Invalid level index: {levelIndex}");
                 return;
             }
 
-            // Если в списке уже лежит загруженный addressables-префаб — создаём сразу
-            if (levelIndex == 0 || AllLevelObjectPrefabs[levelIndex] != null)
+            EnsurePrefabsCapacity(levelIndex);
+
+            if (AllLevelObjectPrefabs[levelIndex] != null)
             {
                 CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
+                return;
+            }
+
+            if (levelIndex == 0)
+            {
+                Debug.LogError("First level prefab is not set.");
                 return;
             }
 
@@ -110,7 +138,6 @@ namespace _Project.Scripts.LevelsManagement
                 return;
             }
 
-            // Иначе — ждём загрузку и создаём после ожидания.
             CreateLevelByIndexAsync(levelIndex).Forget();
         }
 
@@ -119,10 +146,7 @@ namespace _Project.Scripts.LevelsManagement
             if (prefab == null)
                 return;
 
-            // гарантируем размер списка (если в инспекторе не было элементов под 2+)
-            while (AllLevelObjectPrefabs.Count <= levelIndex)
-                AllLevelObjectPrefabs.Add(null);
-
+            EnsurePrefabsCapacity(levelIndex);
             AllLevelObjectPrefabs[levelIndex] = prefab;
 
             Debug.Log($"[LevelsCreator] Cached Addressables level prefab for level #{levelIndex + 1} into AllLevelObjectPrefabs[{levelIndex}]");
@@ -158,7 +182,6 @@ namespace _Project.Scripts.LevelsManagement
 
         private async UniTask CreateLevelByIndexAsync(int levelIndex)
         {
-            // Если пока ждали ивентом уже закэшировали — создаём сразу
             if (levelIndex >= 0 && levelIndex < AllLevelObjectPrefabs.Count && AllLevelObjectPrefabs[levelIndex] != null)
             {
                 CreateLevelByIndexSync(levelIndex, AllLevelObjectPrefabs[levelIndex]);
@@ -177,10 +200,20 @@ namespace _Project.Scripts.LevelsManagement
                 return;
             }
 
-            // закэшируем на всякий случай (если событие ещё не пришло)
             OnAddressablesLevelPrefabLoaded(levelIndex, prefabToInstantiate);
-
             CreateLevelByIndexSync(levelIndex, prefabToInstantiate);
+        }
+
+        private int GetTotalLevelsCount()
+        {
+            int addressablesLevelsCount = _addressablesLevelsLoader?.TotalLevelsCount ?? 0;
+            return Math.Max(AllLevelObjectPrefabs.Count, addressablesLevelsCount);
+        }
+
+        private void EnsurePrefabsCapacity(int levelIndex)
+        {
+            while (AllLevelObjectPrefabs.Count <= levelIndex)
+                AllLevelObjectPrefabs.Add(null);
         }
     }
 }
