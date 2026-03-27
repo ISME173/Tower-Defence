@@ -7,7 +7,7 @@ namespace _Project.Scripts.Localization
     {
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterValue(new DevLocalizationInfo(), new[] { typeof(ILocalizationInfo) });
+            containerBuilder.RegisterValue(new YgLocalization(), new[] { typeof(ILocalizationInfo) });
         }
     }
 }
