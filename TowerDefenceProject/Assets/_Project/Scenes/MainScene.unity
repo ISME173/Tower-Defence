@@ -2262,11 +2262,17 @@ MonoBehaviour:
       - {fileID: 1303597878}
       _objectsForDeactivate:
       - {fileID: 803447138}
+      - {fileID: 1069945780}
+      - {fileID: 1069945779}
+      - {fileID: 1069945778}
     - _infoText: "\u041F\u043E\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0435\u0440\u0432\u0443\u044E
         \u0431\u0430\u0448\u043D\u044E!"
       _trainingStageTriggerListener: {fileID: 1827627535}
       _objectsForActivate:
       - {fileID: 803447138}
+      - {fileID: 1069945780}
+      - {fileID: 1069945779}
+      - {fileID: 1069945778}
       _objectsForDeactivate:
       - {fileID: 1303597878}
     _entitysSwitchDuringTraining:
@@ -11154,29 +11160,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 1482966217}
-  - {fileID: 320640572}
-  - {fileID: 340790981}
-  - {fileID: 565078028}
-  - {fileID: 1804706553}
-  - {fileID: 1285109656}
-  - {fileID: 322098973}
   - {fileID: 2108613273}
-  - {fileID: 363965721}
+  - {fileID: 1804706553}
+  - {fileID: 340790981}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
   - {fileID: 2060574963}
+  - {fileID: 565078028}
+  - {fileID: 1285109656}
   - {fileID: 1017092600}
+  - {fileID: 322098973}
+  - {fileID: 363965721}
   _readOnlyBindingModules:
-  - {fileID: 1482966217}
-  - {fileID: 320640572}
-  - {fileID: 340790981}
-  - {fileID: 565078028}
-  - {fileID: 1804706553}
-  - {fileID: 1285109656}
-  - {fileID: 322098973}
   - {fileID: 2108613273}
-  - {fileID: 363965721}
+  - {fileID: 1804706553}
+  - {fileID: 340790981}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
   - {fileID: 2060574963}
+  - {fileID: 565078028}
+  - {fileID: 1285109656}
   - {fileID: 1017092600}
+  - {fileID: 322098973}
+  - {fileID: 363965721}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
