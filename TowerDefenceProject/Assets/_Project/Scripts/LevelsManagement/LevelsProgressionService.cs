@@ -18,6 +18,8 @@ namespace _Project.Scripts.LevelsManagement
         private int _maxUnlockedLevelIndex;
         private int[] _starsByLevelIndex = Array.Empty<int>();
 
+        public int MaxUnlockedLevelIndex => _maxUnlockedLevelIndex;
+
         public void Initialize(ISaves saves, int totalLevelsCount)
         {
             _saves = saves ?? throw new ArgumentNullException(nameof(saves));
@@ -44,11 +46,9 @@ namespace _Project.Scripts.LevelsManagement
 
             _starsByLevelIndex = stars;
 
-            // гарантируем, что хотя бы 1 уровень открыт
             if (_totalLevelsCount > 0)
                 _maxUnlockedLevelIndex = Math.Max(_maxUnlockedLevelIndex, 0);
 
-            //Save();
             ProgressChanged.OnNext(Unit.Default);
         }
 

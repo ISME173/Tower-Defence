@@ -136,11 +136,12 @@ namespace _Project.Scripts.Construction
 
         public void ShowUpgradeView()
         {
-            var mouse = Mouse.current;
-            if (mouse != null)
+            if (TryGetPointerPosition(out Vector2 pointerPosition))
             {
-                var mousePosition = mouse.position.ReadValue();
-                _upgradeTowerView.transform.position = new Vector3(mousePosition.x, mousePosition.y, _buildTowerView.transform.position.z);
+                _upgradeTowerView.transform.position = new Vector3(
+                    pointerPosition.x,
+                    pointerPosition.y,
+                    _upgradeTowerView.transform.position.z);
             }
 
             _upgradeTowerView.SetActive(true);
@@ -153,11 +154,12 @@ namespace _Project.Scripts.Construction
 
         public void ShowBuildView()
         {
-            var mouse = Mouse.current;
-            if (mouse != null)
+            if (TryGetPointerPosition(out Vector2 pointerPosition))
             {
-                var mousePosition = mouse.position.ReadValue();
-                _buildTowerView.transform.position = new Vector3(mousePosition.x, mousePosition.y, _buildTowerView.transform.position.z);
+                _buildTowerView.transform.position = new Vector3(
+                    pointerPosition.x,
+                    pointerPosition.y,
+                    _buildTowerView.transform.position.z);
             }
 
             _buildTowerView.SetActive(true);
@@ -168,6 +170,26 @@ namespace _Project.Scripts.Construction
         {
             _buildTowerView.SetActive(false);
             IsShowedSelectView = false;
+        }
+
+        private bool TryGetPointerPosition(out Vector2 pointerPosition)
+        {
+            var touchscreen = Touchscreen.current;
+            if (touchscreen != null)
+            {
+                pointerPosition = touchscreen.primaryTouch.position.ReadValue();
+                return true;
+            }
+
+            var mouse = Mouse.current;
+            if (mouse != null)
+            {
+                pointerPosition = mouse.position.ReadValue();
+                return true;
+            }
+
+            pointerPosition = default;
+            return false;
         }
     }
 }

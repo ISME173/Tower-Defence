@@ -2258,17 +2258,21 @@ MonoBehaviour:
     - _infoText: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
         \u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
       _trainingStageTriggerListener: {fileID: 1706919842}
-      _objectsForActivate:
-      - {fileID: 1303597878}
+      _objectsForActivate: []
       _objectsForDeactivate:
       - {fileID: 803447138}
+      - {fileID: 1069945780}
+      - {fileID: 1069945779}
+      - {fileID: 1069945778}
     - _infoText: "\u041F\u043E\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0435\u0440\u0432\u0443\u044E
         \u0431\u0430\u0448\u043D\u044E!"
       _trainingStageTriggerListener: {fileID: 1827627535}
       _objectsForActivate:
       - {fileID: 803447138}
-      _objectsForDeactivate:
-      - {fileID: 1303597878}
+      - {fileID: 1069945780}
+      - {fileID: 1069945779}
+      - {fileID: 1069945778}
+      _objectsForDeactivate: []
     _entitysSwitchDuringTraining:
     - {fileID: 1069945783}
     - {fileID: 1069945782}
@@ -3946,16 +3950,6 @@ MonoBehaviour:
     _loopType: 0
     _ignoreTimeScale: 1
   _hidedLocalScale: {x: 0, y: 0, z: 0}
---- !u!4 &608822538 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8091166585834143898, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
-  m_PrefabInstance: {fileID: 1069945777}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &608822540 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2889205447162624188, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
-  m_PrefabInstance: {fileID: 1069945777}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &609611973
 GameObject:
   m_ObjectHideFlags: 0
@@ -6761,10 +6755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8091166585834143898, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1303597879}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8915064546792704650, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
       insertIndex: -1
@@ -8257,59 +8248,6 @@ MonoBehaviour:
     _text: Neustart
   - _languageType: 5
     _text: "Red\xE9marrer"
---- !u!1 &1303597878
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1303597879}
-  - component: {fileID: 1303597880}
-  m_Layer: 7
-  m_Name: Outline
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1303597879
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303597878}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 608822538}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1303597880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303597878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Outline
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 10
-  precomputeOutline: 1
-  _selectRenderersManually: 1
-  renderers:
-  - {fileID: 608822540}
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &1314130129
 GameObject:
   m_ObjectHideFlags: 0
@@ -11154,29 +11092,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 1482966217}
-  - {fileID: 320640572}
-  - {fileID: 340790981}
-  - {fileID: 565078028}
-  - {fileID: 1804706553}
-  - {fileID: 1285109656}
-  - {fileID: 322098973}
-  - {fileID: 2108613273}
-  - {fileID: 363965721}
   - {fileID: 2060574963}
+  - {fileID: 1804706553}
+  - {fileID: 565078028}
+  - {fileID: 2108613273}
+  - {fileID: 340790981}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
+  - {fileID: 363965721}
+  - {fileID: 1285109656}
   - {fileID: 1017092600}
+  - {fileID: 322098973}
   _readOnlyBindingModules:
-  - {fileID: 1482966217}
-  - {fileID: 320640572}
-  - {fileID: 340790981}
-  - {fileID: 565078028}
-  - {fileID: 1804706553}
-  - {fileID: 1285109656}
-  - {fileID: 322098973}
-  - {fileID: 2108613273}
-  - {fileID: 363965721}
   - {fileID: 2060574963}
+  - {fileID: 1804706553}
+  - {fileID: 565078028}
+  - {fileID: 2108613273}
+  - {fileID: 340790981}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
+  - {fileID: 363965721}
+  - {fileID: 1285109656}
   - {fileID: 1017092600}
+  - {fileID: 322098973}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
