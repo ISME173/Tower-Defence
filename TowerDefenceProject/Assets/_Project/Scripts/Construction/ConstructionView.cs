@@ -134,15 +134,12 @@ namespace _Project.Scripts.Construction
             }
         }
 
-        public void ShowUpgradeView()
+        public void ShowUpgradeView(Vector2 pointerPosition)
         {
-            if (TryGetPointerPosition(out Vector2 pointerPosition))
-            {
-                _upgradeTowerView.transform.position = new Vector3(
-                    pointerPosition.x,
-                    pointerPosition.y,
-                    _upgradeTowerView.transform.position.z);
-            }
+            _upgradeTowerView.transform.position = new Vector3(
+                pointerPosition.x,
+                pointerPosition.y,
+                _upgradeTowerView.transform.position.z);
 
             _upgradeTowerView.SetActive(true);
         }
@@ -152,15 +149,12 @@ namespace _Project.Scripts.Construction
             _upgradeTowerView.SetActive(false);
         }
 
-        public void ShowBuildView()
+        public void ShowBuildView(Vector2 pointerPosition)
         {
-            if (TryGetPointerPosition(out Vector2 pointerPosition))
-            {
-                _buildTowerView.transform.position = new Vector3(
-                    pointerPosition.x,
-                    pointerPosition.y,
-                    _buildTowerView.transform.position.z);
-            }
+            _buildTowerView.transform.position = new Vector3(
+                pointerPosition.x,
+                pointerPosition.y,
+                _buildTowerView.transform.position.z);
 
             _buildTowerView.SetActive(true);
             IsShowedSelectView = true;
