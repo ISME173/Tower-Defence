@@ -7,7 +7,7 @@ namespace _Project.Scripts.DeviceInfoManagement
     {
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterValue(new DevDeviceInfo(), new System.Type[] { typeof(IDeviceInfo) });
+            containerBuilder.RegisterValue(new YgDeviceInfo(), new System.Type[] { typeof(IDeviceInfo) });
         }
     }
 }
