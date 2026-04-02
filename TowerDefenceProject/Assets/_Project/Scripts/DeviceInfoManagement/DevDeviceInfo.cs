@@ -10,9 +10,6 @@ namespace _Project.Scripts.DeviceInfoManagement
 
         public DevDeviceInfo()
         {
-            _currentDeviceType = IDeviceInfo.DeviceType.Mobile;
-            return;
-
             switch (SystemInfo.deviceType)
             {
                 case DeviceType.Handheld:
