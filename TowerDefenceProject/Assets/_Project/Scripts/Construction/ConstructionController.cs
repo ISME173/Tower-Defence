@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Audio;
 using _Project.Scripts.CameraControll;
+using _Project.Scripts.DeviceInfoManagement;
 using _Project.Scripts.LevelsManagement;
 using _Project.Scripts.MoneySystem;
 using _Project.Scripts.PauseManagement;
@@ -19,6 +20,7 @@ namespace _Project.Scripts.Construction
         private readonly CompositeDisposable Disposables = new();
         private readonly HashSet<Tower> TowerPrefabsCanPlaceInCurrentLevel = new();
 
+        private IDeviceInfo _deviceInfo;
         private IAudioService AudioService;
         private ConstructionControllerParameters _constructionControllerParameters;
         private LevelsCreator _levelCreator;
@@ -69,8 +71,9 @@ namespace _Project.Scripts.Construction
             _deferredClickProcessor = CreateDeferredClickProcessor();
         }
 
-        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController, IAudioService audioService)
+        public void Initialize(MoneyManagement moneyManagement, LevelCompletionManagement levelCompletionManagement, LevelsCreator levelsCreator, PauseController pauseController, IAudioService audioService, IDeviceInfo deviceInfo)
         {
+            _deviceInfo = deviceInfo;
             AudioService = audioService;
             _moneyManagement = moneyManagement;
             _levelCompletionManagement = levelCompletionManagement;
@@ -165,10 +168,11 @@ namespace _Project.Scripts.Construction
             if (IsPointerOverUI())
                 return;
 
-            Camera cam = CameraMoving.Camera;
+            if (TryGetPointerPosition(out Vector2 pointerPosition) == false)
+                return;
 
-            Vector2 screenPos = _pointerPositionAction.ReadValue<Vector2>();
-            Ray ray = cam.ScreenPointToRay(screenPos);
+            Camera cam = CameraMoving.Camera;
+            Ray ray = cam.ScreenPointToRay(pointerPosition);
 
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, _constructionControllerParameters.MaxRaycastMaxDistance, _constructionControllerParameters.TargetLayerMask))
@@ -187,12 +191,12 @@ namespace _Project.Scripts.Construction
 
                         if (_selectedBuildingSite.CurrentTower == null)
                         {
-                            ConstructionView.ShowBuildView();
+                            ConstructionView.ShowBuildView(pointerPosition);
                         }
                         else
                         {
                             ConstructionView.UpdateUpgradeTowerView(buildingSite.CurrentTower);
-                            ConstructionView.ShowUpgradeView();
+                            ConstructionView.ShowUpgradeView(pointerPosition);
                         }
 
                         _selectedBuildingSite.ShowSelectView();
@@ -209,6 +213,48 @@ namespace _Project.Scripts.Construction
 
             ConstructionView.HideBuildView();
             ConstructionView.HideUpgradeView();
+        }
+
+        private bool TryGetPointerPosition(out Vector2 pointerPosition)
+        {
+            switch (_deviceInfo?.CurrentDeviceType)
+            {
+                case IDeviceInfo.DeviceType.Desktop:
+                    if (Mouse.current != null)
+                    {
+                        pointerPosition = Mouse.current.position.ReadValue();
+                        return true;
+                    }
+
+                    break;
+
+                case IDeviceInfo.DeviceType.Mobile:
+                    if (Touchscreen.current != null && Touchscreen.current.primaryTouch != null)
+                    {
+                        pointerPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                        return true;
+                    }
+
+                    break;
+                default:
+                    Debug.Log($"Invalid device type: {_deviceInfo.CurrentDeviceType}");
+                    break;
+            }
+
+            //if (Mouse.current != null)
+            //{
+            //    pointerPosition = Mouse.current.position.ReadValue();
+            //    return true;
+            //}
+
+            //if (Touchscreen.current != null && Touchscreen.current.primaryTouch != null)
+            //{
+            //    pointerPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+            //    return true;
+            //}
+
+            pointerPosition = default;
+            return false;
         }
 
         private bool IsPointerOverUI()

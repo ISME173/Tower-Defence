@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6151161121308010909}
   - component: {fileID: 311939020147616683}
   - component: {fileID: 1606457629661748939}
+  - component: {fileID: 5440282803613874410}
   m_Layer: 0
   m_Name: RootScope
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35b182b5ad2f0d48ab13b4fff4ab92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Advertisement.AdvertisementInstaller
+--- !u!114 &5440282803613874410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8618568771787578009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e497a266eb0d4de4090b6b112e445203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DeviceInfoManagement.DeviceInfoInstaller
