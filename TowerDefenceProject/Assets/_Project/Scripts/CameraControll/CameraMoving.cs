@@ -197,7 +197,17 @@ namespace _Project.Scripts.CameraControll
 
         private void UpdateRotation(float dt)
         {
-            bool rotatePressed = _mouseRightButtonAction.IsPressed() || _touchPressAction.IsPressed();
+            bool isTouchRotationBlocked = HasMultipleTouchesPressed();
+            bool rotatePressed = _mouseRightButtonAction.IsPressed() || (_touchPressAction.IsPressed() && !isTouchRotationBlocked);
+
+            if (isTouchRotationBlocked)
+            {
+                _wasRotatePressed = false;
+                _yawStopElapsed = 0f;
+                _yawStopVelocity = 0f;
+                _yawVelocity = 0f;
+                return;
+            }
 
             float inputYawVelocity = 0f;
             if (rotatePressed)
@@ -207,7 +217,6 @@ namespace _Project.Scripts.CameraControll
                 float sign = _invertX ? -1f : 1f;
                 inputYawVelocity = delta.x * sign * _yawSpeed;
 
-                // Разгон к скорости от ввода
                 _yawVelocity = Mathf.Lerp(_yawVelocity, inputYawVelocity, 1f - Mathf.Exp(-_rotationAcceleration * dt));
                 _yawVelocity = Mathf.Clamp(_yawVelocity, -_maxYawVelocity, _maxYawVelocity);
 
@@ -216,7 +225,6 @@ namespace _Project.Scripts.CameraControll
             }
             else
             {
-                // Старт "остановки" ровно в момент отпускания
                 if (_wasRotatePressed)
                 {
                     _yawStopElapsed = 0f;
@@ -241,6 +249,31 @@ namespace _Project.Scripts.CameraControll
             Vector3 euler = _cameraPivot.eulerAngles;
             euler.y += _yawVelocity * dt;
             _cameraPivot.eulerAngles = euler;
+        }
+
+        private bool HasMultipleTouchesPressed()
+        {
+            if (Touchscreen.current == null)
+            {
+                return false;
+            }
+
+            int pressedTouchesCount = 0;
+            foreach (TouchControl touch in Touchscreen.current.touches)
+            {
+                if (!touch.press.isPressed)
+                {
+                    continue;
+                }
+
+                pressedTouchesCount++;
+                if (pressedTouchesCount >= 2)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void UpdateZoom(float dt)
