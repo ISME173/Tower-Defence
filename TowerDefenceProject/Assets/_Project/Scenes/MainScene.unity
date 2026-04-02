@@ -2153,12 +2153,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.CameraControll.CameraMoving
   _cameraPivot: {fileID: 0}
-  _yawSpeed: 100
+  _desktopYawSpeed: 80
+  _mobileYawSpeed: 40
   _invertX: 0
   _rotationAcceleration: 18
   _rotationStopTime: 1
   _maxYawVelocity: 720
-  _zoomSpeed: 100
+  _desktopZoomSpeed: 100
+  _mobileZoomSpeed: 60
   _minCameraDistance: 3.5
   _maxCameraDistance: 7
   _zoomSmoothTime: 0.12
@@ -11092,29 +11094,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 363965721}
   - {fileID: 322098973}
-  - {fileID: 1482966217}
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
-  - {fileID: 2060574963}
   - {fileID: 1804706553}
+  - {fileID: 2060574963}
   - {fileID: 1017092600}
-  - {fileID: 1285109656}
   - {fileID: 340790981}
   - {fileID: 320640572}
+  - {fileID: 363965721}
+  - {fileID: 1482966217}
+  - {fileID: 565078028}
+  - {fileID: 2108613273}
+  - {fileID: 1285109656}
   _readOnlyBindingModules:
-  - {fileID: 363965721}
   - {fileID: 322098973}
-  - {fileID: 1482966217}
-  - {fileID: 2108613273}
-  - {fileID: 565078028}
-  - {fileID: 2060574963}
   - {fileID: 1804706553}
+  - {fileID: 2060574963}
   - {fileID: 1017092600}
-  - {fileID: 1285109656}
   - {fileID: 340790981}
   - {fileID: 320640572}
+  - {fileID: 363965721}
+  - {fileID: 1482966217}
+  - {fileID: 565078028}
+  - {fileID: 2108613273}
+  - {fileID: 1285109656}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0

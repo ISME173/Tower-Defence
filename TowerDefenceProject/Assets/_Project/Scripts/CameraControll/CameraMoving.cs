@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.LevelsManagement;
+﻿using _Project.Scripts.DeviceInfoManagement;
+using _Project.Scripts.LevelsManagement;
 using R3;
 using Reflex.Attributes;
 using UnityEngine;
@@ -11,12 +12,14 @@ namespace _Project.Scripts.CameraControll
     public class CameraMoving : MonoBehaviour
     {
         [Inject] private readonly LevelsCreator LevelsCreator;
+        [Inject] private readonly IDeviceInfo DeviceInfo;
 
         [Header("References")]
         [SerializeField] private Transform _cameraPivot;
 
         [Header("Rotation")]
-        [SerializeField] private float _yawSpeed = 180f;
+        [SerializeField] private float _desktopYawSpeed = 180f;
+        [SerializeField] private float _mobileYawSpeed = 180f;
         [SerializeField] private bool _invertX;
         [SerializeField] private float _rotationAcceleration = 18f;
 
@@ -27,7 +30,8 @@ namespace _Project.Scripts.CameraControll
         [SerializeField] private float _maxYawVelocity = 720f;
 
         [Header("Zoom")]
-        [SerializeField] private float _zoomSpeed = 8f;
+        [SerializeField] private float _desktopZoomSpeed = 8f;
+        [SerializeField] private float _mobileZoomSpeed = 8f;
         [SerializeField] private float _minCameraDistance = 3f;
         [SerializeField] private float _maxCameraDistance = 20f;
         [SerializeField] private float _zoomSmoothTime = 0.12f;
@@ -215,7 +219,7 @@ namespace _Project.Scripts.CameraControll
                 Vector2 delta = _pointerDeltaAction.ReadValue<Vector2>();
 
                 float sign = _invertX ? -1f : 1f;
-                inputYawVelocity = delta.x * sign * _yawSpeed;
+                inputYawVelocity = delta.x * sign * GetCurrentYawSpeed();
 
                 _yawVelocity = Mathf.Lerp(_yawVelocity, inputYawVelocity, 1f - Mathf.Exp(-_rotationAcceleration * dt));
                 _yawVelocity = Mathf.Clamp(_yawVelocity, -_maxYawVelocity, _maxYawVelocity);
@@ -301,10 +305,12 @@ namespace _Project.Scripts.CameraControll
 
         private float GetZoomDelta(float dt)
         {
+            float zoomSpeed = GetCurrentZoomSpeed();
+
             Vector2 scroll = _mouseScrollAction.ReadValue<Vector2>();
             if (Mathf.Abs(scroll.y) > 0.01f)
             {
-                return -(scroll.y * _zoomSpeed * dt);
+                return -(scroll.y * zoomSpeed * dt);
             }
 
             if (Touchscreen.current == null)
@@ -335,7 +341,43 @@ namespace _Project.Scripts.CameraControll
             float currDist = Vector2.Distance(p0, p1);
 
             float pinchDelta = currDist - prevDist;
-            return -(pinchDelta * _zoomSpeed * dt);
+            return -(pinchDelta * zoomSpeed * dt);
+        }
+
+        private float GetCurrentYawSpeed()
+        {
+            if (DeviceInfo == null)
+            {
+                return _desktopYawSpeed;
+            }
+
+            switch (DeviceInfo.CurrentDeviceType)
+            {
+                case IDeviceInfo.DeviceType.Mobile:
+                    return _mobileYawSpeed;
+                case IDeviceInfo.DeviceType.Desktop:
+                    return _desktopYawSpeed;
+                default:
+                    return _desktopYawSpeed;
+            }
+        }
+
+        private float GetCurrentZoomSpeed()
+        {
+            if (DeviceInfo == null)
+            {
+                return _desktopZoomSpeed;
+            }
+
+            switch (DeviceInfo.CurrentDeviceType)
+            {
+                case IDeviceInfo.DeviceType.Mobile:
+                    return _mobileZoomSpeed;
+                case IDeviceInfo.DeviceType.Desktop:
+                    return _desktopZoomSpeed;
+                default:
+                    return _desktopZoomSpeed;
+            }
         }
 
         private void CacheCameraTransform()
