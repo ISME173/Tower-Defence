@@ -8,7 +8,21 @@ namespace _Project.Scripts.Advertisement
     {
         public void ShowFullscreenAdv()
         {
+            bool changeTimeScale = Time.timeScale == 1;
+
+            Time.timeScale = 0;
+
+            YG2.onCloseInterAdv += OnCloseInterAdv;
+
             YG2.InterstitialAdvShow();
+
+            void OnCloseInterAdv()
+            {
+                if (changeTimeScale)
+                    Time.timeScale = 1;
+
+                YG2.onCloseInterAdv -= OnCloseInterAdv;
+            }
         }
 
         public void ShowRewardedAdv(Action onSuccessfullyShowed, Action onError = null)
@@ -20,7 +34,7 @@ namespace _Project.Scripts.Advertisement
                 if (onSuccessfullyShowed != null)
                     onSuccessfullyShowed();
 
-                Debug.Log($"<color=green>Rewarded adv successfull showed!</color>");
+                //Debug.Log($"<color=green>Rewarded adv successfull showed!</color>");
 
                 YG2.onErrorRewardedAdv -= OnErrorRewardedAdv;
             });
@@ -30,7 +44,7 @@ namespace _Project.Scripts.Advertisement
                 if (onError != null)
                     onError();
 
-                Debug.Log($"<color=red>Rewarded adv error!</color>");
+                //Debug.Log($"<color=red>Rewarded adv error!</color>");
 
                 YG2.onErrorRewardedAdv -= OnErrorRewardedAdv;
             }
