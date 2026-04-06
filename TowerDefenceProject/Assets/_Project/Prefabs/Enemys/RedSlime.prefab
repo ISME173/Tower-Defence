@@ -335,7 +335,7 @@ MonoBehaviour:
   _maxHealth: 120
   _movingSpeed: 1
   _attackDamage: 1
-  _moneyForMurder: 30
+  _moneyForMurder: 25
   _rotationTime: 0.1
   _diedEffect: {fileID: 7511832418312683825}
   _center: {fileID: 3849080631560092773}
