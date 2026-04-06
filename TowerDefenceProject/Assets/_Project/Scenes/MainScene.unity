@@ -8082,7 +8082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Castle.CastleBindingsModule
   _castleHealthView: {fileID: 977379065}
-  _addHeartsCountAfterWatchAdv: 5
+  _addHeartsCountAfterWatchAdv: 100
   _shakeSerializableSettings:
     _strenght: 0.3
     _duration: 0.3
@@ -11094,29 +11094,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 1017092600}
-  - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 363965721}
-  - {fileID: 320640572}
-  - {fileID: 2060574963}
-  - {fileID: 322098973}
-  - {fileID: 565078028}
-  - {fileID: 2108613273}
-  - {fileID: 1804706553}
   - {fileID: 340790981}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
+  - {fileID: 1804706553}
+  - {fileID: 363965721}
+  - {fileID: 2108613273}
+  - {fileID: 1017092600}
+  - {fileID: 322098973}
+  - {fileID: 2060574963}
+  - {fileID: 1285109656}
   _readOnlyBindingModules:
-  - {fileID: 1017092600}
-  - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 363965721}
-  - {fileID: 320640572}
-  - {fileID: 2060574963}
-  - {fileID: 322098973}
-  - {fileID: 565078028}
-  - {fileID: 2108613273}
-  - {fileID: 1804706553}
   - {fileID: 340790981}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
+  - {fileID: 1482966217}
+  - {fileID: 1804706553}
+  - {fileID: 363965721}
+  - {fileID: 2108613273}
+  - {fileID: 1017092600}
+  - {fileID: 322098973}
+  - {fileID: 2060574963}
+  - {fileID: 1285109656}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12169,7 +12169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.MoneySystem.MoneySystemBindingsModule
   _moneyView: {fileID: 1255363016}
-  _getMoneyCountAfterWatchAdv: 5
+  _getMoneyCountAfterWatchAdv: 100
   _buttonClickAudioEvent: {fileID: 11400000, guid: 54b5eebb67365f1478c3dd480570af7a, type: 2}
 --- !u!1 &2125241450
 GameObject:
