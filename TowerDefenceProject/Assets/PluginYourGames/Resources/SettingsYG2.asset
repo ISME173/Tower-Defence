@@ -61,7 +61,7 @@ MonoBehaviour:
     loadAdv: 0
     testFailAds: 0
   Templates:
-    logoImageFormat: 0
+    logoImageFormat: 1
     backgroundImgFormat: 0
     gradientBackgroundByLoadGame:
       radial: 0
