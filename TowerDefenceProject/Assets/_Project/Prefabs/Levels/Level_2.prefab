@@ -419,7 +419,7 @@ MonoBehaviour:
   - {fileID: 4227976967575935815, guid: ea3bd62cea8d8314fb3a71c0e15279f2, type: 3}
   - {fileID: 7552555061197613553, guid: bd5ee52a207ade7488989fe4a12b1e0f, type: 3}
   _levelNumber: 2
-  _maxLevelHealth: 2
+  _maxLevelHealth: 20
   _initialAmountOfMoney: 200
   _healthFor1Star: 1
   _healthFor2Stars: 10
