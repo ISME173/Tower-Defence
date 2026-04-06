@@ -15,7 +15,7 @@ MonoBehaviour:
   _attackDamage: 90
   _delayBetweenAttacks: 1
   _projectileSpeed: 10
-  _buildPrice: 50
-  _refundAfterDestruction: 112
+  _buildPrice: 70
+  _refundAfterDestruction: 120
   _towerIconSprite: {fileID: 21300000, guid: ac0c43117add9d44bbf223751a3f4698, type: 3}
   _projectilePrefab: {fileID: 2826483462132512936, guid: a48bd30f64a15734caa33fbf1b985be2, type: 3}
