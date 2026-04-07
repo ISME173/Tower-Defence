@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4537956034480022149}
   - component: {fileID: 1542321765703663351}
   - component: {fileID: 71477061765622546}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4881,7 +4881,7 @@ GameObject:
   - component: {fileID: 6912294319759184500}
   - component: {fileID: 3045549049877322915}
   - component: {fileID: 4293768060352713657}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9715,7 +9715,7 @@ GameObject:
   - component: {fileID: 3162577031371555676}
   - component: {fileID: 603496602277615504}
   - component: {fileID: 8062697270407673392}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EnemyDiedEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

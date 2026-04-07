@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3842393691578871544}
   - component: {fileID: 9161785347456006730}
   - component: {fileID: 6155030208403136102}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BuildTowerEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4901,7 +4901,7 @@ GameObject:
   - component: {fileID: 9148198272410211722}
   - component: {fileID: 8828583211945099041}
   - component: {fileID: 1203993608376025175}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
