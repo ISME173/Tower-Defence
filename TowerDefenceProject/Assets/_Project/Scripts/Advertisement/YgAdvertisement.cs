@@ -8,35 +8,7 @@ namespace _Project.Scripts.Advertisement
     {
         public void ShowFullscreenAdv()
         {
-            if (YG2.isTimerAdvCompleted == false)
-                return;
-
-            bool changeTimeScale = Time.timeScale == 1;
-
-            Time.timeScale = 0;
-
-            YG2.onCloseInterAdv += OnCloseInterAdv;
-            YG2.onErrorInterAdv += OnErrorInterAdv;
-
             YG2.InterstitialAdvShow();
-
-            void OnCloseInterAdv()
-            {
-                if (changeTimeScale)
-                    Time.timeScale = 1;
-
-                YG2.onCloseInterAdv -= OnCloseInterAdv;
-                YG2.onErrorInterAdv -= OnErrorInterAdv;
-            }
-
-            void OnErrorInterAdv()
-            {
-                if (changeTimeScale)
-                    Time.timeScale = 1;
-
-                YG2.onCloseInterAdv -= OnCloseInterAdv;
-                YG2.onErrorInterAdv -= OnErrorInterAdv;
-            }
         }
 
         public void ShowRewardedAdv(Action onSuccessfullyShowed, Action onError = null)
