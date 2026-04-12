@@ -43,7 +43,7 @@ MonoBehaviour:
     platform: {fileID: 11400000, guid: fabe82a4ab034324eb452cc7109f6d19, type: 2}
     autoApplySettings: 1
     autoPauseGame: 1
-    editTimeScale: 1
+    editTimeScale: 0
     editEventSystem: 1
     autoGRA: 1
     logInEditor: 1
@@ -64,7 +64,7 @@ MonoBehaviour:
     testFailAds: 0
     pauseOnFocusGame: 0
   Templates:
-    logoImageFormat: 0
+    logoImageFormat: 1
     backgroundImgFormat: 0
     gradientBackgroundByLoadGame:
       radial: 0
