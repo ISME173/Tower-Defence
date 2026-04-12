@@ -3018,6 +3018,7 @@ GameObject:
   - component: {fileID: 526396284}
   - component: {fileID: 526396286}
   - component: {fileID: 526396285}
+  - component: {fileID: 526396287}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -3066,7 +3067,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Click on building place!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ef63cbca0f0980f47911f4dae1f3f33c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ceed9adf9f3a2504887722d970f5f59e, type: 2}
   m_sharedMaterial: {fileID: -5660775149628104760, guid: ef63cbca0f0980f47911f4dae1f3f33c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3133,7 +3134,7 @@ MonoBehaviour:
   m_margin: {x: 20, y: 20, z: 20, w: 20}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &526396286
@@ -3144,6 +3145,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526396283}
   m_CullTransparentMesh: 1
+--- !u!114 &526396287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526396283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
+  _textsByLanguages:
+  - _languageType: 0
+    _text: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
+      \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
+  - _languageType: 1
+    _text: Click on the building site!
+  - _languageType: 2
+    _text: "\u0130n\u015Faat alan\u0131na t\u0131klay\u0131n!"
+  - _languageType: 3
+    _text: "\xA1Haz clic en el sitio de construcci\xF3n!"
+  - _languageType: 4
+    _text: Klicken Sie auf die Baustelle!
+  - _languageType: 5
+    _text: Cliquez sur le chantier !
 --- !u!1 &550809563
 GameObject:
   m_ObjectHideFlags: 0
@@ -11094,29 +11121,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 320640572}
-  - {fileID: 363965721}
-  - {fileID: 2060574963}
+  - {fileID: 1482966217}
   - {fileID: 2108613273}
   - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 565078028}
-  - {fileID: 340790981}
-  - {fileID: 322098973}
-  - {fileID: 1804706553}
   - {fileID: 1017092600}
+  - {fileID: 363965721}
+  - {fileID: 340790981}
+  - {fileID: 1804706553}
+  - {fileID: 2060574963}
+  - {fileID: 322098973}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
   _readOnlyBindingModules:
-  - {fileID: 320640572}
-  - {fileID: 363965721}
-  - {fileID: 2060574963}
+  - {fileID: 1482966217}
   - {fileID: 2108613273}
   - {fileID: 1285109656}
-  - {fileID: 1482966217}
-  - {fileID: 565078028}
-  - {fileID: 340790981}
-  - {fileID: 322098973}
-  - {fileID: 1804706553}
   - {fileID: 1017092600}
+  - {fileID: 363965721}
+  - {fileID: 340790981}
+  - {fileID: 1804706553}
+  - {fileID: 2060574963}
+  - {fileID: 322098973}
+  - {fileID: 565078028}
+  - {fileID: 320640572}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
