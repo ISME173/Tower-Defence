@@ -8,7 +8,39 @@ namespace _Project.Scripts.Advertisement
     {
         public void ShowFullscreenAdv()
         {
+            if (YG2.isTimerAdvCompleted == false)
+                return;
+
+            bool changeTimeScale = Time.timeScale == 1;
+
+            Time.timeScale = 0;
+
+            YG2.onCloseInterAdv += OnInterstitialAdvClosed;
+            YG2.onErrorInterAdv += OnErrorInterstitialAdv;
+
             YG2.InterstitialAdvShow();
+
+            void OnInterstitialAdvClosed()
+            {
+                if (changeTimeScale)
+                    Time.timeScale = 1;
+
+                YG2.onCloseInterAdv -= OnInterstitialAdvClosed;
+                YG2.onErrorInterAdv -= OnErrorInterstitialAdv;
+
+                Debug.Log($"Closed interstitial adv with change time scale value: {changeTimeScale}");
+            }
+
+            void OnErrorInterstitialAdv()
+            {
+                if (changeTimeScale)
+                    Time.timeScale = 1;
+
+                YG2.onCloseInterAdv -= OnInterstitialAdvClosed;
+                YG2.onErrorInterAdv -= OnErrorInterstitialAdv;
+
+                Debug.Log($"Error interstitial adv with change time scale value: {changeTimeScale}");
+            }
         }
 
         public void ShowRewardedAdv(Action onSuccessfullyShowed, Action onError = null)
