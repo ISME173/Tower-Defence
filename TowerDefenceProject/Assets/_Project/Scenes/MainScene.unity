@@ -7902,9 +7902,9 @@ RectTransform:
   - {fileID: 262532846}
   m_Father: {fileID: 1041355580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 384, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -580, y: 0}
   m_SizeDelta: {x: 110, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273129533
@@ -11121,29 +11121,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 1017092600}
-  - {fileID: 1482966217}
-  - {fileID: 2108613273}
   - {fileID: 320640572}
-  - {fileID: 2060574963}
+  - {fileID: 1285109656}
   - {fileID: 322098973}
+  - {fileID: 1017092600}
+  - {fileID: 1804706553}
+  - {fileID: 1482966217}
+  - {fileID: 2060574963}
   - {fileID: 363965721}
   - {fileID: 565078028}
   - {fileID: 340790981}
-  - {fileID: 1804706553}
-  - {fileID: 1285109656}
+  - {fileID: 2108613273}
   _readOnlyBindingModules:
-  - {fileID: 1017092600}
-  - {fileID: 1482966217}
-  - {fileID: 2108613273}
   - {fileID: 320640572}
-  - {fileID: 2060574963}
+  - {fileID: 1285109656}
   - {fileID: 322098973}
+  - {fileID: 1017092600}
+  - {fileID: 1804706553}
+  - {fileID: 1482966217}
+  - {fileID: 2060574963}
   - {fileID: 363965721}
   - {fileID: 565078028}
   - {fileID: 340790981}
-  - {fileID: 1804706553}
-  - {fileID: 1285109656}
+  - {fileID: 2108613273}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11856,9 +11856,9 @@ RectTransform:
   - {fileID: 1371306591}
   m_Father: {fileID: 1041355580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -374, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 580, y: 0}
   m_SizeDelta: {x: 110, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2043178663
