@@ -20,7 +20,7 @@ MonoBehaviour:
     playerPhoto: demo image
     payingStatus: 0
   InterstitialAdv:
-    showFirstAdv: 0
+    showFirstAdv: 1
     interAdvInterval: 60
     postponeCallByFail: 0
     postponeCallTimer: 10
