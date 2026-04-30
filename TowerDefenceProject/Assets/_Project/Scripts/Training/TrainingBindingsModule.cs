@@ -1,5 +1,6 @@
 using _Project.Scripts.CameraControll;
 using _Project.Scripts.DI;
+using _Project.Scripts.Localization;
 using _Project.Scripts.Saves;
 using Reflex.Attributes;
 using Reflex.Core;
@@ -29,9 +30,9 @@ namespace _Project.Scripts.Training
         }
 
         [Inject]
-        private void Initialize(ISaves saves)
+        private void Initialize(ISaves saves, ILocalizationInfo localizationInfo)
         {
-            _trainingController.Initialize(saves);
+            _trainingController.Initialize(saves, localizationInfo);
         }
     }
 }
