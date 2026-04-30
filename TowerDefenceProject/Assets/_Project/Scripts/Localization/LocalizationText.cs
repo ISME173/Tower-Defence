@@ -9,70 +9,25 @@ namespace _Project.Scripts.Localization
     [RequireComponent(typeof(TMP_Text))]
     public class LocalizationText : MonoBehaviour
     {
-        [SerializeField] private List<TextByLanguage> _textsByLanguages = new List<TextByLanguage>();
+        [SerializeField] private LocalizationVariants _localizationVariants;
 
         private TMP_Text _text;
 
         [Inject]
         private void Initialize(ILocalizationInfo localizationInfo)
         {
-            //Debug.Log($"Inject localization info by lang: {localizationInfo.CurrentLanguageType}");
-
-            ValidateTextsByLanguages();
-
             _text = GetComponent<TMP_Text>();
 
             LanguageType currentLanguageType = localizationInfo.CurrentLanguageType;
 
-            foreach (var textByLanguage in _textsByLanguages)
+            if (_localizationVariants.TryGetTextByLang(currentLanguageType, out string text))
             {
-                if (textByLanguage.LanguageType == currentLanguageType)
-                {
-                    _text.text = textByLanguage.Text;
-                    break;
-                }
+                _text.text = text;
             }
-        }
-
-        private void ValidateTextsByLanguages()
-        {
-            if (_textsByLanguages == null || _textsByLanguages.Count == 0)
-                return;
-
-            HashSet<LanguageType> uniqueLanguageTypes = new HashSet<LanguageType>();
-
-            for (int i = 0; i < _textsByLanguages.Count; i++)
+            else
             {
-                TextByLanguage textByLanguage = _textsByLanguages[i];
-
-                if (uniqueLanguageTypes.Add(textByLanguage.LanguageType) == false)
-                {
-                    Debug.LogWarning(
-                        $"{nameof(LocalizationText)} on object {name}: duplicate language {textByLanguage.LanguageType} was removed from {nameof(_textsByLanguages)}.",
-                        this);
-
-                    _textsByLanguages.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-
-                if (string.IsNullOrWhiteSpace(textByLanguage.Text))
-                {
-                    Debug.LogWarning(
-                        $"{nameof(LocalizationText)} on object {name}: translation text for language {textByLanguage.LanguageType} is empty.",
-                        this);
-                }
+                Debug.LogWarning($"Not founded localization by language: {currentLanguageType} in GameObject '{gameObject.name}', with instance id: {gameObject.GetInstanceID()}");
             }
-        }
-
-        [Serializable]
-        private struct TextByLanguage
-        {
-            [SerializeField] private LanguageType _languageType;
-            [SerializeField, TextArea] private string _text;
-
-            public LanguageType LanguageType => _languageType;
-            public string Text => _text;
         }
     }
 }

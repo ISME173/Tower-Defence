@@ -2257,8 +2257,21 @@ MonoBehaviour:
   _trainingView: {fileID: 1156583739}
   _trainingSettings:
     _trainingStages:
-    - _infoText: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
-        \u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
+    - _infoText:
+        _textsByLanguages:
+        - _languageType: 0
+          _text: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
+            \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
+        - _languageType: 1
+          _text: Click on the building site!
+        - _languageType: 2
+          _text: "\u0130n\u015Faat alan\u0131na t\u0131klay\u0131n!"
+        - _languageType: 3
+          _text: "\xA1Haz clic en el sitio de construcci\xF3n!"
+        - _languageType: 4
+          _text: Klicken Sie auf die Baustelle!
+        - _languageType: 5
+          _text: Cliquez sur le chantier !
       _trainingStageTriggerListener: {fileID: 1706919842}
       _objectsForActivate: []
       _objectsForDeactivate:
@@ -2266,8 +2279,21 @@ MonoBehaviour:
       - {fileID: 1069945780}
       - {fileID: 1069945779}
       - {fileID: 1069945778}
-    - _infoText: "\u041F\u043E\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0435\u0440\u0432\u0443\u044E
-        \u0431\u0430\u0448\u043D\u044E!"
+    - _infoText:
+        _textsByLanguages:
+        - _languageType: 0
+          _text: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0431\u0430\u0448\u043D\u044E
+            \u0434\u043B\u044F \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
+        - _languageType: 1
+          _text: Choose a tower to build!
+        - _languageType: 2
+          _text: "\u0130n\u015Fa etmek istedi\u011Finiz kuleyi se\xE7in!"
+        - _languageType: 3
+          _text: "\xA1Elige una torre para construir!"
+        - _languageType: 4
+          _text: "W\xE4hle einen Turm zum Bauen!"
+        - _languageType: 5
+          _text: "Choisissez une tour \xE0 construire !"
       _trainingStageTriggerListener: {fileID: 1827627535}
       _objectsForActivate:
       - {fileID: 803447138}
@@ -2431,19 +2457,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041C\u0435\u043D\u044E"
-  - _languageType: 1
-    _text: Menu
-  - _languageType: 2
-    _text: "Men\xFC"
-  - _languageType: 3
-    _text: "Men\xFA"
-  - _languageType: 4
-    _text: "Men\xFC"
-  - _languageType: 5
-    _text: Menu
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041C\u0435\u043D\u044E"
+    - _languageType: 1
+      _text: 'Menu
+
+'
+    - _languageType: 2
+      _text: "Men\xFC"
+    - _languageType: 3
+      _text: "Men\xFA"
+    - _languageType: 4
+      _text: Speisekarte
+    - _languageType: 5
+      _text: Menu
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,19 +2871,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
-  - _languageType: 1
-    _text: Continue
-  - _languageType: 2
-    _text: Devam et
-  - _languageType: 3
-    _text: Continuar
-  - _languageType: 4
-    _text: Weiter
-  - _languageType: 5
-    _text: Continuer
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
+    - _languageType: 1
+      _text: Continue
+    - _languageType: 2
+      _text: Devam etmek
+    - _languageType: 3
+      _text: Continuar
+    - _languageType: 4
+      _text: Weitermachen
+    - _languageType: 5
+      _text: Continuer
 --- !u!1 &442510972
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,20 +3187,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
-      \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
-  - _languageType: 1
-    _text: Click on the building site!
-  - _languageType: 2
-    _text: "\u0130n\u015Faat alan\u0131na t\u0131klay\u0131n!"
-  - _languageType: 3
-    _text: "\xA1Haz clic en el sitio de construcci\xF3n!"
-  - _languageType: 4
-    _text: Klicken Sie auf die Baustelle!
-  - _languageType: 5
-    _text: Cliquez sur le chantier !
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E
+        \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438!"
+    - _languageType: 1
+      _text: Click on the building site!
+    - _languageType: 2
+      _text: "\u0130n\u015Faat alan\u0131na t\u0131klay\u0131n!"
+    - _languageType: 3
+      _text: "\xA1Haz clic en el sitio de construcci\xF3n!"
+    - _languageType: 4
+      _text: Klicken Sie auf die Baustelle!
+    - _languageType: 5
+      _text: Cliquez sur le chantier !
 --- !u!1 &550809563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,19 +3389,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041E\u0442\u043A\u0430\u0437\u0430\u0442\u044C\u0441\u044F"
-  - _languageType: 1
-    _text: Cancel
-  - _languageType: 2
-    _text: "\u0130ptal et"
-  - _languageType: 3
-    _text: Cancelar
-  - _languageType: 4
-    _text: Abbrechen
-  - _languageType: 5
-    _text: Annuler
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041E\u0442\u043A\u0430\u0437\u0430\u0442\u044C\u0441\u044F"
+    - _languageType: 1
+      _text: Refuse
+    - _languageType: 2
+      _text: Reddetmek
+    - _languageType: 3
+      _text: Rechazar
+    - _languageType: 4
+      _text: Verweigern
+    - _languageType: 5
+      _text: Refuser
 --- !u!1 &565078026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3739,19 +3771,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041C\u0435\u043D\u044E"
-  - _languageType: 1
-    _text: Menu
-  - _languageType: 2
-    _text: "Men\xFC"
-  - _languageType: 3
-    _text: "Men\xFA"
-  - _languageType: 4
-    _text: "Men\xFC"
-  - _languageType: 5
-    _text: Menu
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041C\u0435\u043D\u044E"
+    - _languageType: 1
+      _text: 'Menu
+
+'
+    - _languageType: 2
+      _text: "Men\xFC"
+    - _languageType: 3
+      _text: "Men\xFA"
+    - _languageType: 4
+      _text: Speisekarte
+    - _languageType: 5
+      _text: Menu
 --- !u!1 &596539871
 GameObject:
   m_ObjectHideFlags: 0
@@ -5594,19 +5629,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u041E\u0420\u0410\u0416\u0415\u041D\u0418\u0415"
-  - _languageType: 1
-    _text: DEFEAT
-  - _languageType: 2
-    _text: "YEN\u0130LG\u0130"
-  - _languageType: 3
-    _text: DERROTA
-  - _languageType: 4
-    _text: NIEDERLAGE
-  - _languageType: 5
-    _text: "D\xC9FAITE"
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u041E\u0420\u0410\u0416\u0415\u041D\u0418\u0415"
+    - _languageType: 1
+      _text: DEFEAT
+    - _languageType: 2
+      _text: YENMEK
+    - _languageType: 3
+      _text: FRACASO
+    - _languageType: 4
+      _text: VERLUST
+    - _languageType: 5
+      _text: "D\xC9FAITE"
 --- !u!1 &838575391
 GameObject:
   m_ObjectHideFlags: 0
@@ -6249,19 +6285,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041E\u0442\u043A\u0430\u0437\u0430\u0442\u044C\u0441\u044F"
-  - _languageType: 1
-    _text: Cancel
-  - _languageType: 2
-    _text: "\u0130ptal et"
-  - _languageType: 3
-    _text: Cancelar
-  - _languageType: 4
-    _text: Abbrechen
-  - _languageType: 5
-    _text: Annuler
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041E\u0442\u043A\u0430\u0437\u0430\u0442\u044C\u0441\u044F"
+    - _languageType: 1
+      _text: Refuse
+    - _languageType: 2
+      _text: Reddetmek
+    - _languageType: 3
+      _text: Rechazar
+    - _languageType: 4
+      _text: Verweigern
+    - _languageType: 5
+      _text: Refuser
 --- !u!1 &1017092598
 GameObject:
   m_ObjectHideFlags: 0
@@ -6701,19 +6738,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041C\u0435\u043D\u044E"
-  - _languageType: 1
-    _text: Menu
-  - _languageType: 2
-    _text: "Men\xFC"
-  - _languageType: 3
-    _text: "Men\xFA"
-  - _languageType: 4
-    _text: "Men\xFC"
-  - _languageType: 5
-    _text: Menu
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041C\u0435\u043D\u044E"
+    - _languageType: 1
+      _text: 'Menu
+
+'
+    - _languageType: 2
+      _text: "Men\xFC"
+    - _languageType: 3
+      _text: "Men\xFA"
+    - _languageType: 4
+      _text: Speisekarte
+    - _languageType: 5
+      _text: Menu
 --- !u!1001 &1069945777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8264,19 +8304,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u0435\u0440\u0435\u0438\u0433\u0440\u0430\u0442\u044C"
-  - _languageType: 1
-    _text: Restart
-  - _languageType: 2
-    _text: "Yeniden ba\u015Flat"
-  - _languageType: 3
-    _text: Reiniciar
-  - _languageType: 4
-    _text: Neustart
-  - _languageType: 5
-    _text: "Red\xE9marrer"
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u0435\u0440\u0435\u0437\u0430\u043F\u0443\u0441\u043A"
+    - _languageType: 1
+      _text: Restart
+    - _languageType: 2
+      _text: "Tekrar ba\u015Flat"
+    - _languageType: 3
+      _text: Reanudar
+    - _languageType: 4
+      _text: Neustart
+    - _languageType: 5
+      _text: "Red\xE9marrage"
 --- !u!1 &1314130129
 GameObject:
   m_ObjectHideFlags: 0
@@ -8619,19 +8660,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u0414\u043E \u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u043E\u043B\u043D\u044B: "
-  - _languageType: 1
-    _text: 'Before the wave begins: '
-  - _languageType: 2
-    _text: "Dalga ba\u015Flamadan \xF6nce: "
-  - _languageType: 3
-    _text: 'Antes de que empiece la ola: '
-  - _languageType: 4
-    _text: 'Bevor die Welle kommt: '
-  - _languageType: 5
-    _text: 'Avant que la vague ne commence : '
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u0414\u043E \u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u043E\u043B\u043D\u044B: "
+    - _languageType: 1
+      _text: 'Before the wave starts:'
+    - _languageType: 2
+      _text: "Dalga ba\u015Flamadan \xF6nce:"
+    - _languageType: 3
+      _text: 'Antes de que comience la ola:'
+    - _languageType: 4
+      _text: 'Bevor die Welle beginnt:'
+    - _languageType: 5
+      _text: "Avant le d\xE9but de la vague :"
 --- !u!1 &1348563255
 GameObject:
   m_ObjectHideFlags: 0
@@ -8931,19 +8973,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C"
-  - _languageType: 1
-    _text: Get
-  - _languageType: 2
-    _text: "\u0130ndir"
-  - _languageType: 3
-    _text: Conseguir
-  - _languageType: 4
-    _text: Hier
-  - _languageType: 5
-    _text: Obtenir
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C"
+    - _languageType: 1
+      _text: Get
+    - _languageType: 2
+      _text: Elde etmek
+    - _languageType: 3
+      _text: Conseguir
+    - _languageType: 4
+      _text: Erhalten
+    - _languageType: 5
+      _text: Obtenir
 --- !u!1 &1371306590
 GameObject:
   m_ObjectHideFlags: 0
@@ -9365,19 +9408,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u041E\u0411\u0415\u0414\u0410"
-  - _languageType: 1
-    _text: VICTORY
-  - _languageType: 2
-    _text: ZAFER
-  - _languageType: 3
-    _text: VICTORIA
-  - _languageType: 4
-    _text: SIEG
-  - _languageType: 5
-    _text: VICTOIRE
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u041E\u0411\u0415\u0414\u0410"
+    - _languageType: 1
+      _text: VICTORY
+    - _languageType: 2
+      _text: ZAFER
+    - _languageType: 3
+      _text: VICTORIA
+    - _languageType: 4
+      _text: SIEG
+    - _languageType: 5
+      _text: VICTOIRE
 --- !u!1 &1455361209
 GameObject:
   m_ObjectHideFlags: 0
@@ -9530,21 +9574,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u0412\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 5 \u0441\u0435\u0440\u0434\u0435\u0446,
-      \u043F\u043E\u0441\u043B\u0435 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430
-      \u0440\u0435\u043A\u043B\u0430\u043C\u044B"
-  - _languageType: 1
-    _text: You'll receive 5 hearts after watching the ad
-  - _languageType: 2
-    _text: "Reklam\u0131 izledikten sonra 5 kalp kazanacaks\u0131n\u0131z"
-  - _languageType: 3
-    _text: "Recibir\xE1s 5 corazones tras ver el anuncio"
-  - _languageType: 4
-    _text: Sie erhalten 5 Herzen, nachdem Sie sich die Werbung angesehen haben
-  - _languageType: 5
-    _text: "Vous recevrez 5 c\u0153urs apr\xE8s avoir regard\xE9 la publicit\xE9"
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: 
+    - _languageType: 1
+      _text: 
+    - _languageType: 2
+      _text: 
+    - _languageType: 3
+      _text: 
+    - _languageType: 4
+      _text: 
+    - _languageType: 5
+      _text: 
 --- !u!1 &1455584799
 GameObject:
   m_ObjectHideFlags: 0
@@ -9914,19 +9957,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
-  - _languageType: 1
-    _text: Continue
-  - _languageType: 2
-    _text: Devam et
-  - _languageType: 3
-    _text: Continuar
-  - _languageType: 4
-    _text: Weiter
-  - _languageType: 5
-    _text: Continuer
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
+    - _languageType: 1
+      _text: Continue
+    - _languageType: 2
+      _text: Devam etmek
+    - _languageType: 3
+      _text: Continuar
+    - _languageType: 4
+      _text: Weitermachen
+    - _languageType: 5
+      _text: Continuer
 --- !u!1 &1499207407
 GameObject:
   m_ObjectHideFlags: 0
@@ -10230,19 +10274,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u0435\u0440\u0435\u0438\u0433\u0440\u0430\u0442\u044C"
-  - _languageType: 1
-    _text: Restart
-  - _languageType: 2
-    _text: "Yeniden ba\u015Flat"
-  - _languageType: 3
-    _text: Reiniciar
-  - _languageType: 4
-    _text: Neustart
-  - _languageType: 5
-    _text: "Red\xE9marrer"
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u0435\u0440\u0435\u0437\u0430\u043F\u0443\u0441\u043A"
+    - _languageType: 1
+      _text: Restart
+    - _languageType: 2
+      _text: "Tekrar ba\u015Flat"
+    - _languageType: 3
+      _text: Reanudar
+    - _languageType: 4
+      _text: Neustart
+    - _languageType: 5
+      _text: "Red\xE9marrage"
 --- !u!1 &1622543187
 GameObject:
   m_ObjectHideFlags: 0
@@ -10501,21 +10546,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u0412\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 100 \u043C\u043E\u043D\u0435\u0442,
-      \u043F\u043E\u0441\u043B\u0435 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430
-      \u0440\u0435\u043A\u043B\u0430\u043C\u044B"
-  - _languageType: 1
-    _text: You'll receive 100 coins after watching the ad
-  - _languageType: 2
-    _text: "Reklam\u0131 izledikten sonra 100 jeton kazanacaks\u0131n\u0131z"
-  - _languageType: 3
-    _text: "Recibir\xE1s 100 monedas tras ver el anuncio"
-  - _languageType: 4
-    _text: "Sie erhalten 100 M\xFCnzen, nachdem Sie sich die Werbung angesehen haben"
-  - _languageType: 5
-    _text: "Vous recevrez 100 pi\xE8ces apr\xE8s avoir visionn\xE9 la publicit\xE9"
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u0412\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 100 \u043C\u043E\u043D\u0435\u0442,
+        \u043F\u043E\u0441\u043B\u0435 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430
+        \u0440\u0435\u043A\u043B\u0430\u043C\u044B"
+    - _languageType: 1
+      _text: You will get 100 coins after watching the ad
+    - _languageType: 2
+      _text: "Reklam\u0131 izledikten sonra 100 jeton kazanacaks\u0131n\u0131z."
+    - _languageType: 3
+      _text: "Obtendr\xE1s 100 monedas despu\xE9s de ver el anuncio."
+    - _languageType: 4
+      _text: "Sie erhalten 100 M\xFCnzen, nachdem Sie die Werbung angesehen haben."
+    - _languageType: 5
+      _text: "Vous recevrez 100 pi\xE8ces apr\xE8s avoir regard\xE9 la publicit\xE9."
 --- !u!1 &1653388358
 GameObject:
   m_ObjectHideFlags: 0
@@ -10818,19 +10864,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C"
-  - _languageType: 1
-    _text: Get
-  - _languageType: 2
-    _text: "\u0130ndir"
-  - _languageType: 3
-    _text: Conseguir
-  - _languageType: 4
-    _text: Hier
-  - _languageType: 5
-    _text: Obtenir
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C"
+    - _languageType: 1
+      _text: Get
+    - _languageType: 2
+      _text: Elde etmek
+    - _languageType: 3
+      _text: Conseguir
+    - _languageType: 4
+      _text: Erhalten
+    - _languageType: 5
+      _text: Obtenir
 --- !u!1 &1706919838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3631699299365442389, guid: 33befd05bfa81e64fb3551bc3122a603, type: 3}
@@ -11121,29 +11168,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.DI.BindingModulesInstaller
   _searchBindingModulesInOnValidate: 1
   _bindingModules:
-  - {fileID: 320640572}
-  - {fileID: 1285109656}
   - {fileID: 322098973}
   - {fileID: 1017092600}
   - {fileID: 1804706553}
-  - {fileID: 1482966217}
-  - {fileID: 2060574963}
+  - {fileID: 1285109656}
   - {fileID: 363965721}
-  - {fileID: 565078028}
-  - {fileID: 340790981}
   - {fileID: 2108613273}
+  - {fileID: 320640572}
+  - {fileID: 2060574963}
+  - {fileID: 565078028}
+  - {fileID: 1482966217}
+  - {fileID: 340790981}
   _readOnlyBindingModules:
-  - {fileID: 320640572}
-  - {fileID: 1285109656}
   - {fileID: 322098973}
   - {fileID: 1017092600}
   - {fileID: 1804706553}
-  - {fileID: 1482966217}
-  - {fileID: 2060574963}
+  - {fileID: 1285109656}
   - {fileID: 363965721}
-  - {fileID: 565078028}
-  - {fileID: 340790981}
   - {fileID: 2108613273}
+  - {fileID: 320640572}
+  - {fileID: 2060574963}
+  - {fileID: 565078028}
+  - {fileID: 1482966217}
+  - {fileID: 340790981}
 --- !u!114 &1804363960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11418,19 +11465,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717980ba76326ed40ae86196fca05136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Localization.LocalizationText
-  _textsByLanguages:
-  - _languageType: 0
-    _text: "\u041F\u0410\u0423\u0417\u0410"
-  - _languageType: 1
-    _text: PAUSE
-  - _languageType: 2
-    _text: DURAKLAMA
-  - _languageType: 3
-    _text: PAUSA
-  - _languageType: 4
-    _text: PAUSE
-  - _languageType: 5
-    _text: PAUSE
+  _localizationVariants:
+    _textsByLanguages:
+    - _languageType: 0
+      _text: "\u041F\u0410\u0423\u0417\u0410"
+    - _languageType: 1
+      _text: PAUSE
+    - _languageType: 2
+      _text: DURAKLAT
+    - _languageType: 3
+      _text: PAUSA
+    - _languageType: 4
+      _text: PAUSE
+    - _languageType: 5
+      _text: PAUSE
 --- !u!1 &1958740899
 GameObject:
   m_ObjectHideFlags: 0

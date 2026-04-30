@@ -1,3 +1,4 @@
+using _Project.Scripts.Localization;
 using _Project.Scripts.Saves;
 using R3;
 using System;
@@ -16,6 +17,7 @@ namespace _Project.Scripts.Training
 
         private int _currentTrainingStageIndex;
         private ISaves _saves;
+        private ILocalizationInfo _localizationInfo;
 
         private readonly Subject<Unit> ReadOnlyOnTutorialFinished = new();
 
@@ -34,9 +36,10 @@ namespace _Project.Scripts.Training
                 entitySwitchDuringTraining.Initialize();
         }
 
-        public void Initialize(ISaves saves)
+        public void Initialize(ISaves saves, ILocalizationInfo localizationInfo)
         {
             _saves = saves;
+            _localizationInfo = localizationInfo;
 
             if (TutorialIsFinished == false)
             {
@@ -46,7 +49,9 @@ namespace _Project.Scripts.Training
                     Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener.OnStageTriggerActivated.Subscribe(OnTriggerStageActivated));
 
                 TrainingView.ShowInfoPanel();
-                TrainingView.SetInfoText(Settings.TrainingStages[_currentTrainingStageIndex].InfoText);
+
+                if (Settings.TrainingStages[_currentTrainingStageIndex].InfoText.TryGetTextByLang(_localizationInfo.CurrentLanguageType, out string text))
+                    TrainingView.SetInfoText(text);
 
                 foreach (var entitySwitchDuringTraining in Settings.EntitysSwitchDuringTraining)
                     entitySwitchDuringTraining.Disable();
@@ -102,7 +107,8 @@ namespace _Project.Scripts.Training
                 Settings.TrainingStages[_currentTrainingStageIndex].StageTriggerListener.OnStageTriggerActivated.Subscribe(OnTriggerStageActivated));
 
             TrainingView.ShowInfoPanel();
-            TrainingView.SetInfoText(Settings.TrainingStages[_currentTrainingStageIndex].InfoText);
+            if (Settings.TrainingStages[_currentTrainingStageIndex].InfoText.TryGetTextByLang(_localizationInfo.CurrentLanguageType, out string text))
+                TrainingView.SetInfoText(text);
         }
 
 
@@ -111,21 +117,21 @@ namespace _Project.Scripts.Training
         {
             [SerializeField] private List<TrainingStage> _trainingStages;
             [SerializeField] private List<EntitySwitchDuringTraining> _entitysSwitchDuringTraining;
-            
+
             public IReadOnlyList<TrainingStage> TrainingStages => _trainingStages;
             public IReadOnlyList<EntitySwitchDuringTraining> EntitysSwitchDuringTraining => _entitysSwitchDuringTraining;
 
             [Serializable]
             public struct TrainingStage
             {
-                [SerializeField, TextArea] private string _infoText;
+                [SerializeField] private LocalizationVariants _infoText;
                 [Space]
                 [SerializeField] private TrainingStageTriggerListener _trainingStageTriggerListener;
                 [Space]
                 [SerializeField] private List<GameObject> _objectsForActivate;
                 [SerializeField] private List<GameObject> _objectsForDeactivate;
 
-                public string InfoText => _infoText;
+                public LocalizationVariants InfoText => _infoText;
                 public TrainingStageTriggerListener StageTriggerListener => _trainingStageTriggerListener;
                 public IReadOnlyList<GameObject> ObjectsForActivate => _objectsForActivate;
                 public IReadOnlyList<GameObject> ObjectsForDeactivate => _objectsForDeactivate;
